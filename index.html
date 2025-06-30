@@ -233,7 +233,7 @@
         instrucoes: "Instrucciones detalladas disponibles en:",
         link2: "http://www.engesat.com.br/softwares/global-mapper/instalacion-y-activacion/",
         senha: "Si no tiene una contraseña definida, utilice la opción “Administrar Cuenta” para recuperarla vía correo electrónico y así poder acceder nuevamente al sitio.",
-        recomendacao: "Recomendamos realizar una copia de seguridad del archivo de instalación y guardar estas instrucciones en un lugar seguro.",
+        recomendacion: "Recomendamos realizar una copia de seguridad del archivo de instalación y guardar estas instrucciones en un lugar seguro.",
         ativacao: "Después de instalar el software, inicie sesión con su correo electrónico y contraseña en el sitio de Blue Marble e ingrese el Order Id en el campo \"Order Number\".",
         duvidas: "Si tiene dudas o dificultades, consulte las instrucciones o contáctenos.",
         contato_whatsapp: "Contacto: +55 (41) 99134-0990 (también Whatsapp) <a href=\"https://api.whatsapp.com/send?phone=554191340990\" target=\"_blank\">WhatsApp</a>",
@@ -263,8 +263,7 @@
         suporte_inicial: "Initial Support Date",
         suporte_final: "Final Support Date",
         // >>> URLs das imagens - SUBSTITUA PELOS SEUS LINKS REAIS HOSPEDADOS ONLINE <<<
-        // Se a imagem em inglês for a mesma que a espanhola, use o mesmo URL.
-        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoEN.png"
+        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Use o mesmo do espanhol se não houver um em inglês
         alt_quadro_ativacao: "Global Mapper License Activation Box - English"
       }
     };
@@ -369,7 +368,7 @@ ${t.setup}<br/>
 </ul>
 
 <p style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
-  <img src="${t.imagem_quadro_ativacao}" alt="${t.alt_quadro_ativacao}" style="max-width: 600px; height: auto; display: block; margin: 0 auto; border: 0;">
+  <img src="${t.imagem_quadro_ativacao}" alt="${t.alt_quadro_ativacao}" width="600" height="auto" style="max-width: 600px; height: auto; display: block; margin: 0 auto; border: 0;">
 </p>
 
 <h3>❓ ${langKey === 'pt' ? 'Dúvidas' : langKey === 'es' ? 'Dudas' : 'Questions'}:</h3>
@@ -382,7 +381,7 @@ ${t.setup}<br/>
 <p>Atenciosamente,<br/>Laurent Martin</p>
 
 <p style="text-align: center; margin-top: 20px;">
-  <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;">
+  <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="150" height="auto" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;">
 </p>
 
       `.trim();
