@@ -2,35 +2,62 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gerador de Email - Licenças Global Mapper</title>
   <link rel="icon" type="image/png" href="img/Treco_Engesat.png" />
   <style>
+    /* Estilos Gerais */
     body {
-      font-family: Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
       margin: 0;
-      padding: 20px;
-      background: url('img/padrao_pagina_email.png') no-repeat center center fixed;
-      background-size: cover;
-      background-color: #f5f5f5;
+      padding: 40px 20px;
+      background-color: #f0f4f8; /* Fundo suave e claro */
+      color: #334e68; /* Cor de texto principal */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
+    /* Container Principal */
     .container {
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 900px;
-      margin: auto;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      background-color: #ffffff;
+      padding: 35px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Título e logo */
+    .header-logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .header-logo img {
+      max-width: 250px; /* Ajuste o tamanho da logo conforme necessário */
+      height: auto;
+      margin-bottom: 15px; /* Espaço entre a logo e o título */
     }
 
     h1 {
       text-align: center;
+      color: #2b3b51;
+      font-size: 2.2em;
+      font-weight: 600;
+      margin: 0;
     }
 
+    /* Abas de Idioma */
     .tabs {
       display: flex;
-      margin-bottom: 20px;
+      justify-content: center;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      background-color: #e9ecef; /* Fundo das abas */
+      padding: 5px;
       cursor: pointer;
       user-select: none;
     }
@@ -38,68 +65,168 @@
     .tab {
       flex: 1;
       padding: 12px;
-      background: #ddd;
       text-align: center;
-      border: 1px solid #bbb;
-      border-bottom: none;
-      transition: background 0.3s ease;
+      font-weight: 500;
+      color: #5a7184;
+      border-radius: 6px;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     .tab.active {
-      background: white;
-      font-weight: bold;
-      border-bottom: 1px solid white;
+      background-color: #ffffff;
+      color: #007bff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
+    /* Formulário e campos */
     label {
       display: block;
-      margin: 8px 0 4px;
-      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #334e68;
+      font-size: 0.95em;
     }
 
     input[type="text"], input[type="date"], select {
       width: 100%;
-      padding: 6px;
-      margin-bottom: 12px;
+      padding: 12px;
       box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      font-size: 1em;
+      color: #495057;
+      background-color: #f8f9fa;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
+    input[type="text"]:focus, input[type="date"]:focus, select:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+
+    /* Botões */
     button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 25px;
       background: #007bff;
       color: white;
       border: none;
-      padding: 12px 20px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
-      margin-top: 12px;
-      border-radius: 4px;
-      transition: background 0.3s ease;
+      font-size: 1.1em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: background 0.3s ease, transform 0.1s ease;
     }
 
     button:hover {
       background: #0056b3;
+      transform: translateY(-2px);
     }
 
-    .email-output {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      margin-top: 20px;
-      font-size: 15px;
-      line-height: 1.6;
-      white-space: normal;
-      max-height: 450px;
-      overflow-y: auto;
-      box-shadow: 0 0 8px rgba(0,0,0,0.12);
-      border: 1px solid #ccc;
+    button#copyBtn {
+      background: #28a745; /* Cor para o botão de copiar */
     }
+
+    button#copyBtn:hover {
+      background: #218838;
+    }
+
+    /* Área de Saída do Email */
+    .email-output {
+      background: #fdfdfd;
+      padding: 30px;
+      border-radius: 12px;
+      margin-top: 30px;
+      font-size: 1em;
+      line-height: 1.7;
+      white-space: normal;
+      max-height: 500px;
+      overflow-y: auto;
+      border: 1px solid #e9ecef;
+      word-wrap: break-word; /* Quebra de linha para palavras longas */
+    }
+
+    .email-output p, .email-output ul, .email-output h3 {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    /* ================================================= */
+    /* Media Queries para Responsividade */
+    /* ================================================= */
+
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 10px; /* Reduz o padding em telas menores */
+      }
+      
+      .container {
+        padding: 20px; /* Reduz o padding do container */
+        border-radius: 8px; /* Arredondamento menor */
+      }
+
+      .header-logo img {
+        max-width: 180px; /* Reduz o tamanho da logo */
+      }
+
+      h1 {
+        font-size: 1.8em; /* Reduz o tamanho da fonte do título */
+      }
+      
+      .tabs {
+        flex-direction: column; /* Alinha as abas verticalmente */
+        padding: 0;
+        background-color: transparent; /* Remove o fundo das abas */
+      }
+
+      .tab {
+        border-bottom: 2px solid #e9ecef;
+        border-radius: 0;
+      }
+      
+      .tab:last-child {
+        border-bottom: none;
+      }
+
+      .tab.active {
+        box-shadow: none; /* Remove a sombra da aba ativa */
+        background-color: #f8f9fa; /* Fundo mais claro para aba ativa */
+      }
+      
+      button {
+        padding: 12px; /* Reduz o padding dos botões */
+        font-size: 1em; /* Reduz o tamanho da fonte do botão */
+      }
+      
+      .email-output {
+        padding: 15px; /* Reduz o padding da área de saída */
+        font-size: 0.9em; /* Reduz o tamanho da fonte do email gerado */
+      }
+
+      /* Esta é a nova regra para todas as imagens dentro do container */
+      .container img {
+        max-width: 100% !important; 
+        height: auto;
+      }
+      
+      /* E para a imagem do quadro de ativação dentro do email gerado */
+      .email-output img {
+        width: 100% !important; /* Força a largura para 100% do seu contêiner */
+      }
+    }
+    
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Gerador de Email - Licenças Global Mapper</h1>
+    <div class="header-logo">
+      <img src="img/GlobalMapper.png" alt="Logo Global Mapper" />
+      <h1>Gerador de Email de Licenças</h1>
+    </div>
 
     <div class="tabs">
       <div class="tab active" data-lang="pt">Português</div>
@@ -108,32 +235,32 @@
     </div>
 
     <form id="emailForm">
-      <label for="ref_engesat">📌 Referência - Interna:</label>
-      <input type="text" id="ref_engesat" />
+      <label for="ref_engesat">📌 Referência Interna:</label>
+      <input type="text" id="ref_engesat" placeholder="Ex: Pedido 25010" />
 
-      <label for="ref_cliente">📌 Referência - Cliente:</label>
-      <input type="text" id="ref_cliente" />
+      <label for="ref_cliente">📝 Referência do Cliente:</label>
+      <input type="text" id="ref_cliente" placeholder="Ex: Ordem de Compra #OC-XYZ" />
 
       <label for="nome">👤 Nome:</label>
-      <input type="text" id="nome" />
+      <input type="text" id="nome" placeholder="Nome do cliente" />
 
       <label for="empresa">🏢 Empresa:</label>
-      <input type="text" id="empresa" />
+      <input type="text" id="empresa" placeholder="Nome da empresa" />
 
       <label for="endereco">📍 Endereço:</label>
-      <input type="text" id="endereco" />
+      <input type="text" id="endereco" placeholder="Endereço completo" />
 
       <label for="cidade">🌆 Cidade:</label>
-      <input type="text" id="cidade" />
+      <input type="text" id="cidade" placeholder="Nome da cidade" />
 
       <label for="pais">🌎 País:</label>
-      <input type="text" id="pais" />
+      <input type="text" id="pais" placeholder="Nome do país" />
 
       <label for="email">📧 Email:</label>
-      <input type="text" id="email" />
+      <input type="text" id="email" placeholder="email@exemplo.com" />
 
       <label for="telefone">📞 Telefone:</label>
-      <input type="text" id="telefone" />
+      <input type="text" id="telefone" placeholder="(XX) XXXX-XXXX" />
 
       <label for="num_licencas">📦 Número de Licenças:</label>
       <select id="num_licencas">
@@ -178,7 +305,7 @@
       <label for="data_final_suporte">📅 Data Final de Suporte:</label>
       <input type="date" id="data_final_suporte" />
 
-      <label for="idioma_email">🌐 Idioma:</label>
+      <label for="idioma_email">🌐 Idioma da Licença:</label>
       <select id="idioma_email">
         <option>Português</option>
         <option>Espanhol</option>
@@ -186,7 +313,7 @@
       </select>
 
       <label for="order_number">🔢 Blue Marble Order:</label>
-      <input type="text" id="order_number" />
+      <input type="text" id="order_number" placeholder="Ex: 123450-K5ONMNMG" />
 
       <button type="button" id="gerarBtn">Gerar Email</button>
     </form>
@@ -220,7 +347,6 @@
         link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`,
         suporte_inicial: "Data Inicial de Suporte",
         suporte_final: "Data Final de Suporte",
-        // >>> URLs das imagens - SUBSTITUA PELOS SEUS LINKS REAIS HOSPEDADOS ONLINE <<<
         imagem_quadro_ativacao: "img/Quadrinho Português - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoPT.png"
         alt_quadro_ativacao: "Quadro de Ativação de Licença Global Mapper - Português"
       },
@@ -241,7 +367,6 @@
         link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`,
         suporte_inicial: "Fecha Inicial de Soporte",
         suporte_final: "Fecha Final de Soporte",
-        // >>> URLs das imagens - SUBSTITUA PELOS SEUS LINKS REAIS HOSPEDADOS ONLINE <<<
         imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoES.png"
         alt_quadro_ativacao: "Cuadro de Activación de Licencia Global Mapper - Español"
       },
@@ -262,8 +387,7 @@
         link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target=\"_blank\">https://www.bluemarblegeo.com/users/register.php</a>`,
         suporte_inicial: "Initial Support Date",
         suporte_final: "Final Support Date",
-        // >>> URLs das imagens - SUBSTITUA PELOS SEUS LINKS REAIS HOSPEDADOS ONLINE <<<
-        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Use o mesmo do espanhol se não houver um em inglês
+        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png",
         alt_quadro_ativacao: "Global Mapper License Activation Box - English"
       }
     };
@@ -320,8 +444,12 @@
       }
 
       const texto = `
-<p><strong>📌 Referência - Interna:</strong> <span style="font-weight:bold; color:#007bff;">${get('ref_engesat')}</span><br/>
-<strong>📌 Referência - Cliente:</strong> <span style="font-weight:bold; color:#007bff;">${refCliente}</span></p>
+<p style="text-align: center; margin-top: 0; margin-bottom: 20px;">
+  <img src="img/GlobalMapper.png" alt="Logo Global Mapper" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;">
+</p>
+
+<p><strong>📌 Referência Interna:</strong> <span style="font-weight:bold; color:#007bff;">${get('ref_engesat')}</span><br/>
+<strong>📝 Referência do Cliente:</strong> <span style="font-weight:bold; color:#007bff;">${refCliente}</span></p>
 
 <p><strong>👤 Nome:</strong> ${get('nome')}<br/>
 <strong>🏢 Empresa:</strong> ${get('empresa')}<br/>
@@ -333,7 +461,7 @@
 
 <p>${t.saudacao}</p>
 
-<p>${langKey === 'pt' ? 'Segue o e-mail formal de entrega referente a' : langKey === 'es' ? 'Adjunto el correo formal de entrega referente a' : 'Please find the formal delivery email referring to'} <strong>📦 ${get('num_licencas')} ${t.licencas} ${get('tipo_licenca')}</strong>, ${langKey === 'pt' ? 'em' : langKey === 'es' ? 'en' : 'in'} <strong>🌐 ${get('idioma_email')}</strong>.<br/>
+<p>Segue o e-mail formal de entrega referente a <strong>📦 ${get('num_licencas')} ${t.licencas} ${get('tipo_licenca')}</strong>, em <strong>🌐 ${get('idioma_email')}</strong>.<br/>
 <strong>Blue Marble Order:</strong> <strong style="color:#007bff;">#${get('order_number')}</strong>.</p>
 
 <p><strong>${t.suporte_inicial}:</strong> ${dataInicialSuporte}<br/>
