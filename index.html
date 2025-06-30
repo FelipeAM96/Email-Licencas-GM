@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Email Licenças GM</title>
+  <link rel="icon" type="image/png" href="img/Treco_Engesat.png" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: url('img/padrao_pagina_email.png') no-repeat center center fixed;
+      background-size: cover;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 900px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px;
+      background: #ddd;
+      text-align: center;
+      border: 1px solid #bbb;
+      border-bottom: none;
+      transition: background 0.3s ease;
+    }
+
+    .tab.active {
+      background: white;
+      font-weight: bold;
+      border-bottom: 1px solid white;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0 4px;
+      font-weight: bold;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 12px;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .email-output {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.6;
+      white-space: normal;
+      max-height: 450px;
+      overflow-y: auto;
+      box-shadow: 0 0 8px rgba(0,0,0,0.12);
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gerador de Email - Licenças Global Mapper</h1>
+
+    <div class="tabs">
+      <div class="tab active" data-lang="pt">Português</div>
+      <div class="tab" data-lang="es">Espanhol</div>
+      <div class="tab" data-lang="en">Inglês</div>
+    </div>
+
+    <form id="emailForm">
+      <label for="ref_engesat">📌 Referência - Interna:</label>
+      <input type="text" id="ref_engesat" />
+
+      <label for="ref_cliente">📌 Referência - Cliente:</label>
+      <input type="text" id="ref_cliente" />
+
+      <label for="nome">👤 Nome:</label>
+      <input type="text" id="nome" />
+
+      <label for="empresa">🏢 Empresa:</label>
+      <input type="text" id="empresa" />
+
+      <label for="endereco">📍 Endereço:</label>
+      <input type="text" id="endereco" />
+
+      <label for="cidade">🌆 Cidade:</label>
+      <input type="text" id="cidade" />
+
+      <label for="pais">🌎 País:</label>
+      <input type="text" id="pais" />
+
+      <label for="email">📧 Email:</label>
+      <input type="text" id="email" />
+
+      <label for="telefone">📞 Telefone:</label>
+      <input type="text" id="telefone" />
+
+      <label for="num_licencas">📦 Número de Licenças:</label>
+      <select id="num_licencas">
+        <option value="">Selecione</option>
+        <option>1</option><option>2</option><option>3</option><option>4</option>
+        <option>5</option><option>6</option><option>7</option><option>8</option>
+        <option>9</option><option>10</option>
+      </select>
+
+      <label for="tipo_licenca">💻 Tipo de Licença:</label>
+      <select id="tipo_licenca">
+        <option value="">Selecione</option>
+        <option>Global Mapper Standalone</option>
+        <option>Global Mapper Flutuante</option>
+        <option>Global Mapper em Rede</option>
+        <option>Global Mapper Pro Standalone</option>
+        <option>Global Mapper Pro Flutuante</option>
+        <option>Global Mapper Pro em Rede</option>
+        <option>Global Mapper + Global Mapper Standalone</option>
+        <option>Global Mapper + Global Mapper Flutuante</option>
+        <option>Global Mapper + Global Mapper Standalone em Rede</option>
+        <option>Renovação Global Mapper Standalone</option>
+        <option>Renovação Global Mapper Flutuante</option>
+        <option>Renovação Global Mapper em Rede</option>
+        <option>Renovação Global Mapper Pro Standalone</option>
+        <option>Renovação Global Mapper Pro Flutuante</option>
+        <option>Renovação Global Mapper Pro em Rede</option>
+        <option>Renovação Global Mapper + Global Mapper Standalone</option>
+        <option>Renovação Global Mapper + Global Mapper Flutuante</option>
+        <option>Renovação Global Mapper + Global Mapper Standalone em Rede</option>
+      </select>
+
+      <label for="idioma_email">🌐 Idioma do Email:</label>
+      <select id="idioma_email">
+        <option>Português</option>
+        <option>Espanhol</option>
+        <option>Inglês</option>
+      </select>
+
+      <label for="order_number">🔢 Blue Marble Order:</label>
+      <input type="text" id="order_number" />
+
+      <button type="button" id="gerarBtn">Gerar Email</button>
+    </form>
+
+    <div id="emailOutput" class="email-output" style="display:none;"></div>
+    <button type="button" id="copyBtn" style="display:none;">Copiar Email</button>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const idiomaSelect = document.getElementById('idioma_email');
+    const gerarBtn = document.getElementById('gerarBtn');
+    const output = document.getElementById('emailOutput');
+    const copyBtn = document.getElementById('copyBtn');
+
+    const textos = {
+      pt: {
+        saudacao: "Prezados,",
+        licencas: "Licenças Perpétuas",
+        download: "Segue o link para download do instalador do software em sua versão mais recente:",
+        setup: "O arquivo de setup do aplicativo em português, versão 26.1, pode ser baixado no link abaixo:",
+        link1: "https://www.bluemarblegeo.com/products/global-mapper-daily-builds.php",
+        instrucoes: "Instruções detalhadas estão disponíveis em:",
+        link2: "http://www.engesat.com.br/softwares/global-mapper/instalacao-e-ativacao/",
+        senha: "Caso não possua senha definida, utilize a opção “Gerenciar Conta” para recuperá-la via e-mail e assim voltar a acessar o site.",
+        recomendacao: "Recomendamos realizar um backup do arquivo de instalação e guardar estas instruções em local seguro.",
+        ativacao: "Após a instalação do software, faça login com seu e-mail e senha no site da Blue Marble e insira o Order Id no campo \"Order Number\".",
+        duvidas: "Caso tenha dúvidas ou dificuldades, consulte as instruções ou entre em contato conosco.",
+        contato_whatsapp: "Contato: +55 (41) 99134-0990 (também Whatsapp) <a href=\"https://api.whatsapp.com/send?phone=554191340990\" target=\"_blank\">WhatsApp</a>",
+        contato_email: "Email: <a href=\"mailto:laurent.engesat@gmail.com\">laurent.engesat@gmail.com</a>",
+        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`
+      },
+      es: {
+        saudacao: "Estimados,",
+        licencas: "Licencias Perpetuas",
+        download: "Adjunto el enlace para descargar el instalador del software en su versión más reciente:",
+        setup: "El archivo de instalación del aplicativo en español, versión 26.1, puede descargarse en el enlace a continuación:",
+        link1: "https://www.bluemarblegeo.com/products/global-mapper-daily-builds.php",
+        instrucoes: "Instrucciones detalladas disponibles en:",
+        link2: "http://www.engesat.com.br/softwares/global-mapper/instalacion-y-activacion/",
+        senha: "Si no tiene una contraseña definida, utilice la opción “Administrar Cuenta” para recuperarla vía correo electrónico y así poder acceder nuevamente al sitio.",
+        recomendacao: "Recomendamos realizar una copia de seguridad del archivo de instalación y guardar estas instrucciones en un lugar seguro.",
+        ativacao: "Después de instalar el software, inicie sesión con su correo electrónico y contraseña en el sitio de Blue Marble e ingrese el Order Id en el campo \"Order Number\".",
+        duvidas: "Si tiene dudas o dificultades, consulte las instrucciones o contáctenos.",
+        // Adicionado para Espanhol
+        contato_whatsapp: "Contacto: +55 (41) 99134-0990 (también Whatsapp) <a href=\"https://api.whatsapp.com/send?phone=554191340990\" target=\"_blank\">WhatsApp</a>",
+        contato_email: "Correo electrónico: <a href=\"mailto:laurent.engesat@gmail.com\">laurent.engesat@gmail.com</a>",
+        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`
+      },
+      en: {
+        saudacao: "Dear all,",
+        licencas: "Perpetual Licenses",
+        download: "Please find the link to download the software installer in its latest version:",
+        setup: "The setup file of the application in English, version 26.1, can be downloaded at the link below:",
+        link1: "https://www.bluemarblegeo.com/products/global-mapper-daily-builds.php",
+        instrucoes: "Detailed instructions are available at:",
+        link2: "http://www.engesat.com.br/softwares/global-mapper/installation-and-activation/",
+        senha: "If you do not have a defined password, use the “Manage Account” option to recover it via email and regain access to the site.",
+        recomendacao: "We recommend making a backup of the installation file and keeping these instructions in a safe place.",
+        ativacao: "After installing the software, log in with your email and password on the Blue Marble site and enter the Order Id in the \"Order Number\" field.",
+        duvidas: "If you have any questions or difficulties, consult the instructions or contact us.",
+        // Adicionado para Inglês
+        contato_whatsapp: "Contact: +55 (41) 99134-0990 (also Whatsapp) <a href=\"https://api.whatsapp.com/send?phone=554191340990\" target=\"_blank\">WhatsApp</a>",
+        contato_email: "Email: <a href=\"mailto:laurent.engesat@gmail.com\">laurent.engesat@gmail.com</a>",
+        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`
+      }
+    };
+
+    let langKey = 'pt';
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        langKey = tab.getAttribute('data-lang');
+
+        if(langKey === 'pt') idiomaSelect.value = 'Português';
+        else if(langKey === 'es') idiomaSelect.value = 'Espanhol';
+        else if(langKey === 'en') idiomaSelect.value = 'Inglês';
+      });
+    });
+
+    function get(id) {
+      return document.getElementById(id).value.trim();
+    }
+
+  gerarBtn.addEventListener('click', () => {
+    const t = textos[langKey];
+    const refCliente = get('ref_cliente');
+
+    const camposObrigatorios = [
+      { id: 'ref_engesat', nome: 'Referência - Interna' },
+      { id: 'ref_cliente', nome: 'Referência - Cliente' },
+      { id: 'nome', nome: 'Nome' },
+      { id: 'empresa', nome: 'Empresa' },
+      { id: 'endereco', nome: 'Endereço' },
+      { id: 'cidade', nome: 'Cidade' },
+      { id: 'pais', nome: 'País' },
+      { id: 'email', nome: 'Email' },
+      { id: 'telefone', nome: 'Telefone' },
+      { id: 'num_licencas', nome: 'Número de Licenças' },
+      { id: 'tipo_licenca', nome: 'Tipo de Licença' },
+      { id: 'order_number', nome: 'Blue Marble Order' }
+    ];
+
+    const camposVazios = camposObrigatorios.filter(campo => !get(campo.id));
+
+    if (camposVazios.length > 0) {
+      alert('Os seguintes campos não foram preenchidos:\n\n' + camposVazios.map(c => `- ${c.nome}`).join('\n') + '\n\nO email será gerado mesmo assim.');
+    }
+
+
+    const texto = `
+  <p><strong>📌 Referência - Interna:</strong> <span style="font-weight:bold; color:#007bff;">${get('ref_engesat')}</span><br/>
+  <strong>📌 Referência - Cliente:</strong> <span style="font-weight:bold; color:#007bff;">${refCliente}</span></p>
+
+  <p><strong>👤 Nome:</strong> ${get('nome')}<br/>
+  <strong>🏢 Empresa:</strong> ${get('empresa')}<br/>
+  <strong>📍 Endereço:</strong> ${get('endereco')}<br/>
+  <strong>🌆 Cidade:</strong> ${get('cidade')}<br/>
+  <strong>🌎 País:</strong> ${get('pais')}<br/>
+  <strong>📧 Email:</strong> ${get('email')}<br/>
+  <strong>📞 Telefone:</strong> ${get('telefone')}</p>
+
+  <p>${t.saudacao}</p>
+
+  <p>${langKey === 'pt' ? 'Segue o e-mail formal de entrega referente a' : langKey === 'es' ? 'Adjunto el correo formal de entrega referente a' : 'Please find the formal delivery email referring to'} <strong>📦 ${get('num_licencas')} ${t.licencas} ${get('tipo_licenca')}</strong>, ${langKey === 'pt' ? 'em' : langKey === 'es' ? 'en' : 'in'} <strong>🌐 ${get('idioma_email')}</strong>.<br/>
+  <strong>Blue Marble Order:</strong> <strong style="color:#007bff;">#${get('order_number')}</strong>.</p>
+
+  <h3>🛠️ ${langKey === 'pt' ? 'Download do Software' : langKey === 'es' ? 'Descarga del Software' : 'Software Download'}:</h3>
+  <p>${t.download}<br/>
+  ${t.setup}<br/>
+  <a href="${t.link1}" target="_blank">${t.link1}</a></p>
+
+  <h3>📖 ${langKey === 'pt' ? 'Instruções detalhadas' : langKey === 'es' ? 'Instrucciones detalladas' : 'Detailed Instructions'}:</h3>
+  <ul>
+    <li>${t.instrucoes}</li>
+    <li><a href="${t.link2}" target="_blank">${t.link2}</a></li>
+  </ul>
+
+  <h3>🔑 ${langKey === 'pt' ? 'Senha' : langKey === 'es' ? 'Contraseña' : 'Password'}:</h3>
+  <ul>
+    <li>${t.senha} 
+    ${t.link_registro_senha || ''}
+    </li>
+  </ul>
+
+  <h3>⚠️ ${langKey === 'pt' ? 'Recomendações' : langKey === 'es' ? 'Recomendaciones' : 'Recommendations'}:</h3>
+  <ul>
+    <li>${t.recomendacao}</li>
+  </ul>
+
+  <h3>✅ ${langKey === 'pt' ? 'Ativação das Licenças' : langKey === 'es' ? 'Activación de Licencias' : 'License Activation'}:</h3>
+  <ul>
+    <li>${t.ativacao}</li>
+  </ul>
+
+  <h3>❓ ${langKey === 'pt' ? 'Dúvidas' : langKey === 'es' ? 'Dudas' : 'Questions'}:</h3>
+  <ul>
+    <li>${t.duvidas}</li>
+    <li>${t.contato_whatsapp}</li>
+    <li>${t.contato_email}</li>
+  </ul>
+
+  <p>Atenciosamente,<br/>Laurent Martin</p>
+        `.trim();
+
+    output.style.display = 'block';
+    output.innerHTML = texto;
+    copyBtn.style.display = 'inline-block';
+  });
+
+
+  copyBtn.addEventListener('click', () => {
+    if (navigator.clipboard && window.ClipboardItem) {
+      // Copiar com formatação HTML (se o navegador suportar)
+      const blobInput = new Blob([output.innerHTML], { type: 'text/html' });
+      const data = [new ClipboardItem({ 'text/html': blobInput })];
+      navigator.clipboard.write(data).then(() => {
+        alert('Email copiado com formatação para a área de transferência!');
+      }).catch(() => {
+        fallbackCopyText();
+      });
+    } else {
+      // Fallback para navegadores que não suportam Clipboard API
+      fallbackCopyText();
+    }
+
+    function fallbackCopyText() {
+      const el = document.createElement('textarea');
+      el.value = output.innerText; // cai para texto puro
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      alert('Email copiado como texto (sem formatação).');
+    }
+  });
+
+  </script>
+</body>
+</html>
