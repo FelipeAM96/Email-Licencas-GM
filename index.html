@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Email Licenças GM</title>
+  <title>Gerador de Email - Licenças Global Mapper</title>
   <link rel="icon" type="image/png" href="img/Treco_Engesat.png" />
   <style>
     body {
@@ -57,7 +57,7 @@
       font-weight: bold;
     }
 
-    input[type="text"], select {
+    input[type="text"], input[type="date"], select {
       width: 100%;
       padding: 6px;
       margin-bottom: 12px;
@@ -149,24 +149,36 @@
         <option>Global Mapper Standalone</option>
         <option>Global Mapper Flutuante</option>
         <option>Global Mapper em Rede</option>
+        <option>Global Mapper em USB</option>
         <option>Global Mapper Pro Standalone</option>
         <option>Global Mapper Pro Flutuante</option>
         <option>Global Mapper Pro em Rede</option>
-        <option>Global Mapper + Global Mapper Standalone</option>
-        <option>Global Mapper + Global Mapper Flutuante</option>
-        <option>Global Mapper + Global Mapper Standalone em Rede</option>
+        <option>Global Mapper Pro USB</option>
+        <option>Global Mapper + Global Mapper Pro Standalone</option>
+        <option>Global Mapper + Global Mapper Pro Flutuante</option>
+        <option>Global Mapper + Global Mapper Pro em Rede</option>
+        <option>Global Mapper + Global Mapper Pro USB</option>
         <option>Renovação Global Mapper Standalone</option>
         <option>Renovação Global Mapper Flutuante</option>
         <option>Renovação Global Mapper em Rede</option>
+        <option>Renovação Global Mapper USB</option>
         <option>Renovação Global Mapper Pro Standalone</option>
         <option>Renovação Global Mapper Pro Flutuante</option>
         <option>Renovação Global Mapper Pro em Rede</option>
-        <option>Renovação Global Mapper + Global Mapper Standalone</option>
-        <option>Renovação Global Mapper + Global Mapper Flutuante</option>
-        <option>Renovação Global Mapper + Global Mapper Standalone em Rede</option>
+        <option>Renovação Global Mapper Pro USB</option>
+        <option>Renovação Global Mapper + Global Mapper Pro Standalone</option>
+        <option>Renovação Global Mapper + Global Mapper Pro Flutuante</option>
+        <option>Renovação Global Mapper + Global Mapper Pro em Rede</option>
+        <option>Renovação Global Mapper + Global Mapper Pro USB</option>
       </select>
 
-      <label for="idioma_email">🌐 Idioma do Email:</label>
+      <label for="data_inicial_suporte">📅 Data Inicial de Suporte:</label>
+      <input type="date" id="data_inicial_suporte" />
+
+      <label for="data_final_suporte">📅 Data Final de Suporte:</label>
+      <input type="date" id="data_final_suporte" />
+
+      <label for="idioma_email">🌐 Idioma:</label>
       <select id="idioma_email">
         <option>Português</option>
         <option>Espanhol</option>
@@ -205,7 +217,12 @@
         duvidas: "Caso tenha dúvidas ou dificuldades, consulte as instruções ou entre em contato conosco.",
         contato_whatsapp: "Contato: +55 (41) 99134-0990 (também Whatsapp) <a href=\"https://api.whatsapp.com/send?phone=554191340990\" target=\"_blank\">WhatsApp</a>",
         contato_email: "Email: <a href=\"mailto:laurent.engesat@gmail.com\">laurent.engesat@gmail.com</a>",
-        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`
+        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`,
+        suporte_inicial: "Data Inicial de Suporte",
+        suporte_final: "Data Final de Suporte",
+        // >>> URLs das imagens - SUBSTITUA PELOS SEUS LINKS REAIS HOSPEDADOS ONLINE <<<
+        imagem_quadro_ativacao: "img/Quadrinho Português - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoPT.png"
+        alt_quadro_ativacao: "Quadro de Ativação de Licença Global Mapper - Português"
       },
       es: {
         saudacao: "Estimados,",
@@ -219,10 +236,14 @@
         recomendacao: "Recomendamos realizar una copia de seguridad del archivo de instalación y guardar estas instrucciones en un lugar seguro.",
         ativacao: "Después de instalar el software, inicie sesión con su correo electrónico y contraseña en el sitio de Blue Marble e ingrese el Order Id en el campo \"Order Number\".",
         duvidas: "Si tiene dudas o dificultades, consulte las instrucciones o contáctenos.",
-        // Adicionado para Espanhol
         contato_whatsapp: "Contacto: +55 (41) 99134-0990 (también Whatsapp) <a href=\"https://api.whatsapp.com/send?phone=554191340990\" target=\"_blank\">WhatsApp</a>",
         contato_email: "Correo electrónico: <a href=\"mailto:laurent.engesat@gmail.com\">laurent.engesat@gmail.com</a>",
-        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`
+        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`,
+        suporte_inicial: "Fecha Inicial de Soporte",
+        suporte_final: "Fecha Final de Soporte",
+        // >>> URLs das imagens - SUBSTITUA PELOS SEUS LINKS REAIS HOSPEDADOS ONLINE <<<
+        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoES.png"
+        alt_quadro_ativacao: "Cuadro de Activación de Licencia Global Mapper - Español"
       },
       en: {
         saudacao: "Dear all,",
@@ -236,12 +257,21 @@
         recomendacao: "We recommend making a backup of the installation file and keeping these instructions in a safe place.",
         ativacao: "After installing the software, log in with your email and password on the Blue Marble site and enter the Order Id in the \"Order Number\" field.",
         duvidas: "If you have any questions or difficulties, consult the instructions or contact us.",
-        // Adicionado para Inglês
         contato_whatsapp: "Contact: +55 (41) 99134-0990 (also Whatsapp) <a href=\"https://api.whatsapp.com/send?phone=554191340990\" target=\"_blank\">WhatsApp</a>",
         contato_email: "Email: <a href=\"mailto:laurent.engesat@gmail.com\">laurent.engesat@gmail.com</a>",
-        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`
+        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target=\"_blank\">https://www.bluemarblegeo.com/users/register.php</a>`,
+        suporte_inicial: "Initial Support Date",
+        suporte_final: "Final Support Date",
+        // >>> URLs das imagens - SUBSTITUA PELOS SEUS LINKS REAIS HOSPEDADOS ONLINE <<<
+        // Se a imagem em inglês for a mesma que a espanhola, use o mesmo URL.
+        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoEN.png"
+        alt_quadro_ativacao: "Global Mapper License Activation Box - English"
       }
     };
+
+    // >>> URL da imagem do logo da empresa - SUBSTITUA PELO SEU LINK REAL HOSPEDADO ONLINE <<<
+    const imageUrlLogo = "img/Logo Engesat.png"; // Ex: "https://i.imgur.com/LogoEngesat.png"
+    const imageAltTextLogo = "Logo Engesat";
 
     let langKey = 'pt';
 
@@ -261,118 +291,130 @@
       return document.getElementById(id).value.trim();
     }
 
-  gerarBtn.addEventListener('click', () => {
-    const t = textos[langKey];
-    const refCliente = get('ref_cliente');
+    gerarBtn.addEventListener('click', () => {
+      const t = textos[langKey];
+      const refCliente = get('ref_cliente');
+      const dataInicialSuporte = get('data_inicial_suporte');
+      const dataFinalSuporte = get('data_final_suporte');
 
-    const camposObrigatorios = [
-      { id: 'ref_engesat', nome: 'Referência - Interna' },
-      { id: 'ref_cliente', nome: 'Referência - Cliente' },
-      { id: 'nome', nome: 'Nome' },
-      { id: 'empresa', nome: 'Empresa' },
-      { id: 'endereco', nome: 'Endereço' },
-      { id: 'cidade', nome: 'Cidade' },
-      { id: 'pais', nome: 'País' },
-      { id: 'email', nome: 'Email' },
-      { id: 'telefone', nome: 'Telefone' },
-      { id: 'num_licencas', nome: 'Número de Licenças' },
-      { id: 'tipo_licenca', nome: 'Tipo de Licença' },
-      { id: 'order_number', nome: 'Blue Marble Order' }
-    ];
+      const camposObrigatorios = [
+        { id: 'ref_engesat', nome: 'Referência - Interna' },
+        { id: 'ref_cliente', nome: 'Referência - Cliente' },
+        { id: 'nome', nome: 'Nome' },
+        { id: 'empresa', nome: 'Empresa' },
+        { id: 'endereco', nome: 'Endereço' },
+        { id: 'cidade', nome: 'Cidade' },
+        { id: 'pais', nome: 'País' },
+        { id: 'email', nome: 'Email' },
+        { id: 'telefone', nome: 'Telefone' },
+        { id: 'num_licencas', nome: 'Número de Licenças' },
+        { id: 'tipo_licenca', nome: 'Tipo de Licença' },
+        { id: 'data_inicial_suporte', nome: 'Data Inicial de Suporte' },
+        { id: 'data_final_suporte', nome: 'Data Final de Suporte' },
+        { id: 'order_number', nome: 'Blue Marble Order' }
+      ];
 
-    const camposVazios = camposObrigatorios.filter(campo => !get(campo.id));
+      const camposVazios = camposObrigatorios.filter(campo => !get(campo.id));
 
-    if (camposVazios.length > 0) {
-      alert('Os seguintes campos não foram preenchidos:\n\n' + camposVazios.map(c => `- ${c.nome}`).join('\n') + '\n\nO email será gerado mesmo assim.');
-    }
+      if (camposVazios.length > 0) {
+        alert('Os seguintes campos não foram preenchidos:\n\n' + camposVazios.map(c => `- ${c.nome}`).join('\n') + '\n\nO email será gerado mesmo assim.');
+      }
 
+      const texto = `
+<p><strong>📌 Referência - Interna:</strong> <span style="font-weight:bold; color:#007bff;">${get('ref_engesat')}</span><br/>
+<strong>📌 Referência - Cliente:</strong> <span style="font-weight:bold; color:#007bff;">${refCliente}</span></p>
 
-    const texto = `
-  <p><strong>📌 Referência - Interna:</strong> <span style="font-weight:bold; color:#007bff;">${get('ref_engesat')}</span><br/>
-  <strong>📌 Referência - Cliente:</strong> <span style="font-weight:bold; color:#007bff;">${refCliente}</span></p>
+<p><strong>👤 Nome:</strong> ${get('nome')}<br/>
+<strong>🏢 Empresa:</strong> ${get('empresa')}<br/>
+<strong>📍 Endereço:</strong> ${get('endereco')}<br/>
+<strong>🌆 Cidade:</strong> ${get('cidade')}<br/>
+<strong>🌎 País:</strong> ${get('pais')}<br/>
+<strong>📧 Email:</strong> ${get('email')}<br/>
+<strong>📞 Telefone:</strong> ${get('telefone')}</p>
 
-  <p><strong>👤 Nome:</strong> ${get('nome')}<br/>
-  <strong>🏢 Empresa:</strong> ${get('empresa')}<br/>
-  <strong>📍 Endereço:</strong> ${get('endereco')}<br/>
-  <strong>🌆 Cidade:</strong> ${get('cidade')}<br/>
-  <strong>🌎 País:</strong> ${get('pais')}<br/>
-  <strong>📧 Email:</strong> ${get('email')}<br/>
-  <strong>📞 Telefone:</strong> ${get('telefone')}</p>
+<p>${t.saudacao}</p>
 
-  <p>${t.saudacao}</p>
+<p>${langKey === 'pt' ? 'Segue o e-mail formal de entrega referente a' : langKey === 'es' ? 'Adjunto el correo formal de entrega referente a' : 'Please find the formal delivery email referring to'} <strong>📦 ${get('num_licencas')} ${t.licencas} ${get('tipo_licenca')}</strong>, ${langKey === 'pt' ? 'em' : langKey === 'es' ? 'en' : 'in'} <strong>🌐 ${get('idioma_email')}</strong>.<br/>
+<strong>Blue Marble Order:</strong> <strong style="color:#007bff;">#${get('order_number')}</strong>.</p>
 
-  <p>${langKey === 'pt' ? 'Segue o e-mail formal de entrega referente a' : langKey === 'es' ? 'Adjunto el correo formal de entrega referente a' : 'Please find the formal delivery email referring to'} <strong>📦 ${get('num_licencas')} ${t.licencas} ${get('tipo_licenca')}</strong>, ${langKey === 'pt' ? 'em' : langKey === 'es' ? 'en' : 'in'} <strong>🌐 ${get('idioma_email')}</strong>.<br/>
-  <strong>Blue Marble Order:</strong> <strong style="color:#007bff;">#${get('order_number')}</strong>.</p>
+<p><strong>${t.suporte_inicial}:</strong> ${dataInicialSuporte}<br/>
+<strong>${t.suporte_final}:</strong> ${dataFinalSuporte}</p>
 
-  <h3>🛠️ ${langKey === 'pt' ? 'Download do Software' : langKey === 'es' ? 'Descarga del Software' : 'Software Download'}:</h3>
-  <p>${t.download}<br/>
-  ${t.setup}<br/>
-  <a href="${t.link1}" target="_blank">${t.link1}</a></p>
+<h3>🛠️ ${langKey === 'pt' ? 'Download do Software' : langKey === 'es' ? 'Descarga del Software' : 'Software Download'}:</h3>
+<p>${t.download}<br/>
+${t.setup}<br/>
+<a href="${t.link1}" target="_blank">${t.link1}</a></p>
 
-  <h3>📖 ${langKey === 'pt' ? 'Instruções detalhadas' : langKey === 'es' ? 'Instrucciones detalladas' : 'Detailed Instructions'}:</h3>
-  <ul>
-    <li>${t.instrucoes}</li>
-    <li><a href="${t.link2}" target="_blank">${t.link2}</a></li>
-  </ul>
+<h3>📖 ${langKey === 'pt' ? 'Instruções detalhadas' : langKey === 'es' ? 'Instrucciones detalladas' : 'Detailed Instructions'}:</h3>
+<ul>
+  <li>${t.instrucoes}</li>
+  <li><a href="${t.link2}" target="_blank">${t.link2}</a></li>
+</ul>
 
-  <h3>🔑 ${langKey === 'pt' ? 'Senha' : langKey === 'es' ? 'Contraseña' : 'Password'}:</h3>
-  <ul>
-    <li>${t.senha} 
-    ${t.link_registro_senha || ''}
-    </li>
-  </ul>
+<h3>🔑 ${langKey === 'pt' ? 'Senha' : langKey === 'es' ? 'Contraseña' : 'Password'}:</h3>
+<ul>
+  <li>${t.senha} 
+  ${t.link_registro_senha || ''}
+  </li>
+</ul>
 
-  <h3>⚠️ ${langKey === 'pt' ? 'Recomendações' : langKey === 'es' ? 'Recomendaciones' : 'Recommendations'}:</h3>
-  <ul>
-    <li>${t.recomendacao}</li>
-  </ul>
+<h3>⚠️ ${langKey === 'pt' ? 'Recomendações' : langKey === 'es' ? 'Recomendaciones' : 'Recommendations'}:</h3>
+<ul>
+  <li>${t.recomendacao}</li>
+</ul>
 
-  <h3>✅ ${langKey === 'pt' ? 'Ativação das Licenças' : langKey === 'es' ? 'Activación de Licencias' : 'License Activation'}:</h3>
-  <ul>
-    <li>${t.ativacao}</li>
-  </ul>
+<h3>✅ ${langKey === 'pt' ? 'Ativação das Licenças' : langKey === 'es' ? 'Activación de Licencias' : 'License Activation'}:</h3>
+<ul>
+  <li>${t.ativacao}</li>
+</ul>
 
-  <h3>❓ ${langKey === 'pt' ? 'Dúvidas' : langKey === 'es' ? 'Dudas' : 'Questions'}:</h3>
-  <ul>
-    <li>${t.duvidas}</li>
-    <li>${t.contato_whatsapp}</li>
-    <li>${t.contato_email}</li>
-  </ul>
+<p style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
+  <img src="${t.imagem_quadro_ativacao}" alt="${t.alt_quadro_ativacao}" style="max-width: 600px; height: auto; display: block; margin: 0 auto; border: 0;">
+</p>
 
-  <p>Atenciosamente,<br/>Laurent Martin</p>
-        `.trim();
+<h3>❓ ${langKey === 'pt' ? 'Dúvidas' : langKey === 'es' ? 'Dudas' : 'Questions'}:</h3>
+<ul>
+  <li>${t.duvidas}</li>
+  <li>${t.contato_whatsapp}</li>
+  <li>${t.contato_email}</li>
+</ul>
 
-    output.style.display = 'block';
-    output.innerHTML = texto;
-    copyBtn.style.display = 'inline-block';
-  });
+<p>Atenciosamente,<br/>Laurent Martin</p>
 
+<p style="text-align: center; margin-top: 20px;">
+  <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;">
+</p>
 
-  copyBtn.addEventListener('click', () => {
-    if (navigator.clipboard && window.ClipboardItem) {
-      // Copiar com formatação HTML (se o navegador suportar)
-      const blobInput = new Blob([output.innerHTML], { type: 'text/html' });
-      const data = [new ClipboardItem({ 'text/html': blobInput })];
-      navigator.clipboard.write(data).then(() => {
-        alert('Email copiado com formatação para a área de transferência!');
-      }).catch(() => {
+      `.trim();
+
+      output.style.display = 'block';
+      output.innerHTML = texto;
+      copyBtn.style.display = 'inline-block';
+    });
+
+    copyBtn.addEventListener('click', () => {
+      if (navigator.clipboard && window.ClipboardItem) {
+        const blobInput = new Blob([output.innerHTML], { type: 'text/html' });
+        const data = [new ClipboardItem({ 'text/html': blobInput })];
+        navigator.clipboard.write(data).then(() => {
+          alert('Email copiado com formatação para a área de transferência!');
+        }).catch(() => {
+          fallbackCopyText();
+        });
+      } else {
         fallbackCopyText();
-      });
-    } else {
-      // Fallback para navegadores que não suportam Clipboard API
-      fallbackCopyText();
-    }
+      }
 
-    function fallbackCopyText() {
-      const el = document.createElement('textarea');
-      el.value = output.innerText; // cai para texto puro
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-      alert('Email copiado como texto (sem formatação).');
-    }
-  });
+      function fallbackCopyText() {
+        const el = document.createElement('textarea');
+        el.value = output.innerText;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        alert('Email copiado como texto (sem formatação).');
+      }
+    });
 
   </script>
 </body>
