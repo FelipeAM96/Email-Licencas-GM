@@ -150,7 +150,7 @@
       word-wrap: break-word; /* Quebra de linha para palavras longas */
     }
 
-    .email-output p, .email-output ul, .email-output h3 {
+    .email-output p, .email-output ul, .email-output h3, .email-output h4 {
         margin-top: 1em;
         margin-bottom: 1em;
     }
@@ -163,7 +163,7 @@
       body {
         padding: 20px 10px; /* Reduz o padding em telas menores */
       }
-      
+
       .container {
         padding: 20px; /* Reduz o padding do container */
         border-radius: 8px; /* Arredondamento menor */
@@ -176,7 +176,7 @@
       h1 {
         font-size: 1.8em; /* Reduz o tamanho da fonte do título */
       }
-      
+
       .tabs {
         flex-direction: column; /* Alinha as abas verticalmente */
         padding: 0;
@@ -187,7 +187,7 @@
         border-bottom: 2px solid #e9ecef;
         border-radius: 0;
       }
-      
+
       .tab:last-child {
         border-bottom: none;
       }
@@ -196,12 +196,12 @@
         box-shadow: none; /* Remove a sombra da aba ativa */
         background-color: #f8f9fa; /* Fundo mais claro para aba ativa */
       }
-      
+
       button {
         padding: 12px; /* Reduz o padding dos botões */
         font-size: 1em; /* Reduz o tamanho da fonte do botão */
       }
-      
+
       .email-output {
         padding: 15px; /* Reduz o padding da área de saída */
         font-size: 0.9em; /* Reduz o tamanho da fonte do email gerado */
@@ -209,16 +209,16 @@
 
       /* Esta é a nova regra para todas as imagens dentro do container */
       .container img {
-        max-width: 100% !important; 
+        max-width: 100% !important;
         height: auto;
       }
-      
+
       /* E para a imagem do quadro de ativação dentro do email gerado */
       .email-output img {
         width: 100% !important; /* Força a largura para 100% do seu contêiner */
       }
     }
-    
+
   </style>
 </head>
 <body>
@@ -350,7 +350,29 @@
         suporte_final: "Data Final de Suporte",
         imagem_quadro_ativacao: "img/Quadrinho Português - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoPT.png"
         alt_quadro_ativacao: "Quadro de Ativação de Licença Global Mapper - Português",
-        assinatura: "Atenciosamente,<br/>Laurent Martin"
+        assinatura: "Atenciosamente,<br/>Laurent Martin",
+        licenseExplanations: {
+          "Standalone": `
+            <h3>- Standalone</h3>
+            <p>A licença Standalone funciona como um passe de acesso para um software que fica preso a um único computador. Você não consegue usá-la remotamente de outro aparelho. É ideal para quem tem um computador principal e trabalha individualmente, ou para uma pessoa dentro de uma equipe que usa uma única máquina dedicada.</p>
+            <p>Você pode mover essa licença até duas vezes por ano para outro computador, mas a remoção do aparelho anterior precisa ser verificada. Se você precisa mudar o software de computador com frequência, essa licença não é a mais indicada, pois as poucas movimentações anuais podem se tornar um impedimento para o seu trabalho.</p>
+          `,
+          "Flutuante": `
+            <h3>- Flutuante</h3>
+            <p>A licença Flutuante de Usuário Único é bem mais flexível que a Standalone. Pense nela como um "passe de acesso" que, embora esteja instalado em um computador específico, pode ser acessado de outras máquinas. Isso significa que você pode usar o software remotamente, por exemplo, através de uma conexão de Área de Trabalho Remota (RDP), acessando o computador onde a licença está instalada.</p>
+            <p>A grande vantagem é a liberdade de movimentação: você pode transferir essa licença entre computadores um número ilimitado de vezes. Para fazer isso, basta liberar a licença do computador anterior antes de ativá-la em uma nova máquina. Isso é ideal se você alterna o uso entre um laptop e um desktop, ou se precisa acessar o software de diferentes locais. No entanto, é importante notar que ela não é feita para ser compartilhada por várias pessoas ou para escritórios com múltiplos usuários simultâneos, pois continua sendo uma licença para uso individual.</p>
+          `,
+          "Rede": `
+            <h3>- Em Rede</h3>
+            <p>A Licença de Rede é a escolha ideal para equipes e grupos de usuários, oferecendo uma forma prática de gerenciar o acesso ao software. Em vez de ser atrelada a um único computador ou a um dispositivo físico, essa licença é hospedada em um servidor. Isso significa que ela pode ser acessada por diversos usuários dentro de uma rede, seja ela em um único escritório ou em várias filiais.</p>
+            <p>O funcionamento é simples: o número de usuários que podem usar o software ao mesmo tempo é limitado pela quantidade de licenças adquiridas. Se você tem uma licença para dois usuários, por exemplo, até duas pessoas podem acessar e utilizar o programa simultaneamente na rede. Além disso, essa licença oferece a flexibilidade de emprestar uma licença do servidor por até 90 dias se um usuário precisar trabalhar fora da rede, como em viagens. É a solução perfeita para garantir que sua equipe tenha acesso ao software de forma eficiente e controlada.</p>
+          `,
+          "USB": `
+            <h3>- USB</h3>
+            <p>A licença por dongle USB é a solução perfeita para quem precisa de total flexibilidade para usar o software em diferentes computadores. Pense no dongle como uma "chave física" que contém a sua licença. Para usar o Global Mapper, você só precisa ter o programa instalado na máquina e conectar o dongle USB.</p>
+            <p>A maior vantagem é a mobilidade ilimitada: basta plugar o dongle onde você quiser usar o software. Não há necessidade de procedimentos complicados de remoção ou ativação a cada troca de máquina, eliminando o incômodo de liberar a licença antes de passar para um novo computador. Isso torna essa licença ideal para profissionais que trabalham em vários locais, alternam entre desktop e laptop constantemente, ou que precisam da liberdade de usar o software em qualquer máquina disponível, desde que o dongle esteja conectado.</p>
+          `
+        }
       },
       es: {
         saudacao: "Estimados,",
@@ -372,7 +394,29 @@
         suporte_final: "Fecha Final de Soporte",
         imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoES.png"
         alt_quadro_ativacao: "Cuadro de Activación de Licencia Global Mapper - Español",
-        assinatura: "Saludos cordiales,<br/>Laurent Martin"
+        assinatura: "Saludos cordiales,<br/>Laurent Martin",
+        licenseExplanations: {
+          "Standalone": `
+            <h3>- Standalone</h3>
+            <p>La licencia Standalone funciona como un pase de acceso para un software que está anclado a un solo computador. No puedes usarla remotamente desde otro dispositivo. Es ideal para quienes tienen un computador principal y trabajan individualmente, o para una persona dentro de un equipo que usa una única máquina dedicada.</p>
+            <p>Puedes mover esta licencia hasta dos veces al año a otro computador, pero la eliminación del dispositivo anterior debe ser verificada. Si necesitas cambiar el software de computador con frecuencia, esta licencia no es la más indicada, ya que los pocos movimientos anuales pueden convertirse en un impedimento para tu trabajo.</p>
+          `,
+          "Flutuante": `
+            <h3>- Flotante</h3>
+            <p>La licencia Flotante de Usuario Único es mucho más flexible que la Standalone. Piensa en ella como un "pase de acceso" que, aunque esté instalado en un computador específico, puede ser accedido desde otras máquinas. Esto significa que puedes usar el software remotamente, por ejemplo, a través de una conexión de Escritorio Remoto (RDP), accediendo al computador donde la licencia está instalada.</p>
+            <p>La gran ventaja es la libertad de movimiento: puedes transferir esta licencia entre computadores un número ilimitado de veces. Para hacer esto, simplemente libera la licencia del computador anterior antes de activarla en una nueva máquina. Esto es ideal si alternas el uso entre una laptop y un escritorio, o si necesitas acceder al software desde diferentes ubicaciones. Sin embargo, es importante tener en cuenta que no está diseñada para ser compartida por varias personas o para oficinas con múltiples usuarios simultáneos, ya que sigue siendo una licencia de uso individual.</p>
+          `,
+          "Rede": `
+            <h3>- En Red</h3>
+            <p>La Licencia de Red es la opción ideal para equipos y grupos de usuarios, ofreciendo una forma práctica de gestionar el acceso al software. En lugar de estar vinculada a un único computador o a un dispositivo físico, esta licencia se aloja en un servidor. Esto significa que puede ser accedida por diversos usuarios dentro de una red, ya sea en una única oficina o en varias sucursales.</p>
+            <p>El funcionamiento es sencillo: el número de usuarios que pueden usar el software al mismo tiempo está limitado por la cantidad de licencias adquiridas. Si tienes una licencia para dos usuarios, por ejemplo, hasta dos personas pueden acceder y utilizar el programa simultáneamente en la red. Además, esta licencia ofrece la flexibilidad de prestar una licencia del servidor por hasta 90 días si un usuario necesita trabajar fuera de la red, como en viajes. Es la solución perfecta para garantizar que tu equipo tenga acceso al software de forma eficiente y controlada.</p>
+          `,
+          "USB": `
+            <h3>- USB</h3>
+            <p>La licencia por dongle USB es la solución perfecta para quienes necesitan total flexibilidad para usar el software en diferentes computadores. Piensa en el dongle como una "llave física" que contiene tu licencia. Para usar Global Mapper, solo necesitas tener el programa instalado en la máquina y conectar el dongle USB.</p>
+            <p>La mayor ventaja es la movilidad ilimitada: simplemente conecta el dongle donde quieras usar el software. No hay necesidad de procedimientos complicados de remoción o activación en cada cambio de máquina, eliminando la molestia de liberar la licencia antes de pasar a un nuevo computador. Esto hace que esta licencia sea ideal para profesionales que trabajan en varios lugares, alternan entre escritorio y laptop constantemente, o que necesitan la libertad de usar el software en cualquier máquina disponible, siempre que el dongle esté conectado.</p>
+          `
+        }
       },
       en: {
         saudacao: "Dear all,",
@@ -392,9 +436,31 @@
         link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target=\"_blank\">https://www.bluemarblegeo.com/users/register.php</a>`,
         suporte_inicial: "Initial Support Date",
         suporte_final: "Final Support Date",
-        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png",
+        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ensure you have an English version or use the Spanish one as a placeholder if not
         alt_quadro_ativacao: "Global Mapper License Activation Box - English",
-        assinatura: "Best regards,<br/>Laurent Martin"
+        assinatura: "Best regards,<br/>Laurent Martin",
+        licenseExplanations: {
+          "Standalone": `
+            <h3>- Standalone</h3>
+            <p>A Standalone license functions as an access pass for software that is tied to a single computer. You cannot use it remotely from another device. It's ideal for those who have a primary computer and work individually, or for one person within a team who uses a single dedicated machine.</p>
+            <p>You can move this license up to two times per year to another computer, but the removal from the previous device needs to be verified. If you frequently need to move the software between computers, this license is not the most suitable, as the few annual movements can become an impediment to your work.</p>
+          `,
+          "Flutuante": `
+            <h3>- Floating</h3>
+            <p>The Single-User Floating license is much more flexible than the Standalone. Think of it as an "access pass" that, although installed on a specific computer, can be accessed from other machines. This means you can use the software remotely, for example, through a Remote Desktop Protocol (RDP) connection, by accessing the computer where the license is installed.</p>
+            <p>The big advantage is the freedom of movement: you can transfer this license between computers an unlimited number of times. To do this, simply release the license from the previous computer before activating it on a new machine. This is ideal if you alternate use between a laptop and a desktop, or if you need to access the software from different locations. However, it's important to note that it's not designed to be shared by multiple people or for offices with multiple simultaneous users, as it remains a license for individual use.</p>
+          `,
+          "Rede": `
+            <h3>- Network</h3>
+            <p>The Network License is the ideal choice for teams and user groups, offering a practical way to manage software access. Instead of being tied to a single computer or a physical device, this license is hosted on a server. This means it can be accessed by various users within a network, whether in a single office or across multiple branches.</p>
+            <p>The operation is simple: the number of users who can use the software simultaneously is limited by the number of licenses purchased. If you have a license for two users, for example, up to two people can access and use the program simultaneously on the network. Additionally, this license offers the flexibility to borrow a license from the server for up to 90 days if a user needs to work off the network, such as when traveling. It's the perfect solution to ensure your team has efficient and controlled access to the software.</p>
+          `,
+          "USB": `
+            <h3>- USB</h3>
+            <p>The USB dongle license is the perfect solution for those who need complete flexibility to use the software on different computers. Think of the dongle as a "physical key" that contains your license. To use Global Mapper, you just need to have the program installed on the machine and connect the USB dongle.</p>
+            <p>The biggest advantage is unlimited mobility: just plug the dongle wherever you want to use the software. There's no need for complicated removal or activation procedures with each machine change, eliminating the hassle of releasing the license before moving to a new computer. This makes this license ideal for professionals who work in various locations, constantly switch between desktop and laptop, or who need the freedom to use the software on any available machine, as long as the dongle is connected.</p>
+          `
+        }
       }
     };
 
@@ -430,6 +496,7 @@
     gerarBtn.addEventListener('click', () => {
       const t = textos[langKey];
       const refCliente = get('ref_cliente');
+      const tipoLicencaSelecionada = get('tipo_licenca'); // Get the full selected license type
       const dataInicialSuporte = formatarData(get('data_inicial_suporte'));
       const dataFinalSuporte = formatarData(get('data_final_suporte'));
 
@@ -456,6 +523,19 @@
         alert('Os seguintes campos não foram preenchidos:\n\n' + camposVazios.map(c => `- ${c.nome}`).join('\n') + '\n\nO email será gerado mesmo assim.');
       }
 
+      // Determine the base license type for explanation lookup
+      let explicacaoLicenca = '';
+      if (tipoLicencaSelecionada.includes("Standalone")) {
+        explicacaoLicenca = t.licenseExplanations["Standalone"] || '';
+      } else if (tipoLicencaSelecionada.includes("Flutuante")) {
+        explicacaoLicenca = t.licenseExplanations["Flutuante"] || '';
+      } else if (tipoLicencaSelecionada.includes("Rede")) {
+        explicacaoLicenca = t.licenseExplanations["Rede"] || '';
+      } else if (tipoLicencaSelecionada.includes("USB")) {
+        explicacaoLicenca = t.licenseExplanations["USB"] || '';
+      }
+
+
       const texto = `
 <p style="text-align: center; margin-top: 0; margin-bottom: 20px;">
   <img src="img/GlobalMapper.png" alt="Logo Global Mapper" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;">
@@ -474,10 +554,10 @@
 
 <p>${t.saudacao}</p>
 
-<p>${t.introducao_licencas} <strong>📦 ${get('num_licencas')} ${t.licencas} ${get('tipo_licenca')}</strong>, <strong>🌐 ${get('idioma_email')}</strong>.<br/>
+<p>${t.introducao_licencas} <strong>📦 ${get('num_licencas')} ${t.licencas} ${tipoLicencaSelecionada}</strong>, <strong>🌐 ${get('idioma_email')}</strong>.<br/>
 <strong>Blue Marble Order:</strong> <strong style="color:#007bff;">#${get('order_number')}</strong>.</p>
 
-<p><strong>${t.suporte_inicial}:</strong> ${dataInicialSuporte}<br/>
+${explicacaoLicenca} <p><strong>${t.suporte_inicial}:</strong> ${dataInicialSuporte}<br/>
 <strong>${t.suporte_final}:</strong> ${dataFinalSuporte}</p>
 
 <h3>🛠️ ${langKey === 'pt' ? 'Download do Software' : langKey === 'es' ? 'Descarga del Software' : 'Software Download'}:</h3>
@@ -493,7 +573,7 @@ ${t.setup}<br/>
 
 <h3>🔑 ${langKey === 'pt' ? 'Senha' : langKey === 'es' ? 'Contraseña' : 'Password'}:</h3>
 <ul>
-  <li>${t.senha} 
+  <li>${t.senha}
   ${t.link_registro_senha || ''}
   </li>
 </ul>
@@ -524,7 +604,6 @@ ${t.setup}<br/>
 <p style="text-align: center; margin-top: 20px;">
   <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="150" height="auto" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;">
 </p>
-
       `.trim();
 
       output.style.display = 'block';
