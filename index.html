@@ -230,8 +230,8 @@
 
     <div class="tabs">
       <div class="tab active" data-lang="pt">Português</div>
-      <div class="tab" data-lang="es">Espanhol</div>
-      <div class="tab" data-lang="en">Inglês</div>
+      <div class="tab" data-lang="es">Español</div>
+      <div class="tab" data-lang="en">English</div>
     </div>
 
     <form id="emailForm">
@@ -308,8 +308,8 @@
       <label for="idioma_email">🌐 Idioma da Licença:</label>
       <select id="idioma_email">
         <option>Português</option>
-        <option>Espanhol</option>
-        <option>Inglês</option>
+        <option>Español</option>
+        <option>English</option>
       </select>
 
       <label for="order_number">🔢 Blue Marble Order:</label>
@@ -332,6 +332,7 @@
     const textos = {
       pt: {
         saudacao: "Prezados,",
+        introducao_licencas: "Segue o e-mail formal de entrega referente a",
         licencas: "Licenças Perpétuas",
         download: "Segue o link para download do instalador do software em sua versão mais recente:",
         setup: "O arquivo de setup do aplicativo em português, versão 26.1, pode ser baixado no link abaixo:",
@@ -348,10 +349,12 @@
         suporte_inicial: "Data Inicial de Suporte",
         suporte_final: "Data Final de Suporte",
         imagem_quadro_ativacao: "img/Quadrinho Português - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoPT.png"
-        alt_quadro_ativacao: "Quadro de Ativação de Licença Global Mapper - Português"
+        alt_quadro_ativacao: "Quadro de Ativação de Licença Global Mapper - Português",
+        assinatura: "Atenciosamente,<br/>Laurent Martin"
       },
       es: {
         saudacao: "Estimados,",
+        introducao_licencas: "Se adjunta el correo electrónico de entrega formal referente a",
         licencas: "Licencias Perpetuas",
         download: "Adjunto el enlace para descargar el instalador del software en su versión más reciente:",
         setup: "El archivo de instalación del aplicativo en español, versión 26.1, puede descargarse en el enlace a continuación:",
@@ -359,7 +362,7 @@
         instrucoes: "Instrucciones detalladas disponibles en:",
         link2: "http://www.engesat.com.br/softwares/global-mapper/instalacion-y-activacion/",
         senha: "Si no tiene una contraseña definida, utilice la opción “Administrar Cuenta” para recuperarla vía correo electrónico y así poder acceder nuevamente al sitio.",
-        recomendacion: "Recomendamos realizar una copia de seguridad del archivo de instalación y guardar estas instrucciones en un lugar seguro.",
+        recomendacao: "Recomendamos realizar una copia de seguridad del archivo de instalación y guardar estas instrucciones en un lugar seguro.",
         ativacao: "Después de instalar el software, inicie sesión con su correo electrónico y contraseña en el sitio de Blue Marble e ingrese el Order Id en el campo \"Order Number\".",
         duvidas: "Si tiene dudas o dificultades, consulte las instrucciones o contáctenos.",
         contato_whatsapp: "Contacto: +55 (41) 99134-0990 (también Whatsapp) <a href=\"https://api.whatsapp.com/send?phone=554191340990\" target=\"_blank\">WhatsApp</a>",
@@ -368,16 +371,18 @@
         suporte_inicial: "Fecha Inicial de Soporte",
         suporte_final: "Fecha Final de Soporte",
         imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoES.png"
-        alt_quadro_ativacao: "Cuadro de Activación de Licencia Global Mapper - Español"
+        alt_quadro_ativacao: "Cuadro de Activación de Licencia Global Mapper - Español",
+        assinatura: "Saludos cordiales,<br/>Laurent Martin"
       },
       en: {
         saudacao: "Dear all,",
+        introducao_licencas: "Attached is the formal delivery email regarding",
         licencas: "Perpetual Licenses",
         download: "Please find the link to download the software installer in its latest version:",
         setup: "The setup file of the application in English, version 26.1, can be downloaded at the link below:",
         link1: "https://www.bluemarblegeo.com/products/global-mapper-daily-builds.php",
         instrucoes: "Detailed instructions are available at:",
-        link2: "http://www.engesat.com.br/softwares/global-mapper/installation-and-activation/",
+        link2: "http://www.engesat.com.br/softwares/global-mapper/instalacion-y-activacion/",
         senha: "If you do not have a defined password, use the “Manage Account” option to recover it via email and regain access to the site.",
         recomendacao: "We recommend making a backup of the installation file and keeping these instructions in a safe place.",
         ativacao: "After installing the software, log in with your email and password on the Blue Marble site and enter the Order Id in the \"Order Number\" field.",
@@ -388,7 +393,8 @@
         suporte_inicial: "Initial Support Date",
         suporte_final: "Final Support Date",
         imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png",
-        alt_quadro_ativacao: "Global Mapper License Activation Box - English"
+        alt_quadro_ativacao: "Global Mapper License Activation Box - English",
+        assinatura: "Best regards,<br/>Laurent Martin"
       }
     };
 
@@ -405,8 +411,8 @@
         langKey = tab.getAttribute('data-lang');
 
         if(langKey === 'pt') idiomaSelect.value = 'Português';
-        else if(langKey === 'es') idiomaSelect.value = 'Espanhol';
-        else if(langKey === 'en') idiomaSelect.value = 'Inglês';
+        else if(langKey === 'es') idiomaSelect.value = 'Español';
+        else if(langKey === 'en') idiomaSelect.value = 'English';
       });
     });
 
@@ -414,11 +420,18 @@
       return document.getElementById(id).value.trim();
     }
 
+    // Função para formatar a data de YYYY-MM-DD para DD/MM/YYYY
+    function formatarData(data) {
+        if (!data) return '';
+        const [ano, mes, dia] = data.split('-');
+        return `${dia}/${mes}/${ano}`;
+    }
+
     gerarBtn.addEventListener('click', () => {
       const t = textos[langKey];
       const refCliente = get('ref_cliente');
-      const dataInicialSuporte = get('data_inicial_suporte');
-      const dataFinalSuporte = get('data_final_suporte');
+      const dataInicialSuporte = formatarData(get('data_inicial_suporte'));
+      const dataFinalSuporte = formatarData(get('data_final_suporte'));
 
       const camposObrigatorios = [
         { id: 'ref_engesat', nome: 'Referência - Interna' },
@@ -461,7 +474,7 @@
 
 <p>${t.saudacao}</p>
 
-<p>Segue o e-mail formal de entrega referente a <strong>📦 ${get('num_licencas')} ${t.licencas} ${get('tipo_licenca')}</strong>, em <strong>🌐 ${get('idioma_email')}</strong>.<br/>
+<p>${t.introducao_licencas} <strong>📦 ${get('num_licencas')} ${t.licencas} ${get('tipo_licenca')}</strong>, <strong>🌐 ${get('idioma_email')}</strong>.<br/>
 <strong>Blue Marble Order:</strong> <strong style="color:#007bff;">#${get('order_number')}</strong>.</p>
 
 <p><strong>${t.suporte_inicial}:</strong> ${dataInicialSuporte}<br/>
@@ -506,7 +519,7 @@ ${t.setup}<br/>
   <li>${t.contato_email}</li>
 </ul>
 
-<p>Atenciosamente,<br/>Laurent Martin</p>
+<p>${t.assinatura}</p>
 
 <p style="text-align: center; margin-top: 20px;">
   <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="150" height="auto" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;">
