@@ -345,9 +345,10 @@
         duvidas: "Caso tenha dúvidas ou dificuldades, consulte as instruções ou entre em contato conosco.",
         contato_whatsapp: "Contato: +55 (41) 99134-0990 (também Whatsapp) <a href=\"https://api.whatsapp.com/send?phone=554191340990\" target=\"_blank\">WhatsApp</a>",
         contato_email: "Email: <a href=\"mailto:laurent.engesat@gmail.com\">laurent.engesat@gmail.com</a>",
-        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`,
+        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target=\"_blank\">https://www.bluemarblegeo.com/users/register.php</a>`,
         suporte_inicial: "Data Inicial de Suporte",
         suporte_final: "Data Final de Suporte",
+        suporte_renovacao_info: "A renovação do suporte e das atualizações do software é anual. Reforçamos a importância dessa renovação para garantir assistência técnica, recuperação do software em caso de falhas nos equipamentos e orientações sobre seu uso. Apenas clientes com suporte ativo terão acesso a atualizações, novos recursos e suporte técnico.",
         imagem_quadro_ativacao: "img/Quadrinho Português - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoPT.png"
         alt_quadro_ativacao: "Quadro de Ativação de Licença Global Mapper - Português",
         assinatura: "Atenciosamente,<br/>Laurent Martin",
@@ -389,9 +390,10 @@
         duvidas: "Si tiene dudas o dificultades, consulte las instrucciones o contáctenos.",
         contato_whatsapp: "Contacto: +55 (41) 99134-0990 (también Whatsapp) <a href=\"https://api.whatsapp.com/send?phone=554191340990\" target=\"_blank\">WhatsApp</a>",
         contato_email: "Correo electrónico: <a href=\"mailto:laurent.engesat@gmail.com\">laurent.engesat@gmail.com</a>",
-        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target="_blank">https://www.bluemarblegeo.com/users/register.php</a>`,
+        link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target=\"_blank\">https://www.bluemarblegeo.com/users/register.php</a>`,
         suporte_inicial: "Fecha Inicial de Soporte",
         suporte_final: "Fecha Final de Soporte",
+        suporte_renovacao_info: "La renovación del soporte y las actualizaciones del software es anual. Recalcamos la importancia de esta renovación para garantizar asistencia técnica, recuperación del software en caso de fallos en los equipos y orientación sobre su uso. Solo los clientes con soporte activo tendrán acceso a actualizaciones, nuevas funciones y soporte técnico.",
         imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoES.png"
         alt_quadro_ativacao: "Cuadro de Activación de Licencia Global Mapper - Español",
         assinatura: "Saludos cordiales,<br/>Laurent Martin",
@@ -436,13 +438,14 @@
         link_registro_senha: `<br/><a href="https://www.bluemarblegeo.com/users/register.php" target=\"_blank\">https://www.bluemarblegeo.com/users/register.php</a>`,
         suporte_inicial: "Initial Support Date",
         suporte_final: "Final Support Date",
+        suporte_renovacao_info: "The renewal of software support and updates is annual. We emphasize the importance of this renewal to ensure technical assistance, software recovery in case of equipment failures, and guidance on its use. Only clients with active support will have access to updates, new features, and technical support.",
         imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ensure you have an English version or use the Spanish one as a placeholder if not
         alt_quadro_ativacao: "Global Mapper License Activation Box - English",
         assinatura: "Best regards,<br/>Laurent Martin",
         licenseExplanations: {
           "Standalone": `
             <h3>- Standalone</h3>
-            <p>A Standalone license functions as an access pass for software that is tied to a single computer. You cannot use it remotely from another device. It's ideal for those who have a primary computer and work individually, or for one person within a team who uses a single dedicated machine.</p>
+            <p>A Standalone license functions as an access pass for software that is tied to a single computer. You can't use it remotely from another device. It's ideal for those who have a primary computer and work individually, or for one person within a team who uses a single dedicated machine.</p>
             <p>You can move this license up to two times per year to another computer, but the removal from the previous device needs to be verified. If you frequently need to move the software between computers, this license is not the most suitable, as the few annual movements can become an impediment to your work.</p>
           `,
           "Flutuante": `
@@ -558,7 +561,9 @@
 <strong>Blue Marble Order:</strong> <strong style="color:#007bff;">#${get('order_number')}</strong>.</p>
 
 ${explicacaoLicenca} <p><strong>${t.suporte_inicial}:</strong> ${dataInicialSuporte}<br/>
-<strong>${t.suporte_final}:</strong> ${dataFinalSuporte}</p>
+<strong>${t.suporte_final}:</strong> ${dataFinalSuporte}
+${t.suporte_renovacao_info ? `<br/><span style="color: red; font-size: 0.9em;">${t.suporte_renovacao_info}</span>` : ''}
+</p>
 
 <h3>🛠️ ${langKey === 'pt' ? 'Download do Software' : langKey === 'es' ? 'Descarga del Software' : 'Software Download'}:</h3>
 <p>${t.download}<br/>
