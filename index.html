@@ -90,7 +90,7 @@
       font-size: 0.95em;
     }
 
-    input[type="text"], input[type="date"], select {
+    input[type="text"], input[type="date"], select, textarea {
       width: 100%;
       padding: 12px;
       box-sizing: border-box;
@@ -100,12 +100,44 @@
       color: #495057;
       background-color: #f8f9fa;
       transition: border-color 0.3s, box-shadow 0.3s;
+      font-family: inherit;
     }
 
-    input[type="text"]:focus, input[type="date"]:focus, select:focus {
+    input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus {
       outline: none;
       border-color: #007bff;
       box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+
+    /* Abas Principais (Pedido / Entrega) */
+    .main-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+      gap: 15px;
+    }
+
+    .main-tab {
+      padding: 12px 25px;
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #5a7184;
+      background-color: #e9ecef;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      user-select: none;
+    }
+
+    .main-tab.active {
+      background-color: #007bff;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
+    }
+
+    .main-tab:hover:not(.active) {
+      background-color: #dee2e6;
     }
 
     /* Botões */
@@ -240,6 +272,15 @@
       body {
         padding: 20px 10px; /* Reduz o padding em telas menores */
       }
+      
+      .main-tabs {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .main-tab {
+        text-align: center;
+      }
 
       .container {
         padding: 20px; /* Reduz o padding do container */
@@ -303,13 +344,37 @@
       <h1>Gerador de Email de Licenças</h1>
     </div>
 
+    <div class="main-tabs">
+      <div class="main-tab active" data-view="pedido">📝 Pedido Global Mapper</div>
+      <div class="main-tab" data-view="entrega">📦 Entrega Global Mapper</div>
+    </div>
+
     <div class="tabs">
       <div class="tab active" data-lang="pt">Português</div>
       <div class="tab" data-lang="es">Español</div>
       <div class="tab" data-lang="en">English</div>
     </div>
 
-    <form id="emailForm">
+    <form id="formPedido">
+      <label for="ped_empresa">🏢 Nome da Empresa:</label>
+      <input type="text" id="ped_empresa" placeholder="Empresa interessada" />
+
+      <label for="ped_responsavel">👤 Nome do Responsável:</label>
+      <input type="text" id="ped_responsavel" placeholder="Nome do contato" />
+
+      <label for="ped_email">📧 Email:</label>
+      <input type="text" id="ped_email" placeholder="email@exemplo.com" />
+
+      <label for="ped_telefone">📞 Telefone:</label>
+      <input type="text" id="ped_telefone" placeholder="(XX) XXXX-XXXX" />
+
+      <label for="ped_obs">📝 Observações / Escopo Adicional (Opcional):</label>
+      <textarea id="ped_obs" rows="4" placeholder="Insira aqui propostas de valores, condições de pagamento ou detalhes adicionais..."></textarea>
+
+      <button type="button" id="gerarPedidoBtn">Gerar Email de Pedido</button>
+    </form>
+
+    <form id="emailForm" style="display: none;">
       <label for="ref_engesat">📌 Referência Interna:</label>
       <input type="text" id="ref_engesat" placeholder="Ex: Pedido 25010" />
 
@@ -354,8 +419,12 @@
 
   <script>
     const tabs = document.querySelectorAll('.tab');
+    const mainTabs = document.querySelectorAll('.main-tab');
+    const formPedido = document.getElementById('formPedido');
+    const emailForm = document.getElementById('emailForm');
     const idiomaSelect = document.getElementById('idioma_email');
     const gerarBtn = document.getElementById('gerarBtn');
+    const gerarPedidoBtn = document.getElementById('gerarPedidoBtn');
     const output = document.getElementById('emailOutput');
     const copyBtn = document.getElementById('copyBtn');
     const toastContainer = document.getElementById('toastContainer');
@@ -364,6 +433,27 @@
     
     let licencaCount = 0;
     let langKey = 'pt'; // <-- Mova a declaração para cá
+    let currentView = 'pedido'; // Inicia na aba de pedido
+    
+    mainTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        mainTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentView = tab.getAttribute('data-view');
+
+        // Ocultar a saída gerada ao trocar de aba
+        output.style.display = 'none';
+        copyBtn.style.display = 'none';
+
+        if (currentView === 'pedido') {
+          formPedido.style.display = 'block';
+          emailForm.style.display = 'none';
+        } else {
+          formPedido.style.display = 'none';
+          emailForm.style.display = 'block';
+        }
+      });
+    });
 
     const optionsNumeroLicencas = `
       <option value="">Selecione</option>
@@ -508,6 +598,32 @@
 
     const textos = {
       pt: {
+        pedido: {
+            saudacao: "Prezado(a)",
+            intro: "Agradecemos o seu contato e o interesse no Global Mapper. Abaixo, detalhamos as informações essenciais sobre o licenciamento do software:",
+            idiomas: "O Global Mapper está disponível nativamente em três idiomas: <strong>Português, Inglês e Espanhol</strong>.",
+            modos_titulo: "Tipos de Licenciamento Disponíveis:",
+            modos_lista: "<ul><li><strong>Standalone:</strong> Licença fixa em um único computador.</li><li><strong>Flutuante (Network):</strong> Acesso via rede/servidor para uso compartilhado (não simultâneo por licença comprada).</li><li><strong>USB Dongle:</strong> Licença atrelada a um pendrive físico, permitindo uso em qualquer máquina que esteja com o dispositivo conectado.</li></ul>",
+            aviso_pro: "⚠️ <strong>Aviso Importante sobre o Global Mapper PRO:</strong> O módulo <em>Global Mapper Pro</em> é um complemento avançado e <strong>não inclui</strong> o software base. Para utilizar as funções do Pro, é obrigatório adquirir também a licença do <em>Global Mapper</em> padrão (Total = Global Mapper + PRO adicional).",
+            tabelas_titulo_novas: "📊 Tabela de Valores - Novas Licenças (R$)",
+            tabelas_titulo_renovacao: "🔄 Tabela de Valores - Upgrade / Renovação do Suporte 12 meses (R$)",
+            col_produto: "Produto",
+            col_standalone: "Standalone",
+            col_rede: "Em rede, por assento<br/>(mínimo 2)",
+            col_flutuante: "Flutuante",
+            col_usb_frete: "USB com frete",
+            col_usb: "USB",
+            row_gm: "Global Mapper",
+            row_pro: "Global Mapper PRO adicional",
+            row_total: "Total",
+            atencao_titulo: "⚠️ Atenção: Licença Vitalícia e Regras de Suporte",
+            vitalicia: "Gostaríamos de destacar que <strong>a licença do Global Mapper é VITALÍCIA</strong>. Uma vez adquirida, o software é seu e poderá ser utilizado para sempre.",
+            suporte: "Entretanto, a compra inicial inclui <strong>somente 1 (um) ano de suporte técnico e atualizações</strong>. A renovação anual deste suporte é fundamental.",
+            importancia: "<strong>Por que o suporte é tão importante?</strong> Em casos de formatação da máquina, queima de HD, perda do computador ou qualquer outra anomalia técnica, <strong>a recuperação da sua licença só poderá ser realizada pela desenvolvedora caso o seu suporte esteja ativo e em dia</strong>.",
+            regras_titulo: "Regras de Renovação do Suporte:",
+            regra_1: "<strong>Atraso de até 2 anos:</strong> É possível renovar o suporte realizando o pagamento retroativo referente aos anos que ficaram sem cobertura.",
+            regra_2: "<strong>Atraso superior a 2 anos:</strong> O valor acumulado das taxas retroativas acaba se tornando mais alto do que comprar um software novo. Nesses casos, recomendamos adquirir uma nova licença, que já incluirá um novo período de 1 ano de suporte atualizado."
+        },
         saudacao: "Prezados,",
         introducao_licencas: "Segue o e-mail formal de entrega referente a",
         licencas: "Licenças Perpétuas",
@@ -553,6 +669,32 @@
         }
       },
       es: {
+        pedido: {
+            saudacao: "Estimado(a)",
+            intro: "Agradecemos su contacto e interés en Global Mapper. A continuación, detallamos la información esencial sobre las licencias del software:",
+            idiomas: "Global Mapper está disponible en tres idiomas: <strong>Portugués, Inglés y Español</strong>.",
+            modos_titulo: "Tipos de Licenciamiento Disponibles:",
+            modos_lista: "<ul><li><strong>Standalone:</strong> Licencia fija en un único computador.</li><li><strong>Flotante (Network):</strong> Acceso vía red/servidor para uso compartido, no simultáneo por licencia.</li><li><strong>USB Dongle:</strong> Licencia vinculada a un dispositivo USB físico, permitiendo el uso en cualquier máquina con el dongle conectado.</li></ul>",
+            aviso_pro: "⚠️ <strong>Aviso Importante sobre Global Mapper PRO:</strong> El módulo <em>Global Mapper Pro</em> es un complemento avanzado y <strong>no incluye</strong> el software base. Para utilizar las funciones Pro, es obligatorio adquirir también la licencia del <em>Global Mapper</em> estándar (Total = Global Mapper + PRO adicional).",
+            tabelas_titulo_novas: "📊 Tabla de Precios - Nuevas Licencias (R$)",
+            tabelas_titulo_renovacao: "🔄 Tabla de Precios - Upgrade / Renovación de Soporte 12 meses (R$)",
+            col_produto: "Producto",
+            col_standalone: "Standalone",
+            col_rede: "En red, por asiento<br/>(mínimo 2)",
+            col_flutuante: "Flotante",
+            col_usb_frete: "USB con envío",
+            col_usb: "USB",
+            row_gm: "Global Mapper",
+            row_pro: "Global Mapper PRO adicional",
+            row_total: "Total",
+            atencao_titulo: "⚠️ Atención: Licencia Vitalicia y Reglas de Soporte",
+            vitalicia: "Es muy importante destacar que <strong>la licencia de Global Mapper es VITALICIA</strong>. Una vez adquirida, podrá utilizarla para siempre.",
+            suporte: "Sin embargo, la compra inicial incluye <strong>solo 1 (un) año de soporte técnico y actualizaciones</strong>. La renovación anual de este soporte es fundamental.",
+            importancia: "<strong>¿Por qué es tan importante el soporte?</strong> En caso de formateo, fallo del disco duro, pérdida del computador o cualquier otra anomalía técnica, <strong>la recuperación de su licencia solo será posible por parte de la desarrolladora si su soporte está activo</strong>.",
+            regras_titulo: "Reglas para Renovación de Soporte:",
+            regra_1: "<strong>Atraso de hasta 2 años:</strong> Es posible renovar el soporte realizando el pago retroactivo de los años sin cobertura.",
+            regra_2: "<strong>Atraso superior a 2 años:</strong> El valor acumulado de las tasas retroactivas supera el costo de un software nuevo. En estos casos, recomendamos adquirir una nueva licencia, que ya incluirá un nuevo período de 1 año de soporte."
+        },
         saudacao: "Estimados,",
         introducao_licencas: "Se adjunta el correo electrónico de entrega formal referente a",
         licencas: "Licencias Perpetuas",
@@ -598,6 +740,32 @@
         }
       },
       en: {
+        pedido: {
+            saudacao: "Dear",
+            intro: "Thank you for reaching out and for your interest in Global Mapper. Below, we detail essential information regarding the software licensing:",
+            idiomas: "Global Mapper is available natively in three languages: <strong>Portuguese, English, and Spanish</strong>.",
+            modos_titulo: "Available Licensing Types:",
+            modos_lista: "<ul><li><strong>Standalone:</strong> Fixed license on a single computer.</li><li><strong>Floating (Network):</strong> Network/server access for shared use, non-simultaneous per license.</li><li><strong>USB Dongle:</strong> License tied to a physical USB drive, allowing use on any machine while the dongle is connected.</li></ul>",
+            aviso_pro: "⚠️ <strong>Important Notice regarding Global Mapper PRO:</strong> The <em>Global Mapper Pro</em> module is an advanced add-on and <strong>does not include</strong> the base software. To use Pro features, it is mandatory to also purchase the standard <em>Global Mapper</em> license (Total = Global Mapper + additional PRO).",
+            tabelas_titulo_novas: "📊 Pricing Table - New Licenses (R$)",
+            tabelas_titulo_renovacao: "🔄 Pricing Table - Upgrade / 12-Month Support Renewal (R$)",
+            col_produto: "Product",
+            col_standalone: "Standalone",
+            col_rede: "Network, per seat<br/>(minimum 2)",
+            col_flutuante: "Floating",
+            col_usb_frete: "USB with shipping",
+            col_usb: "USB",
+            row_gm: "Global Mapper",
+            row_pro: "Global Mapper PRO additional",
+            row_total: "Total",
+            atencao_titulo: "⚠️ Attention: Lifetime License and Support Rules",
+            vitalicia: "It is very important to highlight that <strong>the Global Mapper license is LIFETIME (Perpetual)</strong>. Once acquired, you can use it forever.",
+            suporte: "However, the initial purchase includes <strong>only 1 (one) year of technical support and updates</strong>. The annual renewal of this support is crucial.",
+            importancia: "<strong>Why is support so important?</strong> In cases of computer formatting, hard drive failure, lost machine, or any other technical anomaly, <strong>recovering your license is only possible by the developer if your support is active</strong>.",
+            regras_titulo: "Support Renewal Rules:",
+            regra_1: "<strong>Up to 2 years expired:</strong> It is possible to renew the support by making a retroactive payment for the uncovered years.",
+            regra_2: "<strong>More than 2 years expired:</strong> The accumulated cost of retroactive fees ends up being more expensive than buying a new software. In these cases, we strongly recommend purchasing a new license, which will already include a fresh 1-year support period."
+        },
         saudacao: "Dear all,",
         introducao_licencas: "Attached is the formal delivery email regarding",
         licencas: "Perpetual Licenses",
@@ -674,6 +842,165 @@
         const [ano, mes, dia] = data.split('-');
         return `${dia}/${mes}/${ano}`;
     }
+
+    gerarPedidoBtn.addEventListener('click', () => {
+      const t = textos[langKey].pedido;
+      
+      const empresa = get('ped_empresa');
+      const responsavel = get('ped_responsavel');
+      const email = get('ped_email');
+      const telefone = get('ped_telefone');
+      const obs = get('ped_obs');
+
+      // Validação Básica
+      if (!empresa || !responsavel) {
+         showToast('Atenção: Preencha pelo menos a Empresa e o Responsável.', 'warning');
+      } else {
+         showToast('Email de Pedido gerado com sucesso!', 'success');
+      }
+
+      let obsHtml = '';
+      if(obs) {
+          obsHtml = `
+          <div style="background-color: #f8f9fa; padding: 15px; border-left: 4px solid #007bff; margin-top: 20px;">
+             <p style="margin-top: 0; margin-bottom: 5px;"><strong>📝 Observações / Condições Adicionais:</strong></p>
+             <p style="margin: 0; line-height: 1.5;">${obs.replace(/\n/g, '<br/>')}</p>
+          </div>`;
+      }
+
+      const infoContato = [];
+      if (email) infoContato.push(`<strong>📧 Email:</strong> ${email}`);
+      if (telefone) infoContato.push(`<strong>📞 Telefone:</strong> ${telefone}`);
+      const contatoHtml = infoContato.length > 0 ? `<p style="margin-top:0;">${infoContato.join('<br/>')}</p>` : '';
+
+      // Puxando as explicações detalhadas das licenças já cadastradas (Entrega)
+      const expl = textos[langKey].licenseExplanations;
+      const modosExplicacoes = Object.values(expl).join('\n');
+
+      const tabelasValoresHtml = `
+      <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 15px; margin: 25px 0;">
+          <p style="color: #721c24; margin: 0; font-size: 1.05em;">${t.aviso_pro}</p>
+      </div>
+
+      <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-top: 30px;">${t.tabelas_titulo_novas}</h3>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; font-family: sans-serif; font-size: 0.9em;">
+        <thead>
+          <tr style="background-color: #f0f4f8; color: #334e68;">
+            <th style="border: 1px solid #ced4da; padding: 10px; text-align: left;">${t.col_produto}</th>
+            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_standalone}</th>
+            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_rede}</th>
+            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_flutuante}</th>
+            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_usb_frete}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold;">${t.row_gm}</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">6.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">9.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">9.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">13.900,00</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold; color: #d9534f;">${t.row_pro}</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">8.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
+          </tr>
+          <tr style="background-color: #e9ecef; font-weight: bold; color: #0056b3;">
+            <td style="border: 1px solid #ced4da; padding: 10px;">${t.row_total}</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">15.800,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">22.800,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">22.800,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">26.800,00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px;">${t.tabelas_titulo_renovacao}</h3>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-family: sans-serif; font-size: 0.9em;">
+        <thead>
+          <tr style="background-color: #f0f4f8; color: #334e68;">
+            <th style="border: 1px solid #ced4da; padding: 10px; text-align: left;">${t.col_produto}</th>
+            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_standalone}</th>
+            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_rede}</th>
+            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_flutuante}</th>
+            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_usb}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold;">${t.row_gm}</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">2.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold; color: #d9534f;">${t.row_pro}</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">3.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
+          </tr>
+          <tr style="background-color: #e9ecef; font-weight: bold; color: #0056b3;">
+            <td style="border: 1px solid #ced4da; padding: 10px;">${t.row_total}</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">6.800,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
+            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
+          </tr>
+        </tbody>
+      </table>
+      `;
+
+      const texto = `
+<p style="text-align: center; margin-top: 0; margin-bottom: 20px;">
+  <img src="img/GlobalMapper.png" alt="Logo Global Mapper" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';">
+</p>
+
+<p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>
+${contatoHtml}
+
+<p>${t.intro}</p>
+
+<p>${t.idiomas}</p>
+
+<h3 style="margin-bottom: 5px; font-size: 1.3em;">💻 ${t.modos_titulo}</h3>
+<div style="margin-left: 10px; border-left: 3px solid #007bff; padding-left: 15px;">
+    ${modosExplicacoes}
+</div>
+
+${tabelasValoresHtml}
+
+<div style="background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 8px; padding: 20px; margin: 25px 0;">
+    <h3 style="color: #856404; margin-top: 0;">${t.atencao_titulo}</h3>
+    <p style="color: #856404; margin-bottom: 10px;">${t.vitalicia}</p>
+    <p style="color: #856404; margin-bottom: 10px;">${t.suporte}</p>
+    <p style="color: #856404; margin-bottom: 0;">${t.importancia}</p>
+</div>
+
+<h3>🔄 ${t.regras_titulo}</h3>
+<ul>
+    <li><span style="color: #d9534f;">${t.regra_1}</span></li>
+    <li><span style="color: #d9534f;">${t.regra_2}</span></li>
+</ul>
+
+${obsHtml}
+
+<p style="margin-top: 30px;">${textos[langKey].assinatura}</p>
+
+<p style="text-align: center; margin-top: 20px;">
+  <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="150" height="auto" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/150x50/ffffff/334e68?text=Logo+Engesat';">
+</p>
+      `;
+
+      output.style.display = 'block';
+      output.innerHTML = texto.trim();
+      copyBtn.style.display = 'inline-block';
+      output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
     gerarBtn.addEventListener('click', () => {
       const t = textos[langKey];
