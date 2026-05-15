@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gerador de Email - Licenças Global Mapper</title>
-  <link rel="icon" type="image/png" href="img/Treco_Engesat1.png" />
+  <link rel="icon" type="image/png" href="img/Treco_Engesat1.png" onerror="this.remove()" />
   <style>
     /* Estilos Gerais */
     body {
@@ -28,6 +28,7 @@
       max-width: 800px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
       transition: transform 0.3s ease-in-out;
+      position: relative;
     }
 
     /* Título e logo */
@@ -40,6 +41,7 @@
       max-width: 250px; /* Ajuste o tamanho da logo conforme necessário */
       height: auto;
       margin-bottom: 15px; /* Espaço entre a logo e o título */
+      border-radius: 8px;
     }
 
     h1 {
@@ -127,6 +129,27 @@
       transform: translateY(-2px);
     }
 
+    button.btn-secondary {
+      background: #6c757d;
+      margin-top: 10px;
+    }
+
+    button.btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    button.btn-danger {
+      background: #dc3545;
+      padding: 8px 12px;
+      font-size: 0.9em;
+      margin-top: 10px;
+      width: auto;
+    }
+
+    button.btn-danger:hover {
+      background: #c82333;
+    }
+
     button#copyBtn {
       background: #28a745; /* Cor para o botão de copiar */
     }
@@ -155,10 +178,64 @@
         margin-bottom: 1em;
     }
 
-    /* ================================================= */
-    /* Media Queries para Responsividade */
-    /* ================================================= */
+    /* Toast Notification (Substituto do alert) */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
+    .toast {
+      background-color: #333;
+      color: #fff;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s;
+      max-width: 350px;
+      word-wrap: break-word;
+      font-size: 0.95em;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success { background-color: #28a745; }
+    .toast.warning { background-color: #ffc107; color: #333; }
+    .toast.error { background-color: #dc3545; }
+
+    /* Bloco de Licença */
+    .licenca-block {
+      background-color: #f8f9fa;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      position: relative;
+    }
+    
+    .licenca-block h3 {
+      margin-top: 0;
+      color: #334e68;
+      font-size: 1.1em;
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .licenca-block select, .licenca-block input {
+      background-color: #fff;
+    }
+
+    /* ================================================= */
     @media (max-width: 768px) {
       body {
         padding: 20px 10px; /* Reduz o padding em telas menores */
@@ -207,13 +284,11 @@
         font-size: 0.9em; /* Reduz o tamanho da fonte do email gerado */
       }
 
-      /* Esta é a nova regra para todas as imagens dentro do container */
       .container img {
         max-width: 100% !important;
         height: auto;
       }
 
-      /* E para a imagem do quadro de ativação dentro do email gerado */
       .email-output img {
         width: 100% !important; /* Força a largura para 100% do seu contêiner */
       }
@@ -224,7 +299,7 @@
 <body>
   <div class="container">
     <div class="header-logo">
-      <img src="img/GlobalMapper.png" alt="Logo Global Mapper" />
+      <img src="img/GlobalMapper.png" alt="Logo Global Mapper" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';" />
       <h1>Gerador de Email de Licenças</h1>
     </div>
 
@@ -262,58 +337,11 @@
       <label for="telefone">📞 Telefone:</label>
       <input type="text" id="telefone" placeholder="(XX) XXXX-XXXX" />
 
-      <label for="num_licencas">📦 Número de Licenças:</label>
-      <select id="num_licencas">
-        <option value="">Selecione</option>
-        <option>1</option><option>2</option><option>3</option><option>4</option>
-        <option>5</option><option>6</option><option>7</option><option>8</option>
-        <option>9</option><option>10</option>
-      </select>
-
-      <label for="tipo_licenca">💻 Tipo de Licença:</label>
-      <select id="tipo_licenca">
-        <option value="">Selecione</option>
-        <option>Global Mapper Standalone</option>
-        <option>Global Mapper Flutuante</option>
-        <option>Global Mapper em Rede</option>
-        <option>Global Mapper em USB</option>
-        <option>Global Mapper Pro Standalone</option>
-        <option>Global Mapper Pro Flutuante</option>
-        <option>Global Mapper Pro em Rede</option>
-        <option>Global Mapper Pro USB</option>
-        <option>Global Mapper + Global Mapper Pro Standalone</option>
-        <option>Global Mapper + Global Mapper Pro Flutuante</option>
-        <option>Global Mapper + Global Mapper Pro em Rede</option>
-        <option>Global Mapper + Global Mapper Pro USB</option>
-        <option>Renovação Global Mapper Standalone</option>
-        <option>Renovação Global Mapper Flutuante</option>
-        <option>Renovação Global Mapper em Rede</option>
-        <option>Renovação Global Mapper USB</option>
-        <option>Renovação Global Mapper Pro Standalone</option>
-        <option>Renovação Global Mapper Pro Flutuante</option>
-        <option>Renovação Global Mapper Pro em Rede</option>
-        <option>Renovação Global Mapper Pro USB</option>
-        <option>Renovação Global Mapper + Global Mapper Pro Standalone</option>
-        <option>Renovação Global Mapper + Global Mapper Pro Flutuante</option>
-        <option>Renovação Global Mapper + Global Mapper Pro em Rede</option>
-        <option>Renovação Global Mapper + Global Mapper Pro USB</option>
-      </select>
-
-      <label for="data_inicial_suporte">📅 Data Inicial de Suporte:</label>
-      <input type="date" id="data_inicial_suporte" />
-
-      <label for="data_final_suporte">📅 Data Final de Suporte:</label>
-      <input type="date" id="data_final_suporte" />
-
-      <label for="idioma_email">🌐 Idioma da Licença:</label>
-      <select id="idioma_email">
-        <option>Português</option>
-        <option>Español</option>
-        <option>English</option>
-      </select>
-
-      <label for="order_number">🔢 Blue Marble Order:</label>
-      <input type="text" id="order_number" placeholder="Ex: 123450-K5ONMNMG" />
+      <div id="licencasContainer">
+        <!-- O primeiro bloco será inserido via JavaScript -->
+      </div>
+      
+      <button type="button" id="addLicencaBtn" class="btn-secondary">➕ Adicionar Outra Licença</button>
 
       <button type="button" id="gerarBtn">Gerar Email</button>
     </form>
@@ -322,12 +350,161 @@
     <button type="button" id="copyBtn" style="display:none;">Copiar Email</button>
   </div>
 
+  <div id="toastContainer" class="toast-container"></div>
+
   <script>
     const tabs = document.querySelectorAll('.tab');
     const idiomaSelect = document.getElementById('idioma_email');
     const gerarBtn = document.getElementById('gerarBtn');
     const output = document.getElementById('emailOutput');
     const copyBtn = document.getElementById('copyBtn');
+    const toastContainer = document.getElementById('toastContainer');
+    const licencasContainer = document.getElementById('licencasContainer');
+    const addLicencaBtn = document.getElementById('addLicencaBtn');
+    
+    let licencaCount = 0;
+    let langKey = 'pt'; // <-- Mova a declaração para cá
+
+    const optionsNumeroLicencas = `
+      <option value="">Selecione</option>
+      <option>1</option><option>2</option><option>3</option><option>4</option>
+      <option>5</option><option>6</option><option>7</option><option>8</option>
+      <option>9</option><option>10</option>
+    `;
+
+    const optionsTipoLicenca = `
+      <option value="">Selecione</option>
+      <option>Global Mapper Standalone</option>
+      <option>Global Mapper Flutuante</option>
+      <option>Global Mapper em Rede</option>
+      <option>Global Mapper em USB</option>
+      <option>Global Mapper Pro Standalone</option>
+      <option>Global Mapper Pro Flutuante</option>
+      <option>Global Mapper Pro em Rede</option>
+      <option>Global Mapper Pro USB</option>
+      <option>Global Mapper + Global Mapper Pro Standalone</option>
+      <option>Global Mapper + Global Mapper Pro Flutuante</option>
+      <option>Global Mapper + Global Mapper Pro em Rede</option>
+      <option>Global Mapper + Global Mapper Pro USB</option>
+      <option>Renovação Global Mapper Standalone</option>
+      <option>Renovação Global Mapper Flutuante</option>
+      <option>Renovação Global Mapper em Rede</option>
+      <option>Renovação Global Mapper USB</option>
+      <option>Renovação Global Mapper Pro Standalone</option>
+      <option>Renovação Global Mapper Pro Flutuante</option>
+      <option>Renovação Global Mapper Pro em Rede</option>
+      <option>Renovação Global Mapper Pro USB</option>
+      <option>Renovação Global Mapper + Global Mapper Pro Standalone</option>
+      <option>Renovação Global Mapper + Global Mapper Pro Flutuante</option>
+      <option>Renovação Global Mapper + Global Mapper Pro em Rede</option>
+      <option>Renovação Global Mapper + Global Mapper Pro USB</option>
+    `;
+
+    const optionsIdioma = `
+      <option>Português</option>
+      <option>Español</option>
+      <option>English</option>
+    `;
+
+    function criarBlocoLicenca() {
+      licencaCount++;
+      const id = licencaCount;
+      const bloco = document.createElement('div');
+      bloco.className = 'licenca-block';
+      bloco.id = `bloco_licenca_${id}`;
+
+      bloco.innerHTML = `
+        <h3>Detalhes da Licença #${id}</h3>
+        
+        <label for="num_licencas_${id}">📦 Número de Licenças:</label>
+        <select id="num_licencas_${id}" class="input-licenca" required>${optionsNumeroLicencas}</select>
+
+        <label for="tipo_licenca_${id}">💻 Tipo de Licença:</label>
+        <select id="tipo_licenca_${id}" class="input-licenca" required>${optionsTipoLicenca}</select>
+
+        <label for="idioma_email_${id}">🌐 Idioma da Licença:</label>
+        <select id="idioma_email_${id}" class="input-licenca">${optionsIdioma}</select>
+
+        <label for="order_number_${id}">🔢 Blue Marble Order:</label>
+        <input type="text" id="order_number_${id}" class="input-licenca" placeholder="Ex: 123450-K5ONMNMG" required />
+
+        <label for="data_inicial_suporte_${id}">📅 Data Inicial de Suporte:</label>
+        <input type="date" id="data_inicial_suporte_${id}" class="input-licenca data-inicial" required />
+
+        <label for="data_final_suporte_${id}">📅 Data Final de Suporte:</label>
+        <input type="date" id="data_final_suporte_${id}" class="input-licenca" required />
+        
+        ${id > 1 ? `<button type="button" class="btn-danger" onclick="removerBlocoLicenca(${id})">Remover Licença</button>` : ''}
+      `;
+
+      licencasContainer.appendChild(bloco);
+
+      // Adiciona listener para calcular data final quando a data inicial mudar
+      const dataInicialInput = bloco.querySelector(`#data_inicial_suporte_${id}`);
+      const dataFinalInput = bloco.querySelector(`#data_final_suporte_${id}`);
+      
+      dataInicialInput.addEventListener('change', (e) => {
+        if(e.target.value) {
+            const data = new Date(e.target.value);
+            // Adiciona 1 ano
+            data.setFullYear(data.getFullYear() + 1);
+            
+            // Ajusta o dia para evitar problemas com ano bissexto (ex: 29 de fev)
+            // e retorna para string no formato YYYY-MM-DD para o input type="date"
+            const dia = String(data.getDate()).padStart(2, '0');
+            const mes = String(data.getMonth() + 1).padStart(2, '0'); // Meses começam em 0
+            const ano = data.getFullYear();
+            
+            dataFinalInput.value = `${ano}-${mes}-${dia}`;
+        } else {
+            dataFinalInput.value = '';
+        }
+      });
+      
+      // Sincroniza o idioma do novo bloco com a aba atual
+      const idiomaSelect = bloco.querySelector(`#idioma_email_${id}`);
+      if(langKey === 'pt') idiomaSelect.value = 'Português';
+      else if(langKey === 'es') idiomaSelect.value = 'Español';
+      else if(langKey === 'en') idiomaSelect.value = 'English';
+    }
+
+    function removerBlocoLicenca(id) {
+      const bloco = document.getElementById(`bloco_licenca_${id}`);
+      if (bloco) {
+        bloco.remove();
+        // Opcional: Reordenar os números dos blocos restantes para manter a sequência visual
+        atualizarTitulosBlocos();
+      }
+    }
+
+    function atualizarTitulosBlocos() {
+       const blocos = licencasContainer.querySelectorAll('.licenca-block');
+       blocos.forEach((bloco, index) => {
+           const titulo = bloco.querySelector('h3');
+           if(titulo) titulo.innerText = `Detalhes da Licença #${index + 1}`;
+       });
+    }
+
+    addLicencaBtn.addEventListener('click', criarBlocoLicenca);
+
+    // Inicializa com um bloco
+    criarBlocoLicenca();
+
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerText = message;
+      toastContainer.appendChild(toast);
+      
+      // Animate in
+      setTimeout(() => toast.classList.add('show'), 10);
+
+      // Animate out and remove
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
 
     const textos = {
       pt: {
@@ -471,17 +648,19 @@
     const imageUrlLogo = "img/Logo Engesat.png"; // Ex: "https://i.imgur.com/LogoEngesat.png"
     const imageAltTextLogo = "Logo Engesat";
 
-    let langKey = 'pt';
-
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         langKey = tab.getAttribute('data-lang');
 
-        if(langKey === 'pt') idiomaSelect.value = 'Português';
-        else if(langKey === 'es') idiomaSelect.value = 'Español';
-        else if(langKey === 'en') idiomaSelect.value = 'English';
+        // Atualiza todos os selects de idioma dos blocos dinâmicos
+        const idiomaSelects = document.querySelectorAll('[id^="idioma_email_"]');
+        idiomaSelects.forEach(select => {
+            if(langKey === 'pt') select.value = 'Português';
+            else if(langKey === 'es') select.value = 'Español';
+            else if(langKey === 'en') select.value = 'English';
+        });
       });
     });
 
@@ -499,11 +678,9 @@
     gerarBtn.addEventListener('click', () => {
       const t = textos[langKey];
       const refCliente = get('ref_cliente');
-      const tipoLicencaSelecionada = get('tipo_licenca'); // Get the full selected license type
-      const dataInicialSuporte = formatarData(get('data_inicial_suporte'));
-      const dataFinalSuporte = formatarData(get('data_final_suporte'));
-
-      const camposObrigatorios = [
+      
+      // Validação de campos gerais
+      const camposObrigatoriosGerais = [
         { id: 'ref_engesat', nome: 'Referência - Interna' },
         { id: 'ref_cliente', nome: 'Referência - Cliente' },
         { id: 'nome', nome: 'Nome' },
@@ -512,36 +689,81 @@
         { id: 'cidade', nome: 'Cidade' },
         { id: 'pais', nome: 'País' },
         { id: 'email', nome: 'Email' },
-        { id: 'telefone', nome: 'Telefone' },
-        { id: 'num_licencas', nome: 'Número de Licenças' },
-        { id: 'tipo_licenca', nome: 'Tipo de Licença' },
-        { id: 'data_inicial_suporte', nome: 'Data Inicial de Suporte' },
-        { id: 'data_final_suporte', nome: 'Data Final de Suporte' },
-        { id: 'order_number', nome: 'Blue Marble Order' }
+        { id: 'telefone', nome: 'Telefone' }
       ];
 
-      const camposVazios = camposObrigatorios.filter(campo => !get(campo.id));
+      const camposVaziosGerais = camposObrigatoriosGerais.filter(campo => !get(campo.id));
+      
+      // Coletar dados dos blocos de licença
+      const blocos = licencasContainer.querySelectorAll('.licenca-block');
+      const licencasData = [];
+      let explicacoesConjunto = new Set(); // Usa um Set para evitar explicações duplicadas
+      let camposVaziosLicencas = [];
 
-      if (camposVazios.length > 0) {
-        alert('Os seguintes campos não foram preenchidos:\n\n' + camposVazios.map(c => `- ${c.nome}`).join('\n') + '\n\nO email será gerado mesmo assim.');
+      blocos.forEach((bloco, index) => {
+          const id = bloco.id.split('_').pop();
+          const numLicencas = get(`num_licencas_${id}`);
+          const tipoLicenca = get(`tipo_licenca_${id}`);
+          const idioma = get(`idioma_email_${id}`);
+          const orderNumber = get(`order_number_${id}`);
+          const dataInicialOriginal = get(`data_inicial_suporte_${id}`);
+          const dataFinalOriginal = get(`data_final_suporte_${id}`);
+          const dataFinalDisplay = formatarData(dataFinalOriginal);
+          
+          if(!numLicencas || !tipoLicenca || !orderNumber || !dataInicialOriginal || !dataFinalOriginal) {
+              camposVaziosLicencas.push(`Bloco #${index + 1}`);
+          }
+          
+          if (tipoLicenca) {
+              if (tipoLicenca.includes("Standalone")) explicacoesConjunto.add(t.licenseExplanations["Standalone"] || '');
+              if (tipoLicenca.includes("Flutuante")) explicacoesConjunto.add(t.licenseExplanations["Flutuante"] || '');
+              if (tipoLicenca.includes("Rede")) explicacoesConjunto.add(t.licenseExplanations["Rede"] || '');
+              if (tipoLicenca.includes("USB")) explicacoesConjunto.add(t.licenseExplanations["USB"] || '');
+          }
+
+          licencasData.push({
+              numLicencas,
+              tipoLicenca,
+              idioma,
+              orderNumber,
+              dataInicial: formatarData(dataInicialOriginal),
+              dataFinal: dataFinalDisplay
+          });
+      });
+
+      const todosCamposVazios = [...camposVaziosGerais.map(c => `- ${c.nome}`)];
+      if(camposVaziosLicencas.length > 0) {
+          todosCamposVazios.push(`- Faltam dados em: ${camposVaziosLicencas.join(', ')}`);
       }
 
-      // Determine the base license type for explanation lookup
-      let explicacaoLicenca = '';
-      if (tipoLicencaSelecionada.includes("Standalone")) {
-        explicacaoLicenca = t.licenseExplanations["Standalone"] || '';
-      } else if (tipoLicencaSelecionada.includes("Flutuante")) {
-        explicacaoLicenca = t.licenseExplanations["Flutuante"] || '';
-      } else if (tipoLicencaSelecionada.includes("Rede")) {
-        explicacaoLicenca = t.licenseExplanations["Rede"] || '';
-      } else if (tipoLicencaSelecionada.includes("USB")) {
-        explicacaoLicenca = t.licenseExplanations["USB"] || '';
+      if (todosCamposVazios.length > 0) {
+        showToast('Atenção: Os seguintes campos não foram preenchidos:\n' + todosCamposVazios.join('\n') + '\n\nO email será gerado mesmo assim.', 'warning');
+      } else {
+        showToast('Email gerado com sucesso!', 'success');
       }
 
+      // Constrói o HTML para a listagem de licenças
+      let licencasHTML = '';
+      licencasData.forEach((lic, idx) => {
+          licencasHTML += `
+          <blockquote style="margin: 0 0 20px 0; padding: 15px; border: 1px solid #e9ecef; border-left: 5px solid #007bff; background-color: #f8f9fa; border-radius: 4px;">
+             <p style="margin-top: 0; margin-bottom: 8px; font-size: 1.05em;"><strong>📦 Item ${idx + 1}:</strong> ${lic.numLicencas} ${t.licencas} <strong>${lic.tipoLicenca}</strong></p>
+             <p style="margin-top: 0; margin-bottom: 8px;"><strong>🌐 Idioma da Licença:</strong> ${lic.idioma}</p>
+             <p style="margin-top: 0; margin-bottom: 8px;"><strong>🔢 Blue Marble Order:</strong> <strong style="color:#007bff; font-size: 1.1em;">#${lic.orderNumber}</strong></p>
+             <p style="margin-top: 12px; margin-bottom: 0; font-size: 0.95em; color: #555;">
+               <strong>📅 ${t.suporte_inicial}:</strong> ${lic.dataInicial}<br/>
+               <strong>📅 ${t.suporte_final}:</strong> ${lic.dataFinal}
+             </p>
+          </blockquote>
+          `;
+      });
+
+      // Junta as explicações únicas
+      const explicacaoLicencaFinal = Array.from(explicacoesConjunto).join('');
 
       const texto = `
 <p style="text-align: center; margin-top: 0; margin-bottom: 20px;">
-  <img src="img/GlobalMapper.png" alt="Logo Global Mapper" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;">
+  <img src="img/GlobalMapper.png" alt="Logo Global Mapper" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';">
 </p>
 
 <p><strong>📌 Referência Interna:</strong> <span style="font-weight:bold; color:#007bff;">${get('ref_engesat')}</span><br/>
@@ -557,13 +779,13 @@
 
 <p>${t.saudacao}</p>
 
-<p>${t.introducao_licencas} <strong>📦 ${get('num_licencas')} ${t.licencas} ${tipoLicencaSelecionada}</strong>, <strong>🌐 ${get('idioma_email')}</strong>.<br/>
-<strong>Blue Marble Order:</strong> <strong style="color:#007bff;">#${get('order_number')}</strong>.</p>
+<p>${t.introducao_licencas}:</p>
 
-${explicacaoLicenca} <p><strong>${t.suporte_inicial}:</strong> ${dataInicialSuporte}<br/>
-<strong>${t.suporte_final}:</strong> ${dataFinalSuporte}
-${t.suporte_renovacao_info ? `<br/><span style="color: red; font-size: 0.9em;">${t.suporte_renovacao_info}</span>` : ''}
-</p>
+${licencasHTML}
+
+${t.suporte_renovacao_info ? `<p><span style="color: #d9534f; font-size: 0.95em;">${t.suporte_renovacao_info}</span></p>` : ''}
+
+${explicacaoLicencaFinal} 
 
 <h3>🛠️ ${langKey === 'pt' ? 'Download do Software' : langKey === 'es' ? 'Descarga del Software' : 'Software Download'}:</h3>
 <p>${t.download}<br/>
@@ -594,7 +816,7 @@ ${t.setup}<br/>
 </ul>
 
 <p style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
-  <img src="${t.imagem_quadro_ativacao}" alt="${t.alt_quadro_ativacao}" width="600" height="auto" style="max-width: 600px; height: auto; display: block; margin: 0 auto; border: 0;">
+  <img src="${t.imagem_quadro_ativacao}" alt="${t.alt_quadro_ativacao}" width="600" height="auto" style="max-width: 600px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/600x400/ffffff/334e68?text=Quadro+Ativacao';">
 </p>
 
 <h3>❓ ${langKey === 'pt' ? 'Dúvidas' : langKey === 'es' ? 'Dudas' : 'Questions'}:</h3>
@@ -607,36 +829,58 @@ ${t.setup}<br/>
 <p>${t.assinatura}</p>
 
 <p style="text-align: center; margin-top: 20px;">
-  <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="150" height="auto" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;">
+  <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="150" height="auto" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/150x50/ffffff/334e68?text=Logo+Engesat';">
 </p>
       `.trim();
 
       output.style.display = 'block';
       output.innerHTML = texto;
       copyBtn.style.display = 'inline-block';
+      
+      // Rola a tela suavemente para baixo para ver o e-mail gerado
+      output.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     copyBtn.addEventListener('click', () => {
+      // 1. Seleciona o texto visualmente para garantir que o fallback nativo funcione
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(output);
+      selection.removeAllRanges();
+      selection.addRange(range);
+
       if (navigator.clipboard && window.ClipboardItem) {
-        const blobInput = new Blob([output.innerHTML], { type: 'text/html' });
-        const data = [new ClipboardItem({ 'text/html': blobInput })];
-        navigator.clipboard.write(data).then(() => {
-          alert('Email copiado com formatação para a área de transferência!');
-        }).catch(() => {
+        const html = output.innerHTML;
+        const text = output.innerText;
+        
+        try {
+          // Passa os dois formatos: HTML (para e-mail) e Texto (fallback para whatsapp/bloco de notas)
+          const data = [new ClipboardItem({
+            'text/html': new Blob([html], { type: 'text/html' }),
+            'text/plain': new Blob([text], { type: 'text/plain' })
+          })];
+          
+          navigator.clipboard.write(data).then(() => {
+            showToast('Email copiado com formatação! Cole no seu Outlook/Gmail.', 'success');
+            setTimeout(() => selection.removeAllRanges(), 2000); // Limpa a seleção após 2s
+          }).catch(() => {
+            fallbackCopyText();
+          });
+        } catch (e) {
           fallbackCopyText();
-        });
+        }
       } else {
         fallbackCopyText();
       }
 
       function fallbackCopyText() {
-        const el = document.createElement('textarea');
-        el.value = output.innerText;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        alert('Email copiado como texto (sem formatação).');
+        try {
+          document.execCommand('copy');
+          showToast('Email copiado! Cole no seu cliente de e-mail.', 'success');
+          setTimeout(() => selection.removeAllRanges(), 2000);
+        } catch(err) {
+          showToast('Erro ao copiar. Pressione Ctrl+C para copiar o que foi selecionado.', 'error');
+        }
       }
     });
 
