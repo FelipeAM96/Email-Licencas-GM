@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gerador de Email - Licenças Global Mapper</title>
+  <title>Gerador de Email - Licenças Global Mapper e Avenza</title>
   <link rel="icon" type="image/png" href="img/Treco_Engesat1.png" onerror="this.remove()" />
   <style>
     /* Estilos Gerais */
@@ -15,20 +15,87 @@
       color: #334e68; /* Cor de texto principal */
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start; /* Alterado de center para suportar o painel sticky */
       min-height: 100vh;
     }
 
-    /* Container Principal */
-    .container {
+    /* Layout Flex - App Wrapper */
+    .app-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      width: 100%;
+      max-width: 800px;
+      transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      margin: 0 auto;
+    }
+
+    /* Expansão para Duas Colunas (Telas grandes) */
+    @media (min-width: 1024px) {
+      .app-wrapper.show-output {
+        max-width: 1500px; /* Largura expandida */
+        flex-direction: row;
+        align-items: flex-start;
+      }
+    }
+
+    /* Painéis (Esquerda e Direita) */
+    .panel {
       background-color: #ffffff;
       padding: 35px;
       border-radius: 12px;
       width: 100%;
-      max-width: 800px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
-      transition: transform 0.3s ease-in-out;
-      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      box-sizing: border-box;
+    }
+
+    .left-panel {
+      flex: 1 1 50%;
+    }
+
+    .right-panel {
+      flex: 1 1 50%;
+      display: none; /* Escondido até gerar */
+      opacity: 0;
+    }
+
+    .app-wrapper.show-output .right-panel {
+      display: block;
+      animation: fadeIn 0.6s forwards ease;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Fixar o painel direito na tela no Desktop */
+    @media (min-width: 1024px) {
+      .right-panel {
+        position: sticky;
+        top: 40px; /* Espaço igual ao padding do body */
+        max-height: calc(100vh - 80px); /* 100vh menos topo e fundo */
+        overflow-y: auto;
+      }
+    }
+
+    /* Cabeçalho do Painel Direito (E-mail gerado) */
+    .right-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e9ecef;
+      position: sticky;
+      top: -35px; /* Compensa o padding para manter fixo no scroll interno */
+      background: #ffffff;
+      z-index: 10;
+    }
+
+    .right-header h2 {
+      margin: 0;
+      color: #2b3b51;
+      font-size: 1.4em;
     }
 
     /* Abas de Software (Topo) */
@@ -73,7 +140,7 @@
     }
 
     .header-logo img {
-      max-width: 250px; /* Ajuste o tamanho da logo conforme necessário */
+      max-width: 250px;
       height: auto;
       border-radius: 8px;
     }
@@ -84,7 +151,7 @@
       justify-content: center;
       margin-bottom: 30px;
       border-radius: 8px;
-      background-color: #e9ecef; /* Fundo das abas */
+      background-color: #e9ecef;
       padding: 5px;
       cursor: pointer;
       user-select: none;
@@ -209,7 +276,10 @@
     }
 
     button#copyBtn {
-      background: #28a745; /* Cor para o botão de copiar */
+      background: #28a745; 
+      margin-top: 0;
+      width: auto;
+      padding: 10px 20px;
     }
 
     button#copyBtn:hover {
@@ -218,16 +288,9 @@
 
     /* Área de Saída do Email */
     .email-output {
-      background: #fdfdfd;
-      padding: 30px;
-      border-radius: 12px;
-      margin-top: 30px;
       font-size: 1em;
       line-height: 1.7;
       white-space: normal;
-      max-height: 500px;
-      overflow-y: auto;
-      border: 1px solid #e9ecef;
       word-wrap: break-word; /* Quebra de linha para palavras longas */
     }
 
@@ -259,7 +322,7 @@
       background-color: #fff;
     }
 
-    /* Toast Notification (Substituto do alert) */
+    /* Toast Notification */
     .toast-container {
       position: fixed;
       bottom: 20px;
@@ -293,10 +356,10 @@
     .toast.warning { background-color: #ffc107; color: #333; }
     .toast.error { background-color: #dc3545; }
 
-    /* ================================================= */
+    /* Responsividade */
     @media (max-width: 768px) {
       body {
-        padding: 20px 10px; /* Reduz o padding em telas menores */
+        padding: 20px 10px;
       }
       
       .main-tabs {
@@ -308,19 +371,19 @@
         text-align: center;
       }
 
-      .container {
-        padding: 20px; /* Reduz o padding do container */
-        border-radius: 8px; /* Arredondamento menor */
+      .panel {
+        padding: 20px;
+        border-radius: 8px;
       }
 
       .header-logo img {
-        max-width: 180px; /* Reduz o tamanho da logo */
+        max-width: 180px;
       }
 
       .tabs {
-        flex-direction: column; /* Alinha as abas verticalmente */
+        flex-direction: column;
         padding: 0;
-        background-color: transparent; /* Remove o fundo das abas */
+        background-color: transparent;
       }
 
       .tab {
@@ -333,117 +396,127 @@
       }
 
       .tab.active {
-        box-shadow: none; /* Remove a sombra da aba ativa */
-        background-color: #f8f9fa; /* Fundo mais claro para aba ativa */
+        box-shadow: none;
+        background-color: #f8f9fa;
       }
 
       button {
-        padding: 12px; /* Reduz o padding dos botões */
-        font-size: 1em; /* Reduz o tamanho da fonte do botão */
+        padding: 12px;
+        font-size: 1em;
+      }
+      
+      .right-header {
+        flex-direction: column;
+        gap: 10px;
+        position: static; /* Remove sticky no celular */
       }
 
-      .email-output {
-        padding: 15px; /* Reduz o padding da área de saída */
-        font-size: 0.9em; /* Reduz o tamanho da fonte do email gerado */
-      }
-
-      .container img {
-        max-width: 100% !important;
-        height: auto;
+      button#copyBtn {
+        width: 100%;
       }
 
       .email-output img {
-        width: 100% !important; /* Força a largura para 100% do seu contêiner */
+        width: 100% !important;
       }
     }
-
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="software-tabs">
-      <div class="software-tab active" data-software="gm">🌍 Global Mapper</div>
-      <div class="software-tab" data-software="avenza">📍 Avenza Maps</div>
-    </div>
-
-    <div class="header-logo">
-      <img src="img/GlobalMapper.png" alt="Logo Global Mapper" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';" />
-    </div>
-
-    <div class="main-tabs">
-      <div class="main-tab active" data-view="pedido">📝 Pedido Global Mapper</div>
-      <div class="main-tab" data-view="entrega">📦 Entrega Global Mapper</div>
-    </div>
-
-    <div class="tabs">
-      <div class="tab active" data-lang="pt">Português</div>
-      <div class="tab" data-lang="es">Español</div>
-      <div class="tab" data-lang="en">English</div>
-    </div>
-
-    <form id="formPedido">
-      <label for="ped_empresa">🏢 Nome da Empresa:</label>
-      <input type="text" id="ped_empresa" placeholder="Empresa interessada" />
-
-      <label for="ped_responsavel">👤 Nome do Responsável:</label>
-      <input type="text" id="ped_responsavel" placeholder="Nome do contato" />
-
-      <label for="ped_email">📧 Email:</label>
-      <input type="text" id="ped_email" placeholder="email@exemplo.com" />
-
-      <label for="ped_telefone">📞 Telefone:</label>
-      <input type="text" id="ped_telefone" placeholder="(XX) XXXX-XXXX" />
-
-      <label for="ped_obs">📝 Observações / Escopo Adicional (Opcional):</label>
-      <textarea id="ped_obs" rows="4" placeholder="Insira aqui propostas de valores, condições de pagamento ou detalhes adicionais..."></textarea>
-
-      <button type="button" id="gerarPedidoBtn">Gerar Email de Pedido</button>
-    </form>
-
-    <form id="emailForm" style="display: none;">
-      <label for="ref_engesat">📌 Referência Interna:</label>
-      <input type="text" id="ref_engesat" placeholder="Ex: Pedido 25010" />
-
-      <label for="ref_cliente">📝 Referência do Cliente:</label>
-      <input type="text" id="ref_cliente" placeholder="Ex: Ordem de Compra #OC-XYZ" />
-
-      <label for="nome">👤 Nome:</label>
-      <input type="text" id="nome" placeholder="Nome do cliente" />
-
-      <label for="empresa">🏢 Empresa:</label>
-      <input type="text" id="empresa" placeholder="Nome da empresa" />
-
-      <label for="endereco">📍 Endereço:</label>
-      <input type="text" id="endereco" placeholder="Endereço completo" />
-
-      <label for="cidade">🌆 Cidade:</label>
-      <input type="text" id="cidade" placeholder="Nome da cidade" />
-
-      <label for="pais">🌎 País:</label>
-      <input type="text" id="pais" placeholder="Nome do país" />
-
-      <label for="email">📧 Email:</label>
-      <input type="text" id="email" placeholder="email@exemplo.com" />
-
-      <label for="telefone">📞 Telefone:</label>
-      <input type="text" id="telefone" placeholder="(XX) XXXX-XXXX" />
-
-      <div id="licencasContainer">
-        <!-- O primeiro bloco será inserido via JavaScript -->
+  <div class="app-wrapper" id="appWrapper">
+    <!-- PAINEL ESQUERDO: Abas e Formulários -->
+    <div class="panel left-panel">
+      <div class="software-tabs">
+        <div class="software-tab active" data-software="gm">🌍 Global Mapper</div>
+        <div class="software-tab" data-software="avenza">📍 Avenza Maps</div>
       </div>
-      
-      <button type="button" id="addLicencaBtn" class="btn-secondary">➕ Adicionar Outra Licença</button>
 
-      <button type="button" id="gerarBtn">Gerar Email</button>
-    </form>
+      <div class="header-logo">
+        <img src="img/GlobalMapper.png" alt="Logo Global Mapper" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';" />
+      </div>
 
-    <div id="emailOutput" class="email-output" style="display:none;"></div>
-    <button type="button" id="copyBtn" style="display:none;">Copiar Email</button>
+      <div class="main-tabs">
+        <div class="main-tab active" data-view="pedido">📝 Pedido Global Mapper</div>
+        <div class="main-tab" data-view="entrega">📦 Entrega Global Mapper</div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" data-lang="pt">Português</div>
+        <div class="tab" data-lang="es">Español</div>
+        <div class="tab" data-lang="en">English</div>
+      </div>
+
+      <form id="formPedido">
+        <label for="ped_empresa">🏢 Nome da Empresa:</label>
+        <input type="text" id="ped_empresa" placeholder="Empresa interessada" />
+
+        <label for="ped_responsavel">👤 Nome do Responsável:</label>
+        <input type="text" id="ped_responsavel" placeholder="Nome do contato" />
+
+        <label for="ped_email">📧 Email:</label>
+        <input type="text" id="ped_email" placeholder="email@exemplo.com" />
+
+        <label for="ped_telefone">📞 Telefone:</label>
+        <input type="text" id="ped_telefone" placeholder="(XX) XXXX-XXXX" />
+
+        <label for="ped_obs">📝 Observações / Escopo Adicional (Opcional):</label>
+        <textarea id="ped_obs" rows="4" placeholder="Insira aqui propostas de valores, condições de pagamento ou detalhes adicionais..."></textarea>
+
+        <button type="button" id="gerarPedidoBtn">Gerar Email de Pedido</button>
+      </form>
+
+      <form id="emailForm" style="display: none;">
+        <label for="ref_engesat">📌 Referência Interna:</label>
+        <input type="text" id="ref_engesat" placeholder="Ex: Pedido 25010" />
+
+        <label for="ref_cliente">📝 Referência do Cliente:</label>
+        <input type="text" id="ref_cliente" placeholder="Ex: Ordem de Compra #OC-XYZ" />
+
+        <label for="nome">👤 Nome:</label>
+        <input type="text" id="nome" placeholder="Nome do cliente" />
+
+        <label for="empresa">🏢 Empresa:</label>
+        <input type="text" id="empresa" placeholder="Nome da empresa" />
+
+        <label for="endereco">📍 Endereço:</label>
+        <input type="text" id="endereco" placeholder="Endereço completo" />
+
+        <label for="cidade">🌆 Cidade:</label>
+        <input type="text" id="cidade" placeholder="Nome da cidade" />
+
+        <label for="pais">🌎 País:</label>
+        <input type="text" id="pais" placeholder="Nome do país" />
+
+        <label for="email">📧 Email:</label>
+        <input type="text" id="email" placeholder="email@exemplo.com" />
+
+        <label for="telefone">📞 Telefone:</label>
+        <input type="text" id="telefone" placeholder="(XX) XXXX-XXXX" />
+
+        <div id="licencasContainer">
+          <!-- O primeiro bloco será inserido via JavaScript -->
+        </div>
+        
+        <button type="button" id="addLicencaBtn" class="btn-secondary">➕ Adicionar Outra Licença</button>
+
+        <button type="button" id="gerarBtn">Gerar Email de Entrega</button>
+      </form>
+    </div>
+
+    <!-- PAINEL DIREITO: Saída do E-mail (Inicialmente oculto) -->
+    <div class="panel right-panel" id="rightPanel">
+      <div class="right-header">
+        <h2>Visualização do E-mail</h2>
+        <button type="button" id="copyBtn">Copiar E-mail</button>
+      </div>
+      <div id="emailOutput" class="email-output"></div>
+    </div>
   </div>
 
   <div id="toastContainer" class="toast-container"></div>
 
   <script>
+    const appWrapper = document.getElementById('appWrapper');
+    const rightPanel = document.getElementById('rightPanel');
     const tabs = document.querySelectorAll('.tab');
     const mainTabs = document.querySelectorAll('.main-tab');
     const formPedido = document.getElementById('formPedido');
@@ -460,8 +533,8 @@
     
     let currentSoftware = 'gm';
     let licencaCount = 0;
-    let langKey = 'pt'; // <-- Mova a declaração para cá
-    let currentView = 'pedido'; // Inicia na aba de pedido
+    let langKey = 'pt';
+    let currentView = 'pedido';
     
     mainTabs.forEach(tab => {
       tab.addEventListener('click', () => {
@@ -469,9 +542,8 @@
         tab.classList.add('active');
         currentView = tab.getAttribute('data-view');
 
-        // Ocultar a saída gerada ao trocar de aba
-        output.style.display = 'none';
-        copyBtn.style.display = 'none';
+        // Ocultar a saída gerada ao trocar de aba principal
+        appWrapper.classList.remove('show-output');
 
         if (currentView === 'pedido') {
           formPedido.style.display = 'block';
@@ -584,10 +656,8 @@
             // Adiciona 1 ano
             data.setFullYear(data.getFullYear() + 1);
             
-            // Ajusta o dia para evitar problemas com ano bissexto (ex: 29 de fev)
-            // e retorna para string no formato YYYY-MM-DD para o input type="date"
             const dia = String(data.getDate()).padStart(2, '0');
-            const mes = String(data.getMonth() + 1).padStart(2, '0'); // Meses começam em 0
+            const mes = String(data.getMonth() + 1).padStart(2, '0');
             const ano = data.getFullYear();
             
             dataFinalInput.value = `${ano}-${mes}-${dia}`;
@@ -607,7 +677,6 @@
       const bloco = document.getElementById(`bloco_licenca_${id}`);
       if (bloco) {
         bloco.remove();
-        // Opcional: Reordenar os números dos blocos restantes para manter a sequência visual
         atualizarTitulosBlocos();
       }
     }
@@ -651,8 +720,7 @@
         }
 
         // Ocultar saídas abertas ao trocar de software
-        output.style.display = 'none';
-        copyBtn.style.display = 'none';
+        appWrapper.classList.remove('show-output');
 
         // Atualizar dropdowns de licença existentes
         const tipoLicencaSelects = licencasContainer.querySelectorAll('select[id^="tipo_licenca_"]');
@@ -661,7 +729,7 @@
           select.innerHTML = optionsToUse;
         });
 
-        // Atualizar labels de Order Number (Blue Marble vs Avenza)
+        // Atualizar labels de Order Number
         const orderLabels = licencasContainer.querySelectorAll('label[for^="order_number_"]');
         orderLabels.forEach(label => {
           label.innerHTML = `🔢 ${currentSoftware === 'gm' ? 'Blue Marble' : 'Avenza'} Order:`;
@@ -901,10 +969,6 @@
       }
     };
 
-    // Mágica para clonar o texto do Global Mapper e adaptar para o Avenza Maps de forma inteligente,
-    // sem precisar reescrever as 300 linhas do objeto original.
-    // (NOTA: Se futuramente o Avenza exigir textos e tabelas MUITO diferentes, 
-    // basta substituir esta variável por um objeto novo manual seguindo a mesma estrutura do textosGM).
     const textosAvenza = JSON.parse(
       JSON.stringify(textosGM)
         .replace(/Global Mapper/g, 'Avenza Maps')
@@ -997,11 +1061,6 @@
         suporte_atencao: "<strong>Support Attention:</strong> Full technical support is only guaranteed for direct purchases with EngeSat. The company is not responsible for purchases or upgrades made through app stores (Apple Store/Google Play)."
     };
 
-    // =======================================================
-    // TEXTOS DE ENTREGA ESPECÍFICOS PARA O AVENZA MAPS
-    // =======================================================
-
-    // --- PORTUGUÊS ---
     textosAvenza.pt.introducao_licencas = "Segue o e-mail formal de entrega referente à(s)";
     textosAvenza.pt.licencas = "Assinatura(s) do";
     textosAvenza.pt.download = "O aplicativo Avenza Maps é gratuito para download e deve ser instalado diretamente nas lojas oficiais do seu dispositivo móvel:";
@@ -1014,7 +1073,7 @@
     textosAvenza.pt.recomendacao = "Recomendamos guardar o número da sua Avenza Order e as chaves de licença em um local seguro. Caso sua empresa utilize o <em>Subscription Management</em>, o administrador poderá alocar as licenças pelo painel corporativo.";
     textosAvenza.pt.ativacao = "Para ativar: Abra o aplicativo Avenza Maps > Vá na aba 'Configurações' > 'Assinaturas Avenza Maps' (ou 'Conta') > Faça o login corporativo ou insira sua chave de assinatura.";
     textosAvenza.pt.suporte_renovacao_info = "A assinatura do Avenza Maps é válida pelo período contratado (1, 2 ou 3 anos). Para garantir o uso contínuo das funções corporativas, navegação offline e suporte técnico, lembre-se de renovar antes do vencimento.";
-    textosAvenza.pt.imagem_quadro_ativacao = ""; // Sem imagem de ativação para Avenza
+    textosAvenza.pt.imagem_quadro_ativacao = "";
     textosAvenza.pt.licenseExplanations = {
         "Assinatura": `
             <h3>- Sobre a Assinatura Avenza Maps</h3>
@@ -1023,7 +1082,6 @@
         `
     };
 
-    // --- ESPANHOL ---
     textosAvenza.es.introducao_licencas = "Se adjunta el correo electrónico de entrega formal referente a su(s)";
     textosAvenza.es.licencas = "Suscripción(es) de";
     textosAvenza.es.download = "La aplicación Avenza Maps es de descarga gratuita y debe instalarse directamente desde las tiendas oficiales en su dispositivo móvil:";
@@ -1045,7 +1103,6 @@
         `
     };
 
-    // --- INGLÊS ---
     textosAvenza.en.introducao_licencas = "Attached is the formal delivery email regarding your";
     textosAvenza.en.licencas = "Subscription(s) for";
     textosAvenza.en.download = "The Avenza Maps app is free to download and must be installed directly from the official stores on your mobile device:";
@@ -1069,8 +1126,7 @@
 
     const getTextos = () => currentSoftware === 'gm' ? textosGM : textosAvenza;
 
-    // >>> URL da imagem do logo da empresa - SUBSTITUA PELO SEU LINK REAL HOSPEDADO ONLINE <<<
-    const imageUrlLogo = "img/Logo Engesat.png"; // Ex: "https://i.imgur.com/LogoEngesat.png"
+    const imageUrlLogo = "img/Logo Engesat.png";
     const imageAltTextLogo = "Logo Engesat";
 
     function get(id) {
@@ -1083,6 +1139,7 @@
         return `${dia}/${mes}/${ano}`;
     }
 
+    // Ação do Botão Gerar Email de Pedido
     gerarPedidoBtn.addEventListener('click', () => {
       const t = getTextos()[langKey].pedido;
       
@@ -1092,7 +1149,6 @@
       const telefone = get('ped_telefone');
       const obs = get('ped_obs');
 
-      // Validação Básica
       if (!empresa || !responsavel) {
          showToast('Atenção: Preencha pelo menos a Empresa e o Responsável.', 'warning');
       } else {
@@ -1116,7 +1172,6 @@
       let texto = '';
 
       if (currentSoftware === 'gm') {
-          // Lógica de Geração do HTML para o Global Mapper
           const expl = getTextos()[langKey].licenseExplanations;
           const modosExplicacoes = Object.values(expl).join('\n');
 
@@ -1239,7 +1294,6 @@
           </div>
           `;
       } else {
-          // Lógica de Geração do HTML para o Avenza Maps
           const tableRowsHtml = t.valores_tabela_rows.map(row => `
             <tr>
               <td style="border: 1px solid #ced4da; padding: 10px;">${row[0]}</td>
@@ -1308,17 +1362,22 @@
           `;
       }
 
-      output.style.display = 'block';
       output.innerHTML = texto.trim();
-      copyBtn.style.display = 'inline-block';
-      output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // Expande a visualização (exibe o painel direito)
+      appWrapper.classList.add('show-output');
+
+      // Se for celular, rola até o painel
+      if (window.innerWidth < 1024) {
+          rightPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
 
+    // Ação do Botão Gerar Email de Entrega
     gerarBtn.addEventListener('click', () => {
       const t = getTextos()[langKey];
       const refCliente = get('ref_cliente');
       
-      // Validação de campos gerais
       const camposObrigatoriosGerais = [
         { id: 'ref_engesat', nome: 'Referência - Interna' },
         { id: 'ref_cliente', nome: 'Referência - Cliente' },
@@ -1333,10 +1392,9 @@
 
       const camposVaziosGerais = camposObrigatoriosGerais.filter(campo => !get(campo.id));
       
-      // Coletar dados dos blocos de licença
       const blocos = licencasContainer.querySelectorAll('.licenca-block');
       const licencasData = [];
-      let explicacoesConjunto = new Set(); // Usa um Set para evitar explicações duplicadas
+      let explicacoesConjunto = new Set();
       let camposVaziosLicencas = [];
 
       blocos.forEach((bloco, index) => {
@@ -1382,7 +1440,6 @@
         showToast('Email gerado com sucesso!', 'success');
       }
 
-      // Constrói o HTML para a listagem de licenças
       let licencasHTML = '';
       licencasData.forEach((lic, idx) => {
           licencasHTML += `
@@ -1398,17 +1455,15 @@
           `;
       });
 
-      // Junta as explicações únicas
       const explicacaoLicencaFinal = Array.from(explicacoesConjunto).join('');
-
       const logoImgSrc = currentSoftware === 'gm' ? 'img/GlobalMapper.png' : 'img/AvenzaMaps.png';
       const logoImgAlt = currentSoftware === 'gm' ? 'Logo Global Mapper' : 'Logo Avenza Maps';
       const logoImgFallback = currentSoftware === 'gm' ? 'Global+Mapper' : 'Avenza+Maps';
 
       const texto = `
-<p style="text-align: center; margin-top: 0; margin-bottom: 20px;">
+<div style="text-align: center; margin-top: 0; padding-top: 0; margin-bottom: 20px;">
   <img src="${logoImgSrc}" alt="${logoImgAlt}" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=${logoImgFallback}';">
-</p>
+</div>
 
 <p><strong>📌 Referência Interna:</strong> <span style="font-weight:bold; color:#007bff;">${get('ref_engesat')}</span><br/>
 <strong>📝 Referência do Cliente:</strong> <span style="font-weight:bold; color:#007bff;">${refCliente}</span></p>
@@ -1479,16 +1534,18 @@ ${t.imagem_quadro_ativacao ? `
 </div>
       `.trim();
 
-      output.style.display = 'block';
       output.innerHTML = texto;
-      copyBtn.style.display = 'inline-block';
       
-      // Rola a tela suavemente para baixo para ver o e-mail gerado
-      output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Expande a visualização (exibe o painel direito)
+      appWrapper.classList.add('show-output');
+
+      // Se for celular, rola até o painel
+      if (window.innerWidth < 1024) {
+          rightPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
 
     copyBtn.addEventListener('click', () => {
-      // 1. Seleciona o texto visualmente para garantir que o fallback nativo funcione
       const selection = window.getSelection();
       const range = document.createRange();
       range.selectNodeContents(output);
@@ -1500,7 +1557,6 @@ ${t.imagem_quadro_ativacao ? `
         const text = output.innerText;
         
         try {
-          // Passa os dois formatos: HTML (para e-mail) e Texto (fallback para whatsapp/bloco de notas)
           const data = [new ClipboardItem({
             'text/html': new Blob([html], { type: 'text/html' }),
             'text/plain': new Blob([text], { type: 'text/plain' })
@@ -1508,7 +1564,7 @@ ${t.imagem_quadro_ativacao ? `
           
           navigator.clipboard.write(data).then(() => {
             showToast('Email copiado com formatação! Cole no seu Outlook/Gmail.', 'success');
-            setTimeout(() => selection.removeAllRanges(), 2000); // Limpa a seleção após 2s
+            setTimeout(() => selection.removeAllRanges(), 2000);
           }).catch(() => {
             fallbackCopyText();
           });
@@ -1529,7 +1585,6 @@ ${t.imagem_quadro_ativacao ? `
         }
       }
     });
-
   </script>
 </body>
 </html>
