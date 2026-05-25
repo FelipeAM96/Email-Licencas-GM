@@ -30,10 +30,10 @@
       margin: 0 auto;
     }
 
-    /* Expansão para Duas Colunas (Telas grandes) */
-    @media (min-width: 1024px) {
+    /* Expansão para Duas Colunas (Telas grandes / Notebooks) */
+    @media (min-width: 992px) {
       .app-wrapper.show-output {
-        max-width: 1500px; /* Largura expandida */
+        max-width: 1400px; /* Reduzido de 1500 para melhor adaptação em notebooks */
         flex-direction: row;
         align-items: flex-start;
       }
@@ -50,11 +50,13 @@
     }
 
     .left-panel {
-      flex: 1 1 50%;
+      flex: 1; /* Distribuição de espaço flexível */
+      width: 100%;
     }
 
     .right-panel {
-      flex: 1 1 50%;
+      flex: 1; /* Distribuição de espaço flexível */
+      width: 100%;
       display: none; /* Escondido até gerar */
       opacity: 0;
     }
@@ -69,7 +71,7 @@
     }
 
     /* Fixar o painel direito na tela no Desktop */
-    @media (min-width: 1024px) {
+    @media (min-width: 992px) {
       .right-panel {
         position: sticky;
         top: 40px; /* Espaço igual ao padding do body */
@@ -357,7 +359,7 @@
     .toast.error { background-color: #dc3545; }
 
     /* Responsividade */
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
       body {
         padding: 20px 10px;
       }
@@ -408,7 +410,7 @@
       .right-header {
         flex-direction: column;
         gap: 10px;
-        position: static; /* Remove sticky no celular */
+        position: static; /* Remove sticky no celular/tablet menor */
       }
 
       button#copyBtn {
@@ -1367,8 +1369,8 @@
       // Expande a visualização (exibe o painel direito)
       appWrapper.classList.add('show-output');
 
-      // Se for celular, rola até o painel
-      if (window.innerWidth < 1024) {
+      // Se for celular ou tablet pequeno, rola até o painel
+      if (window.innerWidth < 992) {
           rightPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
@@ -1539,8 +1541,8 @@ ${t.imagem_quadro_ativacao ? `
       // Expande a visualização (exibe o painel direito)
       appWrapper.classList.add('show-output');
 
-      // Se for celular, rola até o painel
-      if (window.innerWidth < 1024) {
+      // Se for celular ou tablet pequeno, rola até o painel
+      if (window.innerWidth < 992) {
           rightPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
