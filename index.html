@@ -31,6 +31,41 @@
       position: relative;
     }
 
+    /* Abas de Software (Topo) */
+    .software-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      background-color: #2b3b51;
+      border-radius: 8px;
+      padding: 6px;
+      gap: 6px;
+    }
+
+    .software-tab {
+      flex: 1;
+      padding: 14px;
+      text-align: center;
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #a0aec0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .software-tab.active {
+      background-color: #ffffff;
+      color: #2b3b51;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .software-tab:hover:not(.active) {
+      background-color: #3e5370;
+      color: #ffffff;
+    }
+
     /* Título e logo */
     .header-logo {
       text-align: center;
@@ -40,16 +75,7 @@
     .header-logo img {
       max-width: 250px; /* Ajuste o tamanho da logo conforme necessário */
       height: auto;
-      margin-bottom: 15px; /* Espaço entre a logo e o título */
       border-radius: 8px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #2b3b51;
-      font-size: 2.2em;
-      font-weight: 600;
-      margin: 0;
     }
 
     /* Abas de Idioma */
@@ -78,35 +104,6 @@
       background-color: #ffffff;
       color: #007bff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Formulário e campos */
-    label {
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 6px;
-      font-weight: 600;
-      color: #334e68;
-      font-size: 0.95em;
-    }
-
-    input[type="text"], input[type="date"], select, textarea {
-      width: 100%;
-      padding: 12px;
-      box-sizing: border-box;
-      border: 1px solid #ced4da;
-      border-radius: 8px;
-      font-size: 1em;
-      color: #495057;
-      background-color: #f8f9fa;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      font-family: inherit;
-    }
-
-    input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #007bff;
-      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
     }
 
     /* Abas Principais (Pedido / Entrega) */
@@ -138,6 +135,35 @@
 
     .main-tab:hover:not(.active) {
       background-color: #dee2e6;
+    }
+
+    /* Formulário e campos */
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #334e68;
+      font-size: 0.95em;
+    }
+
+    input[type="text"], input[type="date"], input[type="number"], select, textarea {
+      width: 100%;
+      padding: 12px;
+      box-sizing: border-box;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      font-size: 1em;
+      color: #495057;
+      background-color: #f8f9fa;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      font-family: inherit;
+    }
+
+    input[type="text"]:focus, input[type="date"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
     }
 
     /* Botões */
@@ -210,6 +236,29 @@
         margin-bottom: 1em;
     }
 
+    /* Bloco de Licença */
+    .licenca-block {
+      background-color: #f8f9fa;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      position: relative;
+    }
+    
+    .licenca-block h3 {
+      margin-top: 0;
+      color: #334e68;
+      font-size: 1.1em;
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .licenca-block select, .licenca-block input {
+      background-color: #fff;
+    }
+
     /* Toast Notification (Substituto do alert) */
     .toast-container {
       position: fixed;
@@ -244,29 +293,6 @@
     .toast.warning { background-color: #ffc107; color: #333; }
     .toast.error { background-color: #dc3545; }
 
-    /* Bloco de Licença */
-    .licenca-block {
-      background-color: #f8f9fa;
-      border: 1px solid #ced4da;
-      border-radius: 8px;
-      padding: 20px;
-      margin-top: 20px;
-      position: relative;
-    }
-    
-    .licenca-block h3 {
-      margin-top: 0;
-      color: #334e68;
-      font-size: 1.1em;
-      border-bottom: 1px solid #dee2e6;
-      padding-bottom: 10px;
-      margin-bottom: 15px;
-    }
-
-    .licenca-block select, .licenca-block input {
-      background-color: #fff;
-    }
-
     /* ================================================= */
     @media (max-width: 768px) {
       body {
@@ -289,10 +315,6 @@
 
       .header-logo img {
         max-width: 180px; /* Reduz o tamanho da logo */
-      }
-
-      h1 {
-        font-size: 1.8em; /* Reduz o tamanho da fonte do título */
       }
 
       .tabs {
@@ -339,9 +361,13 @@
 </head>
 <body>
   <div class="container">
+    <div class="software-tabs">
+      <div class="software-tab active" data-software="gm">🌍 Global Mapper</div>
+      <div class="software-tab" data-software="avenza">📍 Avenza Maps</div>
+    </div>
+
     <div class="header-logo">
       <img src="img/GlobalMapper.png" alt="Logo Global Mapper" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';" />
-      <h1>Gerador de Email de Licenças</h1>
     </div>
 
     <div class="main-tabs">
@@ -430,7 +456,9 @@
     const toastContainer = document.getElementById('toastContainer');
     const licencasContainer = document.getElementById('licencasContainer');
     const addLicencaBtn = document.getElementById('addLicencaBtn');
+    const softwareTabs = document.querySelectorAll('.software-tab');
     
+    let currentSoftware = 'gm';
     let licencaCount = 0;
     let langKey = 'pt'; // <-- Mova a declaração para cá
     let currentView = 'pedido'; // Inicia na aba de pedido
@@ -455,14 +483,24 @@
       });
     });
 
-    const optionsNumeroLicencas = `
-      <option value="">Selecione</option>
-      <option>1</option><option>2</option><option>3</option><option>4</option>
-      <option>5</option><option>6</option><option>7</option><option>8</option>
-      <option>9</option><option>10</option>
-    `;
+    // Lógica para as abas de idioma
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        langKey = tab.getAttribute('data-lang');
 
-    const optionsTipoLicenca = `
+        // Atualiza todos os selects de idioma dos blocos dinâmicos para acompanhar a aba
+        const idiomaSelects = document.querySelectorAll('[id^="idioma_email_"]');
+        idiomaSelects.forEach(select => {
+            if(langKey === 'pt') select.value = 'Português';
+            else if(langKey === 'es') select.value = 'Español';
+            else if(langKey === 'en') select.value = 'English';
+        });
+      });
+    });
+
+    const optionsTipoLicencaGM = `
       <option value="">Selecione</option>
       <option>Global Mapper Standalone</option>
       <option>Global Mapper Flutuante</option>
@@ -490,6 +528,13 @@
       <option>Renovação Global Mapper + Global Mapper Pro USB</option>
     `;
 
+    const optionsTipoLicencaAvenza = `
+      <option value="">Selecione</option>
+      <option>Avenza Maps Pro - Assinatura 1 Ano</option>
+      <option>Avenza Maps Pro - Assinatura 2 Anos</option>
+      <option>Avenza Maps Pro - Assinatura 3 Anos</option>
+    `;
+
     const optionsIdioma = `
       <option>Português</option>
       <option>Español</option>
@@ -507,15 +552,15 @@
         <h3>Detalhes da Licença #${id}</h3>
         
         <label for="num_licencas_${id}">📦 Número de Licenças:</label>
-        <select id="num_licencas_${id}" class="input-licenca" required>${optionsNumeroLicencas}</select>
+        <input type="number" id="num_licencas_${id}" class="input-licenca" min="1" placeholder="Digite a quantidade (Ex: 1, 15, 50...)" required />
 
         <label for="tipo_licenca_${id}">💻 Tipo de Licença:</label>
-        <select id="tipo_licenca_${id}" class="input-licenca" required>${optionsTipoLicenca}</select>
+        <select id="tipo_licenca_${id}" class="input-licenca" required>${currentSoftware === 'gm' ? optionsTipoLicencaGM : optionsTipoLicencaAvenza}</select>
 
         <label for="idioma_email_${id}">🌐 Idioma da Licença:</label>
         <select id="idioma_email_${id}" class="input-licenca">${optionsIdioma}</select>
 
-        <label for="order_number_${id}">🔢 Blue Marble Order:</label>
+        <label for="order_number_${id}">🔢 ${currentSoftware === 'gm' ? 'Blue Marble' : 'Avenza'} Order:</label>
         <input type="text" id="order_number_${id}" class="input-licenca" placeholder="Ex: 123450-K5ONMNMG" required />
 
         <label for="data_inicial_suporte_${id}">📅 Data Inicial de Suporte:</label>
@@ -580,6 +625,50 @@
     // Inicializa com um bloco
     criarBlocoLicenca();
 
+    softwareTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        softwareTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentSoftware = tab.getAttribute('data-software');
+        
+        // Atualizar UI
+        const logoImg = document.querySelector('.header-logo img');
+        const mainTabPedido = document.querySelector('.main-tab[data-view="pedido"]');
+        const mainTabEntrega = document.querySelector('.main-tab[data-view="entrega"]');
+
+        if (currentSoftware === 'gm') {
+          logoImg.src = "img/GlobalMapper.png";
+          logoImg.alt = "Logo Global Mapper";
+          logoImg.setAttribute('onerror', "this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';");
+          mainTabPedido.innerText = "📝 Pedido Global Mapper";
+          mainTabEntrega.innerText = "📦 Entrega Global Mapper";
+        } else {
+          logoImg.src = "img/AvenzaMaps.png";
+          logoImg.alt = "Logo Avenza Maps";
+          logoImg.setAttribute('onerror', "this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Avenza+Maps';");
+          mainTabPedido.innerText = "📝 Pedido Avenza Maps";
+          mainTabEntrega.innerText = "📦 Entrega Avenza Maps";
+        }
+
+        // Ocultar saídas abertas ao trocar de software
+        output.style.display = 'none';
+        copyBtn.style.display = 'none';
+
+        // Atualizar dropdowns de licença existentes
+        const tipoLicencaSelects = licencasContainer.querySelectorAll('select[id^="tipo_licenca_"]');
+        const optionsToUse = currentSoftware === 'gm' ? optionsTipoLicencaGM : optionsTipoLicencaAvenza;
+        tipoLicencaSelects.forEach(select => {
+          select.innerHTML = optionsToUse;
+        });
+
+        // Atualizar labels de Order Number (Blue Marble vs Avenza)
+        const orderLabels = licencasContainer.querySelectorAll('label[for^="order_number_"]');
+        orderLabels.forEach(label => {
+          label.innerHTML = `🔢 ${currentSoftware === 'gm' ? 'Blue Marble' : 'Avenza'} Order:`;
+        });
+      });
+    });
+
     function showToast(message, type = 'info') {
       const toast = document.createElement('div');
       toast.className = `toast ${type}`;
@@ -596,7 +685,7 @@
       }, 4000);
     }
 
-    const textos = {
+    const textosGM = {
       pt: {
         pedido: {
             saudacao: "Prezado(a)",
@@ -642,7 +731,7 @@
         suporte_inicial: "Data Inicial de Suporte",
         suporte_final: "Data Final de Suporte",
         suporte_renovacao_info: "A renovação do suporte e das atualizações do software é anual. Reforçamos a importância dessa renovação para garantir assistência técnica, recuperação do software em caso de falhas nos equipamentos e orientações sobre seu uso. Apenas clientes com suporte ativo terão acesso a atualizações, novos recursos e suporte técnico.",
-        imagem_quadro_ativacao: "img/Quadrinho Português - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoPT.png"
+        imagem_quadro_ativacao: "img/Quadrinho Português - Ativação de Licenca GM - Post.png", 
         alt_quadro_ativacao: "Quadro de Ativação de Licença Global Mapper - Português",
         assinatura: "Atenciosamente,<br/>Laurent Martin",
         licenseExplanations: {
@@ -713,7 +802,7 @@
         suporte_inicial: "Fecha Inicial de Soporte",
         suporte_final: "Fecha Final de Soporte",
         suporte_renovacao_info: "La renovación del soporte y las actualizaciones del software es anual. Recalcamos la importancia de esta renovación para garantizar asistencia técnica, recuperación del software en caso de fallos en los equipos y orientación sobre su uso. Solo los clientes con soporte activo tendrán acceso a actualizaciones, nuevas funciones y soporte técnico.",
-        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ex: "https://i.imgur.com/QuadrinhoES.png"
+        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png",
         alt_quadro_ativacao: "Cuadro de Activación de Licencia Global Mapper - Español",
         assinatura: "Saludos cordiales,<br/>Laurent Martin",
         licenseExplanations: {
@@ -784,7 +873,7 @@
         suporte_inicial: "Initial Support Date",
         suporte_final: "Final Support Date",
         suporte_renovacao_info: "The renewal of software support and updates is annual. We emphasize the importance of this renewal to ensure technical assistance, software recovery in case of equipment failures, and guidance on its use. Only clients with active support will have access to updates, new features, and technical support.",
-        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", // Ensure you have an English version or use the Spanish one as a placeholder if not
+        imagem_quadro_ativacao: "img/Quadrinho Espanhol - Ativação de Licenca GM - Post.png", 
         alt_quadro_ativacao: "Global Mapper License Activation Box - English",
         assinatura: "Best regards,<br/>Laurent Martin",
         licenseExplanations: {
@@ -812,31 +901,182 @@
       }
     };
 
+    // Mágica para clonar o texto do Global Mapper e adaptar para o Avenza Maps de forma inteligente,
+    // sem precisar reescrever as 300 linhas do objeto original.
+    // (NOTA: Se futuramente o Avenza exigir textos e tabelas MUITO diferentes, 
+    // basta substituir esta variável por um objeto novo manual seguindo a mesma estrutura do textosGM).
+    const textosAvenza = JSON.parse(
+      JSON.stringify(textosGM)
+        .replace(/Global Mapper/g, 'Avenza Maps')
+        .replace(/Blue Marble/g, 'Avenza')
+        .replace(/img\/Quadrinho Português - Ativação de Licenca GM - Post\.png/g, 'img/Avenza_Ativacao_PT.png')
+        .replace(/img\/Quadrinho Espanhol - Ativação de Licenca GM - Post\.png/g, 'img/Avenza_Ativacao_ES.png')
+    );
+
+    textosAvenza.pt.pedido = {
+        saudacao: "Prezado(a)",
+        intro: "Agradecemos o seu contato e o interesse no <strong>Avenza Maps Pro</strong>. Abaixo, detalhamos as informações essenciais sobre o aplicativo e seu licenciamento corporativo:",
+        ideal_titulo: "📍 Para Quem é Ideal?",
+        ideal_texto: "Profissionais e equipes em constante movimento que precisam usar mapas geoespaciais e coletar dados em áreas sem acesso à internet, utilizando dispositivos móveis (smartphones e tablets).",
+        func_titulo: "🛠️ Funcionalidades Principais",
+        func_lista: "<ul><li><strong>Navegação 100% Offline:</strong> Localização em tempo real via GPS (com velocidade e elevação) e busca de coordenadas sem depender de internet.</li><li><strong>Mapas Ilimitados:</strong> Carregue seus próprios mapas georreferenciados (GeoPDF, GeoTIFF) sem restrição de quantidade.</li><li><strong>Coleta de Dados Avançada:</strong> Salve pontos (anexando fotos, notas e atributos personalizados), grave trilhas e preencha formulários de campo.</li><li><strong>Ferramentas de Medição:</strong> Calcule distâncias e áreas diretamente na tela.</li><li><strong>Integração SIG:</strong> Importe e exporte dados facilmente. Suporta formatos Shapefile (SHP), além de KML/KMZ.</li></ul>",
+        vantagens_titulo: "💼 Vantagens da Assinatura Pro",
+        vantagens_lista: "<ul><li><strong>Uso Corporativo:</strong> Instalação em múltiplos dispositivos para trabalho colaborativo em equipe.</li><li><strong>Suporte Exclusivo:</strong> Acesso a suporte técnico especializado (instalação e uso).</li><li><strong>Personalização:</strong> Possibilidade de solicitar o desenvolvimento de funcionalidades sob medida.</li><li><strong>Gestão de Dados:</strong> Autonomia total para coletar, gerenciar e exportar informações para atualizar seu Sistema de Informação Geográfica (SIG).</li></ul>",
+        setores_titulo: "🌍 Principais Setores Atendidos",
+        setores_intro: "A ferramenta é amplamente adotada por diversos mercados que exigem precisão no campo:",
+        setores_lista: "<ul><li><strong>Agronegócio e Meio Ambiente:</strong> Agricultura, setor florestal, usinas, pesquisa e ONGs.</li><li><strong>Infraestrutura e Indústria:</strong> Engenharia, construção civil, mineração, óleo, gás, energia (eólica/solar) e rodovias.</li><li><strong>Setor Público e Defesa:</strong> Governos, forças armadas, inteligência e serviços públicos.</li><li><strong>Serviços e Logística:</strong> Telecomunicações, aviação, transporte marítimo, imobiliárias e turismo.</li></ul>",
+        valores_titulo: "💰 Valores e Licenciamento (Versão Pro)",
+        valores_intro: "Para uso comercial, a Avenza exige a versão Pro (para conformidade com o EULA). As assinaturas são <strong>anuais</strong> e o valor unitário cai conforme a quantidade de licenças adquiridas:",
+        valores_tabela_headers: ["Quantidade de Licenças", "Valor Unitário Anual (R$)"],
+        valores_tabela_rows: [
+            ["Até 4 licenças", "599,00"],
+            ["Até 9 licenças", "569,00"],
+            ["Até 24 licenças", "519,00"],
+            ["Até 49 licenças", "469,00"],
+            ["Até 99 licenças", "419,00"],
+            ["Até 249 licenças", "339,00"]
+        ],
+        suporte_titulo: "🤝 Distribuição e Suporte Técnico",
+        suporte_distribuidor: "<strong>Distribuidor Oficial:</strong> A EngeSat é a revendedora oficial para a América Latina.",
+        suporte_atencao: "<strong>Atenção ao Suporte:</strong> O suporte técnico pleno só é garantido para compras diretas com a EngeSat. A empresa não se responsabiliza por compras ou upgrades feitos pelas lojas de aplicativos (Apple Store/Google Play)."
+    };
+
+    textosAvenza.es.pedido = {
+        saudacao: "Estimado(a)",
+        intro: "Agradecemos su contacto e interés en <strong>Avenza Maps Pro</strong>. A continuación, detallamos la información esencial sobre la aplicación y su licenciamiento corporativo:",
+        ideal_titulo: "📍 ¿Para Quién es Ideal?",
+        ideal_texto: "Profesionales y equipos en constante movimiento que necesitan usar mapas geoespaciales y recopilar datos en áreas sin acceso a internet, utilizando dispositivos móviles (smartphones y tablets).",
+        func_titulo: "🛠️ Funcionalidades Principales",
+        func_lista: "<ul><li><strong>Navegación 100% Offline:</strong> Ubicación en tiempo real vía GPS (con velocidad y elevación) y búsqueda de coordenadas sin depender de internet.</li><li><strong>Mapas Ilimitados:</strong> Cargue sus propios mapas georreferenciados (GeoPDF, GeoTIFF) sin restricciones de cantidad.</li><li><strong>Recopilación de Datos Avanzada:</strong> Guarde puntos (adjuntando fotos, notas y atributos personalizados), grabe pistas y complete formularios de campo.</li><li><strong>Herramientas de Medición:</strong> Calcule distancias y áreas directamente en la pantalla.</li><li><strong>Integración SIG:</strong> Importe y exporte datos fácilmente. Soporta formatos Shapefile (SHP), además de KML/KMZ.</li></ul>",
+        vantagens_titulo: "💼 Ventajas de la Suscripción Pro",
+        vantagens_lista: "<ul><li><strong>Uso Corporativo:</strong> Instalación en múltiples dispositivos para trabajo colaborativo en equipo.</li><li><strong>Soporte Exclusivo:</strong> Acceso a soporte técnico especializado (instalación y uso).</li><li><strong>Personalización:</strong> Posibilidad de solicitar el desarrollo de funcionalidades a medida.</li><li><strong>Gestión de Datos:</strong> Autonomía total para recopilar, gestionar y exportar información para actualizar su Sistema de Información Geográfica (SIG).</li></ul>",
+        setores_titulo: "🌍 Principales Sectores Atendidos",
+        setores_intro: "La herramienta es ampliamente adoptada por diversos mercados que exigen precisión en el campo:",
+        setores_lista: "<ul><li><strong>Agronegocios y Medio Ambiente:</strong> Agricultura, sector forestal, ingenios, investigación y ONGs.</li><li><strong>Infraestructura e Industria:</strong> Ingeniería, construcción civil, minería, petróleo, gas, energía (eólica/solar) y carreteras.</li><li><strong>Sector Público y Defensa:</strong> Gobiernos, fuerzas armadas, inteligencia y servicios públicos.</li><li><strong>Servicios y Logística:</strong> Telecomunicaciones, aviación, transporte marítimo, bienes raíces y turismo.</li></ul>",
+        valores_titulo: "💰 Precios y Licenciamiento (Versión Pro)",
+        valores_intro: "Para uso comercial, Avenza requiere la versión Pro (para cumplimiento con el EULA). Las suscripciones son <strong>anuales</strong> y el valor unitario disminuye según la cantidad de licencias adquiridas:",
+        valores_tabela_headers: ["Cantidad de Licencias", "Valor Unitario Anual (R$)"],
+        valores_tabela_rows: [
+            ["Hasta 4 licencias", "599,00"],
+            ["Hasta 9 licencias", "569,00"],
+            ["Hasta 24 licencias", "519,00"],
+            ["Hasta 49 licencias", "469,00"],
+            ["Hasta 99 licencias", "419,00"],
+            ["Hasta 249 licencias", "339,00"]
+        ],
+        suporte_titulo: "🤝 Distribución y Soporte Técnico",
+        suporte_distribuidor: "<strong>Distribuidor Oficial:</strong> EngeSat es el revendedor oficial para América Latina.",
+        suporte_atencao: "<strong>Atención al Soporte:</strong> El soporte técnico completo solo está garantizado para compras directas con EngeSat. La empresa no se responsabiliza por compras o actualizaciones realizadas a través de tiendas de aplicaciones (Apple Store/Google Play)."
+    };
+
+    textosAvenza.en.pedido = {
+        saudacao: "Dear",
+        intro: "Thank you for reaching out and for your interest in <strong>Avenza Maps Pro</strong>. Below, we detail the essential information about the app and its corporate licensing:",
+        ideal_titulo: "📍 Who is it ideal for?",
+        ideal_texto: "Professionals and teams constantly on the move who need to use geospatial maps and collect data in areas without internet access, using mobile devices (smartphones and tablets).",
+        func_titulo: "🛠️ Key Features",
+        func_lista: "<ul><li><strong>100% Offline Navigation:</strong> Real-time GPS location (with speed and elevation) and coordinate search without relying on the internet.</li><li><strong>Unlimited Maps:</strong> Load your own georeferenced maps (GeoPDF, GeoTIFF) with no quantity restrictions.</li><li><strong>Advanced Data Collection:</strong> Save points (attaching photos, notes, and custom attributes), record tracks, and fill out field forms.</li><li><strong>Measurement Tools:</strong> Calculate distances and areas directly on the screen.</li><li><strong>GIS Integration:</strong> Easily import and export data. Supports Shapefile (SHP) formats, as well as KML/KMZ.</li></ul>",
+        vantagens_titulo: "💼 Benefits of the Pro Subscription",
+        vantagens_lista: "<ul><li><strong>Corporate Use:</strong> Installation on multiple devices for collaborative teamwork.</li><li><strong>Exclusive Support:</strong> Access to specialized technical support (installation and use).</li><li><strong>Customization:</strong> Possibility to request the development of custom features.</li><li><strong>Data Management:</strong> Total autonomy to collect, manage, and export information to update your Geographic Information System (GIS).</li></ul>",
+        setores_titulo: "🌍 Key Sectors Served",
+        setores_intro: "The tool is widely adopted by various markets that require precision in the field:",
+        setores_lista: "<ul><li><strong>Agribusiness and Environment:</strong> Agriculture, forestry, mills, research, and NGOs.</li><li><strong>Infrastructure and Industry:</strong> Engineering, construction, mining, oil, gas, energy (wind/solar), and highways.</li><li><strong>Public Sector and Defense:</strong> Governments, armed forces, intelligence, and public services.</li><li><strong>Services and Logistics:</strong> Telecommunications, aviation, maritime transport, real estate, and tourism.</li></ul>",
+        valores_titulo: "💰 Pricing and Licensing (Pro Version)",
+        valores_intro: "For commercial use, Avenza requires the Pro version (for EULA compliance). Subscriptions are <strong>annual</strong>, and the unit price decreases depending on the number of licenses purchased:",
+        valores_tabela_headers: ["Quantity of Licenses", "Annual Unit Price (R$)"],
+        valores_tabela_rows: [
+            ["Up to 4 licenses", "599.00"],
+            ["Up to 9 licenses", "569.00"],
+            ["Up to 24 licenses", "519.00"],
+            ["Up to 49 licenses", "469.00"],
+            ["Up to 99 licenses", "419.00"],
+            ["Up to 249 licenses", "339.00"]
+        ],
+        suporte_titulo: "🤝 Distribution and Technical Support",
+        suporte_distribuidor: "<strong>Official Distributor:</strong> EngeSat is the official reseller for Latin America.",
+        suporte_atencao: "<strong>Support Attention:</strong> Full technical support is only guaranteed for direct purchases with EngeSat. The company is not responsible for purchases or upgrades made through app stores (Apple Store/Google Play)."
+    };
+
+    // =======================================================
+    // TEXTOS DE ENTREGA ESPECÍFICOS PARA O AVENZA MAPS
+    // =======================================================
+
+    // --- PORTUGUÊS ---
+    textosAvenza.pt.introducao_licencas = "Segue o e-mail formal de entrega referente à(s)";
+    textosAvenza.pt.licencas = "Assinatura(s) do";
+    textosAvenza.pt.download = "O aplicativo Avenza Maps é gratuito para download e deve ser instalado diretamente nas lojas oficiais do seu dispositivo móvel:";
+    textosAvenza.pt.setup = "• Para Android: Procure por 'Avenza Maps' na <strong>Google Play Store</strong><br/>• Para iOS: Procure por 'Avenza Maps' na <strong>Apple App Store</strong>";
+    textosAvenza.pt.link1 = "https://www.avenzamaps.com/maps/how-it-works.html";
+    textosAvenza.pt.instrucoes = "As instruções detalhadas de ativação, uso de pastas e importação de mapas estão disponíveis no portal de suporte oficial:";
+    textosAvenza.pt.link2 = "https://support.avenzamaps.com/";
+    textosAvenza.pt.senha = "O acesso às funções Pro é liberado após inserir sua <strong>Chave de Licença de Assinatura (Subscription Key)</strong> ou fazendo o login com a conta da sua empresa, conforme orientação de entrega da Avenza.";
+    textosAvenza.pt.link_registro_senha = ""; 
+    textosAvenza.pt.recomendacao = "Recomendamos guardar o número da sua Avenza Order e as chaves de licença em um local seguro. Caso sua empresa utilize o <em>Subscription Management</em>, o administrador poderá alocar as licenças pelo painel corporativo.";
+    textosAvenza.pt.ativacao = "Para ativar: Abra o aplicativo Avenza Maps > Vá na aba 'Configurações' > 'Assinaturas Avenza Maps' (ou 'Conta') > Faça o login corporativo ou insira sua chave de assinatura.";
+    textosAvenza.pt.suporte_renovacao_info = "A assinatura do Avenza Maps é válida pelo período contratado (1, 2 ou 3 anos). Para garantir o uso contínuo das funções corporativas, navegação offline e suporte técnico, lembre-se de renovar antes do vencimento.";
+    textosAvenza.pt.imagem_quadro_ativacao = ""; // Sem imagem de ativação para Avenza
+    textosAvenza.pt.licenseExplanations = {
+        "Assinatura": `
+            <h3>- Sobre a Assinatura Avenza Maps</h3>
+            <p>A assinatura (Pro) desbloqueia o verdadeiro potencial do Avenza Maps para uso comercial corporativo. Diferente da versão recreativa gratuita, ela permite importar mapas de forma ilimitada, coletar dados com atributos personalizados (Shapefiles) e utilizar ferramentas avançadas de GPS totalmente offline.</p>
+            <p>A licença é baseada em uma assinatura por dispositivo. Durante o período ativo, o usuário recebe todas as atualizações do aplicativo e possui direito pleno ao suporte técnico para maximizar seus resultados em campo.</p>
+        `
+    };
+
+    // --- ESPANHOL ---
+    textosAvenza.es.introducao_licencas = "Se adjunta el correo electrónico de entrega formal referente a su(s)";
+    textosAvenza.es.licencas = "Suscripción(es) de";
+    textosAvenza.es.download = "La aplicación Avenza Maps es de descarga gratuita y debe instalarse directamente desde las tiendas oficiales en su dispositivo móvil:";
+    textosAvenza.es.setup = "• Para Android: Busque 'Avenza Maps' en <strong>Google Play Store</strong><br/>• Para iOS: Busque 'Avenza Maps' en <strong>Apple App Store</strong>";
+    textosAvenza.es.link1 = "https://www.avenzamaps.com/maps/how-it-works.html";
+    textosAvenza.es.instrucoes = "Las instrucciones detalladas de activación, uso de carpetas e importación de mapas están disponibles en el portal de soporte oficial:";
+    textosAvenza.es.link2 = "https://support.avenzamaps.com/";
+    textosAvenza.es.senha = "El acceso a las funciones Pro se libera después de ingresar su <strong>Clave de Licencia de Suscripción (Subscription Key)</strong> o al iniciar sesión con la cuenta de su empresa, según las indicaciones de Avenza.";
+    textosAvenza.es.link_registro_senha = ""; 
+    textosAvenza.es.recomendacao = "Recomendamos guardar su número de Avenza Order y las claves de licencia en un lugar seguro. Si su empresa utiliza el <em>Subscription Management</em>, el administrador podrá asignar las licencias desde el panel corporativo.";
+    textosAvenza.es.ativacao = "Para activar: Abra la aplicación Avenza Maps > Vaya a la pestaña 'Configuración' > 'Suscripciones de Avenza Maps' (o 'Cuenta') > Inicie sesión corporativa o ingrese su clave de suscripción.";
+    textosAvenza.es.suporte_renovacao_info = "La suscripción a Avenza Maps es válida por el período contratado (1, 2 o 3 años). Para garantizar el uso continuo de las funciones corporativas, navegación fuera de línea y soporte técnico, recuerde renovar antes de su vencimiento.";
+    textosAvenza.es.imagem_quadro_ativacao = ""; 
+    textosAvenza.es.licenseExplanations = {
+        "Assinatura": `
+            <h3>- Acerca de la Suscripción Avenza Maps</h3>
+            <p>La suscripción (Pro) desbloquea el verdadero potencial de Avenza Maps para uso comercial. A diferencia del uso recreativo, permite importar mapas de forma ilimitada, recopilar datos con atributos personalizados (Shapefiles) y usar herramientas avanzadas de GPS totalmente fuera de línea.</p>
+            <p>La licencia se basa en una suscripción por dispositivo. Durante el período activo, el usuario recibe todas las actualizaciones de la aplicación y tiene pleno derecho al soporte técnico.</p>
+        `
+    };
+
+    // --- INGLÊS ---
+    textosAvenza.en.introducao_licencas = "Attached is the formal delivery email regarding your";
+    textosAvenza.en.licencas = "Subscription(s) for";
+    textosAvenza.en.download = "The Avenza Maps app is free to download and must be installed directly from the official stores on your mobile device:";
+    textosAvenza.en.setup = "• For Android: Search for 'Avenza Maps' in the <strong>Google Play Store</strong><br/>• For iOS: Search for 'Avenza Maps' in the <strong>Apple App Store</strong>";
+    textosAvenza.en.link1 = "https://www.avenzamaps.com/maps/how-it-works.html";
+    textosAvenza.en.instrucoes = "Detailed instructions for activation, using folders, and importing maps are available on the official support portal:";
+    textosAvenza.en.link2 = "https://support.avenzamaps.com/";
+    textosAvenza.en.senha = "Access to Pro features is unlocked after entering your <strong>Subscription Key</strong> or logging in with your corporate account, as directed by Avenza.";
+    textosAvenza.en.link_registro_senha = ""; 
+    textosAvenza.en.recomendacao = "We recommend keeping your Avenza Order number and license keys in a safe place. If your company uses <em>Subscription Management</em>, the administrator can allocate licenses from the corporate dashboard.";
+    textosAvenza.en.ativacao = "To activate: Open the Avenza Maps app > Go to the 'Settings' tab > 'Avenza Maps Subscriptions' (or 'Account') > Log in with your corporate account or enter your subscription key.";
+    textosAvenza.en.suporte_renovacao_info = "The Avenza Maps subscription is valid for the contracted period (1, 2, or 3 years). To ensure the continuous use of corporate features, offline navigation, and technical support, remember to renew before it expires.";
+    textosAvenza.en.imagem_quadro_ativacao = ""; 
+    textosAvenza.en.licenseExplanations = {
+        "Assinatura": `
+            <h3>- About the Avenza Maps Subscription</h3>
+            <p>The subscription (Pro) unlocks the true potential of Avenza Maps for commercial use. Unlike free recreational use, it allows unlimited map importing, data collection with custom attributes (Shapefiles), and the use of advanced tools completely offline.</p>
+            <p>The license is based on a subscription per device. During the active period, the user receives all app updates and is fully entitled to technical support.</p>
+        `
+    };
+
+    const getTextos = () => currentSoftware === 'gm' ? textosGM : textosAvenza;
+
     // >>> URL da imagem do logo da empresa - SUBSTITUA PELO SEU LINK REAL HOSPEDADO ONLINE <<<
     const imageUrlLogo = "img/Logo Engesat.png"; // Ex: "https://i.imgur.com/LogoEngesat.png"
     const imageAltTextLogo = "Logo Engesat";
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        langKey = tab.getAttribute('data-lang');
-
-        // Atualiza todos os selects de idioma dos blocos dinâmicos
-        const idiomaSelects = document.querySelectorAll('[id^="idioma_email_"]');
-        idiomaSelects.forEach(select => {
-            if(langKey === 'pt') select.value = 'Português';
-            else if(langKey === 'es') select.value = 'Español';
-            else if(langKey === 'en') select.value = 'English';
-        });
-      });
-    });
 
     function get(id) {
       return document.getElementById(id).value.trim();
     }
 
-    // Função para formatar a data de YYYY-MM-DD para DD/MM/YYYY
     function formatarData(data) {
         if (!data) return '';
         const [ano, mes, dia] = data.split('-');
@@ -844,7 +1084,7 @@
     }
 
     gerarPedidoBtn.addEventListener('click', () => {
-      const t = textos[langKey].pedido;
+      const t = getTextos()[langKey].pedido;
       
       const empresa = get('ped_empresa');
       const responsavel = get('ped_responsavel');
@@ -873,128 +1113,200 @@
       if (telefone) infoContato.push(`<strong>📞 Telefone:</strong> ${telefone}`);
       const contatoHtml = infoContato.length > 0 ? `<p style="margin-top:0;">${infoContato.join('<br/>')}</p>` : '';
 
-      // Puxando as explicações detalhadas das licenças já cadastradas (Entrega)
-      const expl = textos[langKey].licenseExplanations;
-      const modosExplicacoes = Object.values(expl).join('\n');
+      let texto = '';
 
-      const tabelasValoresHtml = `
-      <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 15px; margin: 25px 0;">
-          <p style="color: #721c24; margin: 0; font-size: 1.05em;">${t.aviso_pro}</p>
-      </div>
+      if (currentSoftware === 'gm') {
+          // Lógica de Geração do HTML para o Global Mapper
+          const expl = getTextos()[langKey].licenseExplanations;
+          const modosExplicacoes = Object.values(expl).join('\n');
 
-      <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-top: 30px;">${t.tabelas_titulo_novas}</h3>
-      <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; font-family: sans-serif; font-size: 0.9em;">
-        <thead>
-          <tr style="background-color: #f0f4f8; color: #334e68;">
-            <th style="border: 1px solid #ced4da; padding: 10px; text-align: left;">${t.col_produto}</th>
-            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_standalone}</th>
-            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_rede}</th>
-            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_flutuante}</th>
-            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_usb_frete}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold;">${t.row_gm}</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">6.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">9.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">9.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">13.900,00</td>
-          </tr>
-          <tr>
-            <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold; color: #d9534f;">${t.row_pro}</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">8.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
-          </tr>
-          <tr style="background-color: #e9ecef; font-weight: bold; color: #0056b3;">
-            <td style="border: 1px solid #ced4da; padding: 10px;">${t.row_total}</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">15.800,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">22.800,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">22.800,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">26.800,00</td>
-          </tr>
-        </tbody>
-      </table>
+          const tabelasValoresHtml = `
+          <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 15px; margin: 25px 0;">
+              <p style="color: #721c24; margin: 0; font-size: 1.05em;">${t.aviso_pro}</p>
+          </div>
 
-      <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px;">${t.tabelas_titulo_renovacao}</h3>
-      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-family: sans-serif; font-size: 0.9em;">
-        <thead>
-          <tr style="background-color: #f0f4f8; color: #334e68;">
-            <th style="border: 1px solid #ced4da; padding: 10px; text-align: left;">${t.col_produto}</th>
-            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_standalone}</th>
-            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_rede}</th>
-            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_flutuante}</th>
-            <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_usb}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold;">${t.row_gm}</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">2.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
-          </tr>
-          <tr>
-            <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold; color: #d9534f;">${t.row_pro}</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">3.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
-          </tr>
-          <tr style="background-color: #e9ecef; font-weight: bold; color: #0056b3;">
-            <td style="border: 1px solid #ced4da; padding: 10px;">${t.row_total}</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">6.800,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
-            <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
-          </tr>
-        </tbody>
-      </table>
-      `;
+          <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-top: 30px;">${t.tabelas_titulo_novas}</h3>
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; font-family: sans-serif; font-size: 0.9em;">
+            <thead>
+              <tr style="background-color: #f0f4f8; color: #334e68;">
+                <th style="border: 1px solid #ced4da; padding: 10px; text-align: left;">${t.col_produto}</th>
+                <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_standalone}</th>
+                <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_rede}</th>
+                <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_flutuante}</th>
+                <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_usb_frete}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold;">${t.row_gm}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">6.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">9.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">9.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">13.900,00</td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold; color: #d9534f;">${t.row_pro}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">8.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
+              </tr>
+              <tr style="background-color: #e9ecef; font-weight: bold; color: #0056b3;">
+                <td style="border: 1px solid #ced4da; padding: 10px;">${t.row_total}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">15.800,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">22.800,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">22.800,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">26.800,00</td>
+              </tr>
+            </tbody>
+          </table>
 
-      const texto = `
-<p style="text-align: center; margin-top: 0; margin-bottom: 20px;">
-  <img src="img/GlobalMapper.png" alt="Logo Global Mapper" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';">
-</p>
+          <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px;">${t.tabelas_titulo_renovacao}</h3>
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-family: sans-serif; font-size: 0.9em;">
+            <thead>
+              <tr style="background-color: #f0f4f8; color: #334e68;">
+                <th style="border: 1px solid #ced4da; padding: 10px; text-align: left;">${t.col_produto}</th>
+                <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_standalone}</th>
+                <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_rede}</th>
+                <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_flutuante}</th>
+                <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.col_usb}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold;">${t.row_gm}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">2.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold; color: #d9534f;">${t.row_pro}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">3.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
+              </tr>
+              <tr style="background-color: #e9ecef; font-weight: bold; color: #0056b3;">
+                <td style="border: 1px solid #ced4da; padding: 10px;">${t.row_total}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">6.800,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
+              </tr>
+            </tbody>
+          </table>
+          `;
 
-<p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>
-${contatoHtml}
+          texto = `
+          <div style="text-align: center; margin-top: 0; padding-top: 0; margin-bottom: 20px;">
+            <img src="img/GlobalMapper.png" alt="Logo Global Mapper" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';">
+          </div>
 
-<p>${t.intro}</p>
+          <p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>
+          ${contatoHtml}
 
-<p>${t.idiomas}</p>
+          <p>${t.intro}</p>
 
-<h3 style="margin-bottom: 5px; font-size: 1.3em;">💻 ${t.modos_titulo}</h3>
-<div style="margin-left: 10px; border-left: 3px solid #007bff; padding-left: 15px;">
-    ${modosExplicacoes}
-</div>
+          <p>${t.idiomas}</p>
 
-${tabelasValoresHtml}
+          <h3 style="margin-bottom: 5px; font-size: 1.3em;">💻 ${t.modos_titulo}</h3>
+          <div style="margin-left: 10px; border-left: 3px solid #007bff; padding-left: 15px;">
+              ${modosExplicacoes}
+          </div>
 
-<div style="background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 8px; padding: 20px; margin: 25px 0;">
-    <h3 style="color: #856404; margin-top: 0;">${t.atencao_titulo}</h3>
-    <p style="color: #856404; margin-bottom: 10px;">${t.vitalicia}</p>
-    <p style="color: #856404; margin-bottom: 10px;">${t.suporte}</p>
-    <p style="color: #856404; margin-bottom: 0;">${t.importancia}</p>
-</div>
+          ${tabelasValoresHtml}
 
-<h3>🔄 ${t.regras_titulo}</h3>
-<ul>
-    <li><span style="color: #d9534f;">${t.regra_1}</span></li>
-    <li><span style="color: #d9534f;">${t.regra_2}</span></li>
-</ul>
+          <div style="background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 8px; padding: 20px; margin: 25px 0;">
+              <h3 style="color: #856404; margin-top: 0;">${t.atencao_titulo}</h3>
+              <p style="color: #856404; margin-bottom: 10px;">${t.vitalicia}</p>
+              <p style="color: #856404; margin-bottom: 10px;">${t.suporte}</p>
+              <p style="color: #856404; margin-bottom: 0;">${t.importancia}</p>
+          </div>
 
-${obsHtml}
+          <h3>🔄 ${t.regras_titulo}</h3>
+          <ul>
+              <li><span style="color: #d9534f;">${t.regra_1}</span></li>
+              <li><span style="color: #d9534f;">${t.regra_2}</span></li>
+          </ul>
 
-<p style="margin-top: 30px;">${textos[langKey].assinatura}</p>
+          ${obsHtml}
 
-<p style="text-align: center; margin-top: 20px;">
-  <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="150" height="auto" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/150x50/ffffff/334e68?text=Logo+Engesat';">
-</p>
-      `;
+          <p style="margin-top: 30px;">${getTextos()[langKey].assinatura}</p>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="150" height="auto" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/150x50/ffffff/334e68?text=Logo+Engesat';">
+          </div>
+          `;
+      } else {
+          // Lógica de Geração do HTML para o Avenza Maps
+          const tableRowsHtml = t.valores_tabela_rows.map(row => `
+            <tr>
+              <td style="border: 1px solid #ced4da; padding: 10px;">${row[0]}</td>
+              <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; font-weight: bold;">${row[1]}</td>
+            </tr>
+          `).join('');
+
+          texto = `
+          <div style="text-align: center; margin-top: 0; padding-top: 0; margin-bottom: 20px;">
+            <img src="img/AvenzaMaps.png" alt="Logo Avenza Maps" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Avenza+Maps';">
+          </div>
+
+          <p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>
+          ${contatoHtml}
+
+          <p>${t.intro}</p>
+
+          <h3 style="margin-bottom: 5px; font-size: 1.2em; color: #334e68;">${t.ideal_titulo}</h3>
+          <p style="margin-top: 0;">${t.ideal_texto}</p>
+
+          <h3 style="margin-bottom: 5px; font-size: 1.2em; color: #334e68;">${t.func_titulo}</h3>
+          <div style="margin-left: 10px; border-left: 3px solid #007bff; padding-left: 15px;">
+              ${t.func_lista}
+          </div>
+
+          <h3 style="margin-bottom: 5px; font-size: 1.2em; color: #334e68;">${t.vantagens_titulo}</h3>
+          <div style="margin-left: 10px; border-left: 3px solid #28a745; padding-left: 15px;">
+              ${t.vantagens_lista}
+          </div>
+
+          <h3 style="margin-bottom: 5px; font-size: 1.2em; color: #334e68;">${t.setores_titulo}</h3>
+          <p style="margin-top: 0; margin-bottom: 5px;">${t.setores_intro}</p>
+          <div style="margin-left: 10px; padding-left: 5px;">
+              ${t.setores_lista}
+          </div>
+
+          <div style="background-color: #f8f9fa; border: 1px solid #ced4da; border-radius: 8px; padding: 20px; margin: 25px 0;">
+              <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-top: 0;">${t.valores_titulo}</h3>
+              <p>${t.valores_intro}</p>
+              <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-family: sans-serif; font-size: 0.95em; max-width: 500px;">
+                <thead>
+                  <tr style="background-color: #e9ecef; color: #334e68;">
+                    <th style="border: 1px solid #ced4da; padding: 10px; text-align: left;">${t.valores_tabela_headers[0]}</th>
+                    <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.valores_tabela_headers[1]}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${tableRowsHtml}
+                </tbody>
+              </table>
+          </div>
+
+          <div style="background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 8px; padding: 20px; margin: 25px 0;">
+              <h3 style="color: #856404; margin-top: 0;">${t.suporte_titulo}</h3>
+              <p style="color: #856404; margin-bottom: 10px;">${t.suporte_distribuidor}</p>
+              <p style="color: #856404; margin-bottom: 0;">${t.suporte_atencao}</p>
+          </div>
+
+          ${obsHtml}
+
+          <p style="margin-top: 30px;">${getTextos()[langKey].assinatura}</p>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="150" height="auto" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/150x50/ffffff/334e68?text=Logo+Engesat';">
+          </div>
+          `;
+      }
 
       output.style.display = 'block';
       output.innerHTML = texto.trim();
@@ -1003,7 +1315,7 @@ ${obsHtml}
     });
 
     gerarBtn.addEventListener('click', () => {
-      const t = textos[langKey];
+      const t = getTextos()[langKey];
       const refCliente = get('ref_cliente');
       
       // Validação de campos gerais
@@ -1046,6 +1358,7 @@ ${obsHtml}
               if (tipoLicenca.includes("Flutuante")) explicacoesConjunto.add(t.licenseExplanations["Flutuante"] || '');
               if (tipoLicenca.includes("Rede")) explicacoesConjunto.add(t.licenseExplanations["Rede"] || '');
               if (tipoLicenca.includes("USB")) explicacoesConjunto.add(t.licenseExplanations["USB"] || '');
+              if (tipoLicenca.includes("Assinatura")) explicacoesConjunto.add(t.licenseExplanations["Assinatura"] || '');
           }
 
           licencasData.push({
@@ -1076,7 +1389,7 @@ ${obsHtml}
           <blockquote style="margin: 0 0 20px 0; padding: 15px; border: 1px solid #e9ecef; border-left: 5px solid #007bff; background-color: #f8f9fa; border-radius: 4px;">
              <p style="margin-top: 0; margin-bottom: 8px; font-size: 1.05em;"><strong>📦 Item ${idx + 1}:</strong> ${lic.numLicencas} ${t.licencas} <strong>${lic.tipoLicenca}</strong></p>
              <p style="margin-top: 0; margin-bottom: 8px;"><strong>🌐 Idioma da Licença:</strong> ${lic.idioma}</p>
-             <p style="margin-top: 0; margin-bottom: 8px;"><strong>🔢 Blue Marble Order:</strong> <strong style="color:#007bff; font-size: 1.1em;">#${lic.orderNumber}</strong></p>
+             <p style="margin-top: 0; margin-bottom: 8px;"><strong>🔢 ${currentSoftware === 'gm' ? 'Blue Marble' : 'Avenza'} Order:</strong> <strong style="color:#007bff; font-size: 1.1em;">#${lic.orderNumber}</strong></p>
              <p style="margin-top: 12px; margin-bottom: 0; font-size: 0.95em; color: #555;">
                <strong>📅 ${t.suporte_inicial}:</strong> ${lic.dataInicial}<br/>
                <strong>📅 ${t.suporte_final}:</strong> ${lic.dataFinal}
@@ -1088,9 +1401,13 @@ ${obsHtml}
       // Junta as explicações únicas
       const explicacaoLicencaFinal = Array.from(explicacoesConjunto).join('');
 
+      const logoImgSrc = currentSoftware === 'gm' ? 'img/GlobalMapper.png' : 'img/AvenzaMaps.png';
+      const logoImgAlt = currentSoftware === 'gm' ? 'Logo Global Mapper' : 'Logo Avenza Maps';
+      const logoImgFallback = currentSoftware === 'gm' ? 'Global+Mapper' : 'Avenza+Maps';
+
       const texto = `
 <p style="text-align: center; margin-top: 0; margin-bottom: 20px;">
-  <img src="img/GlobalMapper.png" alt="Logo Global Mapper" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';">
+  <img src="${logoImgSrc}" alt="${logoImgAlt}" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=${logoImgFallback}';">
 </p>
 
 <p><strong>📌 Referência Interna:</strong> <span style="font-weight:bold; color:#007bff;">${get('ref_engesat')}</span><br/>
@@ -1142,9 +1459,11 @@ ${t.setup}<br/>
   <li>${t.ativacao}</li>
 </ul>
 
-<p style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
+${t.imagem_quadro_ativacao ? `
+<div style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
   <img src="${t.imagem_quadro_ativacao}" alt="${t.alt_quadro_ativacao}" width="600" height="auto" style="max-width: 600px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/600x400/ffffff/334e68?text=Quadro+Ativacao';">
-</p>
+</div>
+` : ''}
 
 <h3>❓ ${langKey === 'pt' ? 'Dúvidas' : langKey === 'es' ? 'Dudas' : 'Questions'}:</h3>
 <ul>
@@ -1155,9 +1474,9 @@ ${t.setup}<br/>
 
 <p>${t.assinatura}</p>
 
-<p style="text-align: center; margin-top: 20px;">
+<div style="text-align: center; margin-top: 20px;">
   <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="150" height="auto" style="max-width: 150px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/150x50/ffffff/334e68?text=Logo+Engesat';">
-</p>
+</div>
       `.trim();
 
       output.style.display = 'block';
