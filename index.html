@@ -714,7 +714,7 @@
           mainTabPedido.innerText = "📝 Pedido Global Mapper";
           mainTabEntrega.innerText = "📦 Entrega Global Mapper";
         } else {
-          logoImg.src = "img/AvenzaMaps.png";
+          logoImg.src = "img/Avenza_logo.png";
           logoImg.alt = "Logo Avenza Maps";
           logoImg.setAttribute('onerror', "this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Avenza+Maps';");
           mainTabPedido.innerText = "📝 Pedido Avenza Maps";
@@ -1335,7 +1335,7 @@
 
           texto = `
           <div style="text-align: center; margin-top: 0; padding-top: 0; margin-bottom: 20px;">
-            <img src="img/AvenzaMaps.png" alt="Logo Avenza Maps" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Avenza+Maps';">
+            <img src="img/Avenza_logo.png" alt="Logo Avenza Maps" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Avenza+Maps';">
           </div>
 
           <p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>
@@ -1510,7 +1510,7 @@
       });
 
       const explicacaoLicencaFinal = Array.from(explicacoesConjunto).join('');
-      const logoImgSrc = currentSoftware === 'gm' ? 'img/GlobalMapper.png' : 'img/AvenzaMaps.png';
+      const logoImgSrc = currentSoftware === 'gm' ? 'img/GlobalMapper.png' : 'img/Avenza_logo.png';
       const logoImgAlt = currentSoftware === 'gm' ? 'Logo Global Mapper' : 'Logo Avenza Maps';
       const logoImgFallback = currentSoftware === 'gm' ? 'Global+Mapper' : 'Avenza+Maps';
 
