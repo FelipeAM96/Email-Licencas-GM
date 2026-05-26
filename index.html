@@ -477,6 +477,11 @@
         <label for="ped_telefone">📞 Telefone:</label>
         <input type="text" id="ped_telefone" placeholder="(XX) XXXX-XXXX" />
 
+        <div id="container_qtd_avenza" style="display: none;">
+          <label for="ped_qtd_avenza">🔢 Quantidade de Licenças Avenza (Opcional):</label>
+          <input type="number" id="ped_qtd_avenza" min="1" placeholder="Ex: 5 (calcula orçamento automático)" />
+        </div>
+
         <label for="ped_obs">📝 Observações / Escopo Adicional (Opcional):</label>
         <textarea id="ped_obs" rows="4" placeholder="Insira aqui propostas de valores, condições de pagamento ou detalhes adicionais..."></textarea>
 
@@ -553,6 +558,7 @@
     const licencasContainer = document.getElementById('licencasContainer');
     const addLicencaBtn = document.getElementById('addLicencaBtn');
     const softwareTabs = document.querySelectorAll('.software-tab');
+    const containerQtdAvenza = document.getElementById('container_qtd_avenza');
     
     let currentSoftware = 'gm';
     let licencaCount = 0;
@@ -772,12 +778,14 @@
           logoImg.setAttribute('onerror', "this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';");
           mainTabPedido.innerText = "📝 Pedido Global Mapper";
           mainTabEntrega.innerText = "📦 Entrega Global Mapper";
+          containerQtdAvenza.style.display = 'none';
         } else {
           logoImg.src = "img/Avenza_logo_OK.png";
           logoImg.alt = "Logo Avenza Maps";
           logoImg.setAttribute('onerror', "this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Avenza+Maps';");
           mainTabPedido.innerText = "📝 Pedido Avenza Maps";
           mainTabEntrega.innerText = "📦 Entrega Avenza Maps";
+          containerQtdAvenza.style.display = 'block';
         }
 
         // Ocultar saídas abertas ao trocar de software
@@ -1052,7 +1060,7 @@
         ideal_titulo: "📍 Para Quem é Ideal?",
         ideal_texto: "Profissionais e equipes em constante movimento que precisam usar mapas geoespaciais e coletar dados em áreas sem acesso à internet, utilizando dispositivos móveis (smartphones e tablets).",
         func_titulo: "🛠️ Funcionalidades Principais",
-        func_lista: "<ul><li><strong>Navegação 100% Offline:</strong> Localização em tempo real via GPS (com velocidade e elevação) e busca de coordenadas sem depender de internet.</li><li><strong>Mapas Ilimitados:</strong> Carregue seus próprios mapas georreferenciados (GeoPDF, GeoTIFF) sem restrição de quantidade.</li><li><strong>Coleta de Dados Avançada:</strong> Salve pontos (anexando fotos, notas e atributos personalizados), grave trilhas e preencha formulários de campo.</li><li><strong>Ferramentas de Medição:</strong> Calcule distâncias e áreas diretamente na tela.</li><li><strong>Integração SIG:</strong> Importe e exporte dados facilmente. Suporta formatos Shapefile (SHP), além de KML/KMZ.</li></ul>",
+        func_lista: "<ul><li><strong>Navegação 100% Offline:</strong> Localização em tempo real via GPS (com velocidade e elevação) e busca de coordenadas sem depender de internet.</li><li><strong>Mapas Ilimitados:</strong> Carregue seus próprios mapas georreferenciados (GeoPDF, GeoTIFF) sem restrição de quantidade.</li><li><strong>Coleta de Dados Avançada:</strong> Salve pontos (anexando fotos, notas e atributos personalizados), grave trilhas e preencha formulários de campo.</li><li><strong>Ferramentas de Medição:</strong> Calcule distancias e áreas diretamente na tela.</li><li><strong>Integração SIG:</strong> Importe e exporte dados facilmente. Suporta formatos Shapefile (SHP), além de KML/KMZ.</li></ul>",
         vantagens_titulo: "💼 Vantagens da Assinatura Pro",
         vantagens_lista: "<ul><li><strong>Uso Corporativo:</strong> Instalação em múltiplos dispositivos para trabalho colaborativo em equipe.</li><li><strong>Suporte Exclusivo:</strong> Acesso a suporte técnico especializado (instalação e uso).</li><li><strong>Personalização:</strong> Possibilidade de solicitar o desenvolvimento de funcionalidades sob medida.</li><li><strong>Gestão de Dados:</strong> Autonomia total para coletar, gerenciar e exportar informações para atualizar seu Sistema de Informação Geográfica (SIG).</li></ul>",
         setores_titulo: "🌍 Principais Setores Atendidos",
@@ -1279,7 +1287,7 @@
 
           // Tabela convertida em formato de lista para o Whatsapp
           let tabelasValoresWpp = `
-📊 *${formatForWhatsApp(t.tabelas_titulo_novas)}*
+*${formatForWhatsApp(t.tabelas_titulo_novas)}*
 
 *${t.row_gm}*
 • Standalone: 6.900,00
@@ -1299,7 +1307,7 @@
 • Flutuante: 22.800,00
 • USB com frete: 26.800,00
 
-🔄 *${formatForWhatsApp(t.tabelas_titulo_renovacao)}*
+*${formatForWhatsApp(t.tabelas_titulo_renovacao)}*
 
 *${t.row_gm}*
 • Standalone: 2.900,00
@@ -1323,9 +1331,9 @@
           wpp += `_${formatForWhatsApp(t.intro)}_\n\n`;
           wpp += `_${formatForWhatsApp(t.idiomas)}_\n\n`;
           wpp += `💻 *${formatForWhatsApp(t.modos_titulo)}*\n${formatForWhatsApp(modosExplicacoes)}\n\n`;
-          wpp += `⚠️ *Aviso Importante sobre o Global Mapper PRO:* ${formatForWhatsApp(t.aviso_pro)}\n\n`;
+          wpp += `${formatForWhatsApp(t.aviso_pro)}\n\n`;
           wpp += `${tabelasValoresWpp.trim()}\n\n`;
-          wpp += `⚠️ *${formatForWhatsApp(t.atencao_titulo)}*\n${formatForWhatsApp(t.vitalicia)}\n${formatForWhatsApp(t.suporte)}\n${formatForWhatsApp(t.importancia)}\n\n`;
+          wpp += `*${formatForWhatsApp(t.atencao_titulo)}*\n${formatForWhatsApp(t.vitalicia)}\n${formatForWhatsApp(t.suporte)}\n${formatForWhatsApp(t.importancia)}\n\n`;
           wpp += `🔄 *${formatForWhatsApp(t.regras_titulo)}*\n• ${formatForWhatsApp(t.regra_1)}\n• ${formatForWhatsApp(t.regra_2)}\n\n`;
           wpp += `🌐 _${formatForWhatsApp(t.mais_info)}_\n\n`;
 
@@ -1451,22 +1459,58 @@
           `;
       } else {
           // Geração da Tabela em formato Whatsapp para o Avenza
-          let tabelasValoresWpp = `💰 *${formatForWhatsApp(t.valores_titulo)}*\n_${formatForWhatsApp(t.valores_intro)}_\n\n`;
+          let tabelasValoresWpp = `*${formatForWhatsApp(t.valores_titulo)}*\n_${formatForWhatsApp(t.valores_intro)}_\n\n`;
           t.valores_tabela_rows.forEach(row => {
               tabelasValoresWpp += `• ${row[0]}: R$ ${row[1]}\n`;
           });
 
+          // --- CÁLCULO DE ORÇAMENTO AVENZA ---
+          let orcamentoHtml = '';
+          let orcamentoWpp = '';
+          const qtdInput = get('ped_qtd_avenza');
+          const qtd = parseInt(qtdInput, 10);
+
+          if (!isNaN(qtd) && qtd > 0) {
+              let unitPrice = 0;
+              if (qtd <= 4) unitPrice = 599.00;
+              else if (qtd <= 9) unitPrice = 569.00;
+              else if (qtd <= 24) unitPrice = 519.00;
+              else if (qtd <= 49) unitPrice = 469.00;
+              else if (qtd <= 99) unitPrice = 419.00;
+              else unitPrice = 339.00;
+
+              const total = qtd * unitPrice;
+              const unitPriceFormatted = unitPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+              const totalFormatted = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+              const titleLbl = langKey === 'pt' ? `Orçamento Estimado (${qtd} Licenças)` : (langKey === 'es' ? `Presupuesto Estimado (${qtd} Licencias)` : `Estimated Quote (${qtd} Licenses)`);
+              const unitLbl = langKey === 'pt' ? 'Valor Unitário' : (langKey === 'es' ? 'Valor Unitario' : 'Unit Price');
+              const totalLbl = langKey === 'pt' ? 'Valor Total Anual' : (langKey === 'es' ? 'Valor Total Anual' : 'Total Annual Value');
+
+              orcamentoHtml = `
+              <div style="background-color: #e6f7ff; border: 1px solid #b3e0ff; border-left: 5px solid #007bff; border-radius: 6px; padding: 15px; margin: 20px 0;">
+                  <h3 style="color: #0056b3; margin-top: 0; font-size: 1.15em;">📊 ${titleLbl}</h3>
+                  <p style="margin: 5px 0; color: #333;"><strong>${unitLbl}:</strong> ${unitPriceFormatted}</p>
+                  <p style="margin: 5px 0; font-size: 1.1em; color: #333;"><strong>${totalLbl}:</strong> <span style="color: #28a745; font-weight: bold;">${totalFormatted}</span></p>
+              </div>
+              `;
+
+              orcamentoWpp = `\n📊 *${titleLbl}*\n• ${unitLbl}: ${unitPriceFormatted}\n• ${totalLbl}: *${totalFormatted}*\n`;
+          }
+          // --- FIM DO CÁLCULO ---
+
           wpp += `_${formatForWhatsApp(t.intro)}_\n\n`;
-          wpp += `⚠️ *${formatForWhatsApp(t.aviso_uso_comercial_titulo)}*\n_${formatForWhatsApp(t.aviso_uso_comercial_texto)}_\n${formatForWhatsApp(t.aviso_uso_comercial_vantagem)}\n\n`;
-          wpp += `📍 *${formatForWhatsApp(t.ideal_titulo)}*\n_${formatForWhatsApp(t.ideal_texto)}_\n\n`;
-          wpp += `🛠️ *${formatForWhatsApp(t.func_titulo)}*\n${formatForWhatsApp(t.func_lista)}\n\n`;
-          wpp += `💼 *${formatForWhatsApp(t.vantagens_titulo)}*\n${formatForWhatsApp(t.vantagens_lista)}\n\n`;
-          wpp += `🌍 *${formatForWhatsApp(t.setores_titulo)}*\n_${formatForWhatsApp(t.setores_intro)}_\n${formatForWhatsApp(t.setores_lista)}\n\n`;
-          wpp += `${tabelasValoresWpp}\n`;
+          wpp += `*${formatForWhatsApp(t.aviso_uso_comercial_titulo)}*\n_${formatForWhatsApp(t.aviso_uso_comercial_texto)}_\n${formatForWhatsApp(t.aviso_uso_comercial_vantagem)}\n\n`;
+          wpp += `*${formatForWhatsApp(t.ideal_titulo)}*\n_${formatForWhatsApp(t.ideal_texto)}_\n\n`;
+          wpp += `*${formatForWhatsApp(t.func_titulo)}*\n${formatForWhatsApp(t.func_lista)}\n\n`;
+          wpp += `*${formatForWhatsApp(t.vantagens_titulo)}*\n${formatForWhatsApp(t.vantagens_lista)}\n\n`;
+          wpp += `*${formatForWhatsApp(t.setores_titulo)}*\n_${formatForWhatsApp(t.setores_intro)}_\n${formatForWhatsApp(t.setores_lista)}\n\n`;
+          wpp += `${tabelasValoresWpp}`;
+          wpp += `${orcamentoWpp}\n`;
           wpp += `${formatForWhatsApp(t.aviso_desconto)}\n\n`;
           wpp += `${formatForWhatsApp(t.aviso_expiracao)}\n\n`;
-          wpp += `👥 *${formatForWhatsApp(t.gerenciador_titulo)}*\n_${formatForWhatsApp(t.gerenciador_texto)}_\n\n`;
-          wpp += `🤝 *${formatForWhatsApp(t.suporte_titulo)}*\n${formatForWhatsApp(t.suporte_distribuidor)}\n${formatForWhatsApp(t.suporte_atencao)}\n\n`;
+          wpp += `*${formatForWhatsApp(t.gerenciador_titulo)}*\n_${formatForWhatsApp(t.gerenciador_texto)}_\n\n`;
+          wpp += `*${formatForWhatsApp(t.suporte_titulo)}*\n${formatForWhatsApp(t.suporte_distribuidor)}\n${formatForWhatsApp(t.suporte_atencao)}\n\n`;
           wpp += `🌐 _${formatForWhatsApp(t.mais_info)}_\n\n`;
 
           const tableRowsHtml = t.valores_tabela_rows.map(row => `
@@ -1525,6 +1569,7 @@
                   ${tableRowsHtml}
                 </tbody>
               </table>
+              ${orcamentoHtml}
               <div style="margin-top: 15px; background-color: #e6f9ed; border: 1px solid #b3ecc8; border-radius: 6px; padding: 12px;">
                  <p style="color: #1a6b38; margin: 0; font-size: 0.95em;">${t.aviso_desconto}</p>
               </div>
