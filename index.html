@@ -1109,12 +1109,12 @@
         valores_intro: "Para uso comercial, Avenza requiere la versión Pro (para cumplimiento con el EULA). Las suscripciones son <strong>anuales</strong> y el valor unitario disminuye según la cantidad de licencias adquiridas:",
         valores_tabela_headers: ["Cantidad de Licencias", "Valor Unitario Anual (USD)"],
         valores_tabela_rows: [
-            ["Hasta 4 licencias", "92,15"],
-            ["Hasta 9 licencias", "87,54"],
-            ["Hasta 24 licencias", "79,85"],
-            ["Hasta 49 licencias", "72,15"],
-            ["Hasta 99 licencias", "64,46"],
-            ["Hasta 249 licencias", "52,15"]
+            ["Hasta 4 licencias", "93,00"],
+            ["Hasta 9 licencias", "88,00"],
+            ["Hasta 24 licencias", "80,00"],
+            ["Hasta 49 licencias", "73,00"],
+            ["Hasta 99 licencias", "65,00"],
+            ["Hasta 249 licencias", "53,00"]
         ],
         aviso_desconto: "💡 <strong>Precio Exclusivo EngeSat:</strong> El precio del PRO que ofrecemos es <strong>aproximadamente un 30% más barato</strong> que los valores de tabla oficiales de Avenza, debido a un acuerdo especial que tenemos para clientes en Brasil.",
         aviso_expiracao: "⏳ <strong>Atención a la Vigencia:</strong> Todas las licencias compradas tienen una fecha de caducidad de exactamente 1 (un) año después de la fecha de entrega, <strong>ya sea que se activen inmediatamente o no</strong>. Por lo tanto, recomendamos comprar solo la cantidad que va a utilizar.",
@@ -1148,12 +1148,12 @@
         valores_intro: "For commercial use, Avenza requires the Pro version (for EULA compliance). Subscriptions are <strong>annual</strong>, and the unit price decreases depending on the number of licenses purchased:",
         valores_tabela_headers: ["Quantity of Licenses", "Annual Unit Price (USD)"],
         valores_tabela_rows: [
-            ["Up to 4 licenses", "92.15"],
-            ["Up to 9 licenses", "87.54"],
-            ["Up to 24 licenses", "79.85"],
-            ["Up to 49 licenses", "72.15"],
-            ["Up to 99 licenses", "64.46"],
-            ["Up to 249 licenses", "52.15"]
+            ["Up to 4 licenses", "93.00"],
+            ["Up to 9 licenses", "88.00"],
+            ["Up to 24 licenses", "80.00"],
+            ["Up to 49 licenses", "73.00"],
+            ["Up to 99 licenses", "65.00"],
+            ["Up to 249 licenses", "53.00"]
         ],
         aviso_desconto: "💡 <strong>Exclusive EngeSat Pricing:</strong> The PRO price we offer is <strong>about 30% cheaper</strong> than Avenza's official list prices, due to a special agreement we have with them for customers in Brazil.",
         aviso_expiracao: "⏳ <strong>Expiration Notice:</strong> All purchased licenses have an expiration date of exactly 1 (one) year after the delivery date, <strong>whether they are activated immediately or not</strong>. Therefore, we recommend buying only the amount you will use.",
@@ -1861,10 +1861,10 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
               else if (qtd <= 99) unitPrice = 419.00;
               else unitPrice = 339.00;
 
-              // Conversão automática para USD (dividir por 6.5) se idioma não for Português
+              // Conversão automática para USD (dividir por 6.5 arredondando o valor inteiro para cima) se idioma não for Português
               let isExt = (langKey === 'es' || langKey === 'en');
               if (isExt) {
-                  unitPrice = unitPrice / 6.5;
+                  unitPrice = Math.ceil(unitPrice / 6.5);
               }
 
               const total = qtd * unitPrice;
