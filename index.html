@@ -1107,14 +1107,14 @@
         setores_lista: "<ul><li><strong>Agronegocios y Medio Ambiente:</strong> Agricultura, sector forestal, ingenios, investigación y ONGs.</li><li><strong>Infraestructura e Industria:</strong> Ingeniería, construcción civil, minería, petróleo, gas, energía (eólica/solar) y carreteras.</li><li><strong>Sector Público y Defensa:</strong> Gobiernos, fuerzas armadas, inteligencia y servicios públicos.</li><li><strong>Servicios y Logística:</strong> Telecomunicaciones, aviación, transporte marítimo, bienes raíces y turismo.</li></ul>",
         valores_titulo: "💰 Precios y Licenciamiento (Versión Pro)",
         valores_intro: "Para uso comercial, Avenza requiere la versión Pro (para cumplimiento con el EULA). Las suscripciones son <strong>anuales</strong> y el valor unitario disminuye según la cantidad de licencias adquiridas:",
-        valores_tabela_headers: ["Cantidad de Licencias", "Valor Unitario Anual (R$)"],
+        valores_tabela_headers: ["Cantidad de Licencias", "Valor Unitario Anual (USD)"],
         valores_tabela_rows: [
-            ["Hasta 4 licencias", "599,00"],
-            ["Hasta 9 licencias", "569,00"],
-            ["Hasta 24 licencias", "519,00"],
-            ["Hasta 49 licencias", "469,00"],
-            ["Hasta 99 licencias", "419,00"],
-            ["Hasta 249 licencias", "339,00"]
+            ["Hasta 4 licencias", "92,15"],
+            ["Hasta 9 licencias", "87,54"],
+            ["Hasta 24 licencias", "79,85"],
+            ["Hasta 49 licencias", "72,15"],
+            ["Hasta 99 licencias", "64,46"],
+            ["Hasta 249 licencias", "52,15"]
         ],
         aviso_desconto: "💡 <strong>Precio Exclusivo EngeSat:</strong> El precio del PRO que ofrecemos es <strong>aproximadamente un 30% más barato</strong> que los valores de tabla oficiales de Avenza, debido a un acuerdo especial que tenemos para clientes en Brasil.",
         aviso_expiracao: "⏳ <strong>Atención a la Vigencia:</strong> Todas las licencias compradas tienen una fecha de caducidad de exactamente 1 (un) año después de la fecha de entrega, <strong>ya sea que se activen inmediatamente o no</strong>. Por lo tanto, recomendamos comprar solo la cantidad que va a utilizar.",
@@ -1146,14 +1146,14 @@
         setores_lista: "<ul><li><strong>Agribusiness and Environment:</strong> Agriculture, forestry, mills, research, and NGOs.</li><li><strong>Infrastructure and Industry:</strong> Engineering, construction, mining, oil, gas, energy (wind/solar), and highways.</li><li><strong>Public Sector and Defense:</strong> Governments, armed forces, intelligence, and public services.</li><li><strong>Services and Logistics:</strong> Telecommunications, aviation, maritime transport, real estate, and tourism.</li></ul>",
         valores_titulo: "💰 Pricing and Licensing (Pro Version)",
         valores_intro: "For commercial use, Avenza requires the Pro version (for EULA compliance). Subscriptions are <strong>annual</strong>, and the unit price decreases depending on the number of licenses purchased:",
-        valores_tabela_headers: ["Quantity of Licenses", "Annual Unit Price (R$)"],
+        valores_tabela_headers: ["Quantity of Licenses", "Annual Unit Price (USD)"],
         valores_tabela_rows: [
-            ["Up to 4 licenses", "599.00"],
-            ["Up to 9 licenses", "569.00"],
-            ["Up to 24 licenses", "519.00"],
-            ["Up to 49 licenses", "469.00"],
-            ["Up to 99 licenses", "419.00"],
-            ["Up to 249 licenses", "339.00"]
+            ["Up to 4 licenses", "92.15"],
+            ["Up to 9 licenses", "87.54"],
+            ["Up to 24 licenses", "79.85"],
+            ["Up to 49 licenses", "72.15"],
+            ["Up to 99 licenses", "64.46"],
+            ["Up to 249 licenses", "52.15"]
         ],
         aviso_desconto: "💡 <strong>Exclusive EngeSat Pricing:</strong> The PRO price we offer is <strong>about 30% cheaper</strong> than Avenza's official list prices, due to a special agreement we have with them for customers in Brazil.",
         aviso_expiracao: "⏳ <strong>Expiration Notice:</strong> All purchased licenses have an expiration date of exactly 1 (one) year after the delivery date, <strong>whether they are activated immediately or not</strong>. Therefore, we recommend buying only the amount you will use.",
@@ -1841,8 +1841,9 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
       } else {
           // Geração da Tabela em formato Whatsapp para o Avenza
           let tabelasValoresWpp = `*${formatForWhatsApp(t.valores_titulo)}*\n_${formatForWhatsApp(t.valores_intro)}_\n\n`;
+          const prefixoMoeda = langKey === 'pt' ? 'R$ ' : 'US$ ';
           t.valores_tabela_rows.forEach(row => {
-              tabelasValoresWpp += `• ${row[0]}: R$ ${row[1]}\n`;
+              tabelasValoresWpp += `• ${row[0]}: ${prefixoMoeda}${row[1]}\n`;
           });
 
           // --- CÁLCULO DE ORÇAMENTO AVENZA ---
@@ -1860,9 +1861,19 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
               else if (qtd <= 99) unitPrice = 419.00;
               else unitPrice = 339.00;
 
+              // Conversão automática para USD (dividir por 6.5) se idioma não for Português
+              let isExt = (langKey === 'es' || langKey === 'en');
+              if (isExt) {
+                  unitPrice = unitPrice / 6.5;
+              }
+
               const total = qtd * unitPrice;
-              const unitPriceFormatted = unitPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-              const totalFormatted = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+              
+              const localeStr = isExt ? 'en-US' : 'pt-BR';
+              const curStyle = isExt ? 'USD' : 'BRL';
+
+              const unitPriceFormatted = unitPrice.toLocaleString(localeStr, { style: 'currency', currency: curStyle });
+              const totalFormatted = total.toLocaleString(localeStr, { style: 'currency', currency: curStyle });
 
               const titleLbl = langKey === 'pt' ? `Orçamento Estimado (${qtd} Licenças)` : (langKey === 'es' ? `Presupuesto Estimado (${qtd} Licencias)` : `Estimated Quote (${qtd} Licenses)`);
               const unitLbl = langKey === 'pt' ? 'Valor Unitário' : (langKey === 'es' ? 'Valor Unitario' : 'Unit Price');
