@@ -288,6 +288,27 @@
       background: #218838;
     }
 
+    /* Botões de Moeda */
+    .currency-btn {
+      padding: 8px 15px;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9em;
+      background-color: #f8f9fa;
+      color: #495057;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .currency-btn.active {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+      box-shadow: 0 2px 8px rgba(0,123,255,0.25);
+    }
+
     /* Botão WhatsApp */
     button.btn-whatsapp {
       background: #25D366; 
@@ -482,6 +503,12 @@
           <input type="number" id="ped_qtd_avenza" min="1" placeholder="Ex: 5 (calcula orçamento automático)" />
         </div>
 
+        <div id="currency-toggle" style="display: flex; gap: 10px; margin-top: 20px; align-items: center;">
+          <label style="margin: 0; padding-right: 5px;">💵 Moeda dos Valores:</label>
+          <div class="currency-btn active" data-currency="BRL">BRL (R$)</div>
+          <div class="currency-btn" data-currency="USD">USD ($)</div>
+        </div>
+
         <label for="ped_obs">📝 Observações / Escopo Adicional (Opcional):</label>
         <textarea id="ped_obs" rows="4" placeholder="Insira aqui propostas de valores, condições de pagamento ou detalhes adicionais..."></textarea>
 
@@ -565,6 +592,17 @@
     let langKey = 'pt';
     let currentView = 'pedido';
     let currentWhatsAppText = ''; // Variável global para armazenar a versão WPP
+    let currentCurrency = 'BRL'; // Variável global para a moeda
+
+    // Lógica para os botões de Moeda
+    const currencyBtns = document.querySelectorAll('.currency-btn');
+    currencyBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+         currencyBtns.forEach(b => b.classList.remove('active'));
+         btn.classList.add('active');
+         currentCurrency = btn.getAttribute('data-currency');
+      });
+    });
 
     // Função auxiliar para formatar HTML para a sintaxe do WhatsApp
     function formatForWhatsApp(html) {
@@ -1665,48 +1703,71 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
       if (currentSoftware === 'gm') {
           const expl = getTextos()[langKey].licenseExplanations;
           const modosExplicacoes = Object.values(expl).join('\n');
+          
+          // Preços baseados em BRL (a serem convertidos se USD)
+          const gmPrices = {
+              novas: {
+                  gm: [6900, 9900, 9900, 13900],
+                  pro: [8900, 12900, 12900, 12900],
+                  total: [15800, 22800, 22800, 26800]
+              },
+              renovacao: {
+                  gm: [2900, 3900, 3900, 3900],
+                  pro: [3900, 4900, 4900, 4900],
+                  total: [6800, 8800, 8800, 8800]
+              }
+          };
+
+          const formatGM = (brlVal) => {
+              const val = currentCurrency === 'USD' ? brlVal / 5.5 : brlVal; // Taxa de câmbio simbólica de 5.5
+              const loc = currentCurrency === 'USD' ? 'en-US' : 'pt-BR';
+              return val.toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          };
+
+          const tituloNovas = t.tabelas_titulo_novas.replace(/\(R\$\)|\(USD\)/g, `(${currentCurrency})`);
+          const tituloRenov = t.tabelas_titulo_renovacao.replace(/\(R\$\)|\(USD\)/g, `(${currentCurrency})`);
 
           // Tabela convertida em formato de lista para o Whatsapp
           let tabelasValoresWpp = `
-*${formatForWhatsApp(t.tabelas_titulo_novas)}*
+*${formatForWhatsApp(tituloNovas)}*
 
 *${t.row_gm}*
-• Standalone: 6.900,00
-• Em rede (min 2): 9.900,00
-• Flutuante: 9.900,00
-• USB com frete: 13.900,00
+• Standalone: ${formatGM(gmPrices.novas.gm[0])}
+• Em rede (min 2): ${formatGM(gmPrices.novas.gm[1])}
+• Flutuante: ${formatGM(gmPrices.novas.gm[2])}
+• USB com frete: ${formatGM(gmPrices.novas.gm[3])}
 
 *${t.row_pro}*
-• Standalone: 8.900,00
-• Em rede (min 2): 12.900,00
-• Flutuante: 12.900,00
-• USB com frete: 12.900,00
+• Standalone: ${formatGM(gmPrices.novas.pro[0])}
+• Em rede (min 2): ${formatGM(gmPrices.novas.pro[1])}
+• Flutuante: ${formatGM(gmPrices.novas.pro[2])}
+• USB com frete: ${formatGM(gmPrices.novas.pro[3])}
 
 *${t.row_total}*
-• Standalone: 15.800,00
-• Em rede (min 2): 22.800,00
-• Flutuante: 22.800,00
-• USB com frete: 26.800,00
+• Standalone: ${formatGM(gmPrices.novas.total[0])}
+• Em rede (min 2): ${formatGM(gmPrices.novas.total[1])}
+• Flutuante: ${formatGM(gmPrices.novas.total[2])}
+• USB com frete: ${formatGM(gmPrices.novas.total[3])}
 
-*${formatForWhatsApp(t.tabelas_titulo_renovacao)}*
+*${formatForWhatsApp(tituloRenov)}*
 
 *${t.row_gm}*
-• Standalone: 2.900,00
-• Em rede: 3.900,00
-• Flutuante: 3.900,00
-• USB: 3.900,00
+• Standalone: ${formatGM(gmPrices.renovacao.gm[0])}
+• Em rede: ${formatGM(gmPrices.renovacao.gm[1])}
+• Flutuante: ${formatGM(gmPrices.renovacao.gm[2])}
+• USB: ${formatGM(gmPrices.renovacao.gm[3])}
 
 *${t.row_pro}*
-• Standalone: 3.900,00
-• Em rede: 4.900,00
-• Flutuante: 4.900,00
-• USB: 4.900,00
+• Standalone: ${formatGM(gmPrices.renovacao.pro[0])}
+• Em rede: ${formatGM(gmPrices.renovacao.pro[1])}
+• Flutuante: ${formatGM(gmPrices.renovacao.pro[2])}
+• USB: ${formatGM(gmPrices.renovacao.pro[3])}
 
 *${t.row_total}*
-• Standalone: 6.800,00
-• Em rede: 8.800,00
-• Flutuante: 8.800,00
-• USB: 8.800,00
+• Standalone: ${formatGM(gmPrices.renovacao.total[0])}
+• Em rede: ${formatGM(gmPrices.renovacao.total[1])}
+• Flutuante: ${formatGM(gmPrices.renovacao.total[2])}
+• USB: ${formatGM(gmPrices.renovacao.total[3])}
           `;
 
           wpp += `_${formatForWhatsApp(t.intro)}_\n\n`;
@@ -1723,7 +1784,7 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
               <p style="color: #721c24; margin: 0; font-size: 1.05em;">${t.aviso_pro}</p>
           </div>
 
-          <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-top: 30px;">${t.tabelas_titulo_novas}</h3>
+          <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-top: 30px;">${tituloNovas}</h3>
           <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; font-family: sans-serif; font-size: 0.9em;">
             <thead>
               <tr style="background-color: #f0f4f8; color: #334e68;">
@@ -1737,29 +1798,29 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
             <tbody>
               <tr>
                 <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold;">${t.row_gm}</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">6.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">9.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">9.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">13.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.novas.gm[0])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.novas.gm[1])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.novas.gm[2])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.novas.gm[3])}</td>
               </tr>
               <tr>
                 <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold; color: #d9534f;">${t.row_pro}</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">8.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">12.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">${formatGM(gmPrices.novas.pro[0])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">${formatGM(gmPrices.novas.pro[1])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">${formatGM(gmPrices.novas.pro[2])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">${formatGM(gmPrices.novas.pro[3])}</td>
               </tr>
               <tr style="background-color: #e9ecef; font-weight: bold; color: #0056b3;">
                 <td style="border: 1px solid #ced4da; padding: 10px;">${t.row_total}</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">15.800,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">22.800,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">22.800,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">26.800,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.novas.total[0])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.novas.total[1])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.novas.total[2])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.novas.total[3])}</td>
               </tr>
             </tbody>
           </table>
 
-          <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px;">${t.tabelas_titulo_renovacao}</h3>
+          <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px;">${tituloRenov}</h3>
           <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-family: sans-serif; font-size: 0.9em;">
             <thead>
               <tr style="background-color: #f0f4f8; color: #334e68;">
@@ -1773,24 +1834,24 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
             <tbody>
               <tr>
                 <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold;">${t.row_gm}</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">2.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">3.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.renovacao.gm[0])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.renovacao.gm[1])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.renovacao.gm[2])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.renovacao.gm[3])}</td>
               </tr>
               <tr>
                 <td style="border: 1px solid #ced4da; padding: 10px; font-weight: bold; color: #d9534f;">${t.row_pro}</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">3.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">4.900,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">${formatGM(gmPrices.renovacao.pro[0])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">${formatGM(gmPrices.renovacao.pro[1])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">${formatGM(gmPrices.renovacao.pro[2])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; color: #d9534f;">${formatGM(gmPrices.renovacao.pro[3])}</td>
               </tr>
               <tr style="background-color: #e9ecef; font-weight: bold; color: #0056b3;">
                 <td style="border: 1px solid #ced4da; padding: 10px;">${t.row_total}</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">6.800,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
-                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">8.800,00</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.renovacao.total[0])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.renovacao.total[1])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.renovacao.total[2])}</td>
+                <td style="border: 1px solid #ced4da; padding: 10px; text-align: right;">${formatGM(gmPrices.renovacao.total[3])}</td>
               </tr>
             </tbody>
           </table>
@@ -1839,11 +1900,34 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           </div>
           `;
       } else {
-          // Geração da Tabela em formato Whatsapp para o Avenza
-          let tabelasValoresWpp = `*${formatForWhatsApp(t.valores_titulo)}*\n_${formatForWhatsApp(t.valores_intro)}_\n\n`;
-          const prefixoMoeda = langKey === 'pt' ? 'R$ ' : 'US$ ';
-          t.valores_tabela_rows.forEach(row => {
-              tabelasValoresWpp += `• ${row[0]}: ${prefixoMoeda}${row[1]}\n`;
+          // Geração da Tabela Dinâmica para o Avenza
+          const tituloValoresAvenza = t.valores_titulo.replace(/\(R\$\)|\(USD\)/g, `(${currentCurrency})`);
+          let tabelasValoresWpp = `*${formatForWhatsApp(tituloValoresAvenza)}*\n_${formatForWhatsApp(t.valores_intro)}_\n\n`;
+          const prefixoMoeda = currentCurrency === 'USD' ? 'US$ ' : 'R$ ';
+          
+          const avenzaData = [
+              { label: t.valores_tabela_rows[0][0], brl: 599, usd: 93 },
+              { label: t.valores_tabela_rows[1][0], brl: 569, usd: 88 },
+              { label: t.valores_tabela_rows[2][0], brl: 519, usd: 80 },
+              { label: t.valores_tabela_rows[3][0], brl: 469, usd: 73 },
+              { label: t.valores_tabela_rows[4][0], brl: 419, usd: 65 },
+              { label: t.valores_tabela_rows[5][0], brl: 339, usd: 53 }
+          ];
+
+          let tableRowsHtml = '';
+
+          avenzaData.forEach(row => {
+              const val = currentCurrency === 'USD' ? row.usd : row.brl;
+              const loc = currentCurrency === 'USD' ? 'en-US' : 'pt-BR';
+              const valFormatado = val.toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+              
+              tabelasValoresWpp += `• ${row.label}: ${prefixoMoeda}${valFormatado}\n`;
+              tableRowsHtml += `
+                <tr>
+                  <td style="border: 1px solid #ced4da; padding: 10px;">${row.label}</td>
+                  <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; font-weight: bold;">${valFormatado}</td>
+                </tr>
+              `;
           });
 
           // --- CÁLCULO DE ORÇAMENTO AVENZA ---
@@ -1853,24 +1937,22 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           const qtd = parseInt(qtdInput, 10);
 
           if (!isNaN(qtd) && qtd > 0) {
-              let unitPrice = 0;
-              if (qtd <= 4) unitPrice = 599.00;
-              else if (qtd <= 9) unitPrice = 569.00;
-              else if (qtd <= 24) unitPrice = 519.00;
-              else if (qtd <= 49) unitPrice = 469.00;
-              else if (qtd <= 99) unitPrice = 419.00;
-              else unitPrice = 339.00;
+              let unitPriceBRL = 0;
+              let unitPriceUSD = 0;
+              
+              if (qtd <= 4) { unitPriceBRL = 599; unitPriceUSD = 93; }
+              else if (qtd <= 9) { unitPriceBRL = 569; unitPriceUSD = 88; }
+              else if (qtd <= 24) { unitPriceBRL = 519; unitPriceUSD = 80; }
+              else if (qtd <= 49) { unitPriceBRL = 469; unitPriceUSD = 73; }
+              else if (qtd <= 99) { unitPriceBRL = 419; unitPriceUSD = 65; }
+              else { unitPriceBRL = 339; unitPriceUSD = 53; }
 
-              // Conversão automática para USD (dividir por 6.5 arredondando o valor inteiro para cima) se idioma não for Português
-              let isExt = (langKey === 'es' || langKey === 'en');
-              if (isExt) {
-                  unitPrice = Math.ceil(unitPrice / 6.5);
-              }
-
+              const isUSD = (currentCurrency === 'USD');
+              const unitPrice = isUSD ? unitPriceUSD : unitPriceBRL;
               const total = qtd * unitPrice;
               
-              const localeStr = isExt ? 'en-US' : 'pt-BR';
-              const curStyle = isExt ? 'USD' : 'BRL';
+              const localeStr = isUSD ? 'en-US' : 'pt-BR';
+              const curStyle = isUSD ? 'USD' : 'BRL';
 
               const unitPriceFormatted = unitPrice.toLocaleString(localeStr, { style: 'currency', currency: curStyle });
               const totalFormatted = total.toLocaleString(localeStr, { style: 'currency', currency: curStyle });
@@ -1904,13 +1986,6 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           wpp += `*${formatForWhatsApp(t.gerenciador_titulo)}*\n_${formatForWhatsApp(t.gerenciador_texto)}_\n\n`;
           wpp += `*${formatForWhatsApp(t.suporte_titulo)}*\n${formatForWhatsApp(t.suporte_distribuidor)}\n${formatForWhatsApp(t.suporte_atencao)}\n\n`;
           wpp += `🌐 _${formatForWhatsApp(t.mais_info)}_\n\n`;
-
-          const tableRowsHtml = t.valores_tabela_rows.map(row => `
-            <tr>
-              <td style="border: 1px solid #ced4da; padding: 10px;">${row[0]}</td>
-              <td style="border: 1px solid #ced4da; padding: 10px; text-align: right; font-weight: bold;">${row[1]}</td>
-            </tr>
-          `).join('');
 
           texto = `
           <div style="text-align: center; margin-top: 0; padding-top: 0; margin-bottom: 20px;">
@@ -1948,13 +2023,13 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           </div>
 
           <div style="background-color: #f8f9fa; border: 1px solid #ced4da; border-radius: 8px; padding: 20px; margin: 25px 0;">
-              <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-top: 0;">${t.valores_titulo}</h3>
+              <h3 style="color: #334e68; border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-top: 0;">${tituloValoresAvenza}</h3>
               <p>${t.valores_intro}</p>
               <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-family: sans-serif; font-size: 0.95em; max-width: 500px;">
                 <thead>
                   <tr style="background-color: #e9ecef; color: #334e68;">
                     <th style="border: 1px solid #ced4da; padding: 10px; text-align: left;">${t.valores_tabela_headers[0]}</th>
-                    <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.valores_tabela_headers[1]}</th>
+                    <th style="border: 1px solid #ced4da; padding: 10px; text-align: center;">${t.valores_tabela_headers[1].replace(/\(R\$\)|\(USD\)/g, `(${currentCurrency})`)}</th>
                   </tr>
                 </thead>
                 <tbody>
