@@ -497,10 +497,21 @@
 
         <label for="ped_telefone">📞 Telefone:</label>
         <input type="text" id="ped_telefone" placeholder="(XX) XXXX-XXXX" />
+        
+        <!-- Campos Dinâmicos Avenza -->
+        <div id="container_dados_avenza" style="display: none;">
+          <div style="background-color: #e9ecef; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #334e68;">
+              <h4 style="margin-top: 0; color: #334e68; margin-bottom: 10px;">📋 Dados Comerciais (Avenza)</h4>
+              
+              <label for="ped_qtd_avenza" style="margin-top: 0;">🔢 Quantidade de Licenças Avenza (Opcional):</label>
+              <input type="number" id="ped_qtd_avenza" min="1" placeholder="Ex: 5 (calcula orçamento automático)" />
 
-        <div id="container_qtd_avenza" style="display: none;">
-          <label for="ped_qtd_avenza">🔢 Quantidade de Licenças Avenza (Opcional):</label>
-          <input type="number" id="ped_qtd_avenza" min="1" placeholder="Ex: 5 (calcula orçamento automático)" />
+              <label for="ped_dias_pagamento">⏳ Dias para Pagamento:</label>
+              <input type="number" id="ped_dias_pagamento" min="1" placeholder="Ex: 15" value="15" />
+
+              <label for="ped_validade_proposta">📅 Validade da Proposta:</label>
+              <input type="date" id="ped_validade_proposta" />
+          </div>
         </div>
 
         <div id="currency-toggle" style="display: flex; gap: 10px; margin-top: 20px; align-items: center;">
@@ -585,7 +596,8 @@
     const licencasContainer = document.getElementById('licencasContainer');
     const addLicencaBtn = document.getElementById('addLicencaBtn');
     const softwareTabs = document.querySelectorAll('.software-tab');
-    const containerQtdAvenza = document.getElementById('container_qtd_avenza');
+    const containerDadosAvenza = document.getElementById('container_dados_avenza');
+    const inputValidadeProposta = document.getElementById('ped_validade_proposta');
     
     let currentSoftware = 'gm';
     let licencaCount = 0;
@@ -593,6 +605,11 @@
     let currentView = 'pedido';
     let currentWhatsAppText = ''; // Variável global para armazenar a versão WPP
     let currentCurrency = 'BRL'; // Variável global para a moeda
+
+    // Define a data de validade sugerida para 15 dias a partir de hoje
+    const date15Days = new Date();
+    date15Days.setDate(date15Days.getDate() + 15);
+    inputValidadeProposta.value = date15Days.toISOString().split('T')[0];
 
     // Lógica para os botões de Moeda
     const currencyBtns = document.querySelectorAll('.currency-btn');
@@ -604,7 +621,7 @@
       });
     });
 
-    // Função auxiliar para formatar HTML para a sintaxe do WhatsApp
+    // Função auxiliar para formatar HTML para a sintaxe do WhatsApp (Totalmente limpa)
     function formatForWhatsApp(html) {
       if (!html) return '';
       let text = html;
@@ -613,13 +630,11 @@
       text = text.replace(/<br\s*[\/]?>/gi, '\n');
       text = text.replace(/<\/p>/gi, '\n\n');
       
-      // Negrito e Itálico
+      // Negrito
       text = text.replace(/<(strong|b)>/gi, '*');
       text = text.replace(/<\/(strong|b)>/gi, '*');
-      text = text.replace(/<(em|i)>/gi, '_');
-      text = text.replace(/<\/(em|i)>/gi, '_');
-
-      // Links (manter apenas URL) aceitando aspas duplas ou simples
+      
+      // Links (manter apenas URL)
       text = text.replace(/<a[^>]*href=['"]([^'"]+)['"][^>]*>.*?<\/a>/gi, '$1');
       
       // Listas
@@ -816,14 +831,14 @@
           logoImg.setAttribute('onerror', "this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';");
           mainTabPedido.innerText = "📝 Pedido Global Mapper";
           mainTabEntrega.innerText = "📦 Entrega Global Mapper";
-          containerQtdAvenza.style.display = 'none';
+          containerDadosAvenza.style.display = 'none';
         } else {
           logoImg.src = "img/Avenza_logo_OK.png";
           logoImg.alt = "Logo Avenza Maps";
           logoImg.setAttribute('onerror', "this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Avenza+Maps';");
           mainTabPedido.innerText = "📝 Pedido Avenza Maps";
           mainTabEntrega.innerText = "📦 Entrega Avenza Maps";
-          containerQtdAvenza.style.display = 'block';
+          containerDadosAvenza.style.display = 'block';
         }
 
         // Ocultar saídas abertas ao trocar de software
@@ -868,7 +883,7 @@
             idiomas: "O Global Mapper está disponível nativamente em três idiomas: <strong>Português, Inglês e Espanhol</strong>.",
             modos_titulo: "Tipos de Licenciamento Disponíveis:",
             modos_lista: "<ul><li><strong>Standalone:</strong> Licença fixa em um único computador.</li><li><strong>Flutuante (Network):</strong> Acesso via rede/servidor para uso compartilhado (não simultâneo por licença comprada).</li><li><strong>USB Dongle:</strong> Licença atrelada a um pendrive físico, permitindo uso em qualquer máquina que esteja com o dispositivo conectado.</li></ul>",
-            aviso_pro: "⚠️ <strong>Aviso Importante sobre o Global Mapper PRO:</strong> O módulo <em>Global Mapper Pro</em> é um complemento avançado e <strong>não inclui</strong> o software base. Para utilizar as funções do Pro, é obrigatório adquirir também a licença do <em>Global Mapper</em> padrão (Total = Global Mapper + PRO adicional).",
+            aviso_pro: "⚠️ <strong>Aviso Importante sobre o Global Mapper PRO:</strong> O módulo Global Mapper Pro é um complemento avançado e <strong>não inclui</strong> o software base. Para utilizar as funções do Pro, é obrigatório adquirir também a licença do Global Mapper padrão (Total = Global Mapper + PRO adicional).",
             tabelas_titulo_novas: "📊 Tabela de Valores - Novas Licenças (R$)",
             tabelas_titulo_renovacao: "🔄 Tabela de Valores - Upgrade / Renovação do Suporte 12 meses (R$)",
             col_produto: "Produto",
@@ -940,7 +955,7 @@
             idiomas: "Global Mapper está disponible en tres idiomas: <strong>Portugués, Inglés y Español</strong>.",
             modos_titulo: "Tipos de Licenciamiento Disponibles:",
             modos_lista: "<ul><li><strong>Standalone:</strong> Licencia fija en un único computador.</li><li><strong>Flotante (Network):</strong> Acceso vía red/servidor para uso compartido, no simultáneo por licencia.</li><li><strong>USB Dongle:</strong> Licencia vinculada a un dispositivo USB físico, permitiendo el uso en cualquier máquina con el dongle conectado.</li></ul>",
-            aviso_pro: "⚠️ <strong>Aviso Importante sobre Global Mapper PRO:</strong> El módulo <em>Global Mapper Pro</em> es un complemento avanzado y <strong>no incluye</strong> el software base. Para utilizar las funciones Pro, es obligatorio adquirir también la licencia del <em>Global Mapper</em> estándar (Total = Global Mapper + PRO adicional).",
+            aviso_pro: "⚠️ <strong>Aviso Importante sobre Global Mapper PRO:</strong> El módulo Global Mapper Pro es un complemento avanzado y <strong>no incluye</strong> el software base. Para utilizar las funciones Pro, es obligatorio adquirir también la licencia del Global Mapper estándar (Total = Global Mapper + PRO adicional).",
             tabelas_titulo_novas: "📊 Tabla de Precios - Nuevas Licencias (R$)",
             tabelas_titulo_renovacao: "🔄 Tabla de Precios - Upgrade / Renovación de Soporte 12 meses (R$)",
             col_produto: "Producto",
@@ -1012,7 +1027,7 @@
             idiomas: "Global Mapper is available natively in three languages: <strong>Portuguese, English, and Spanish</strong>.",
             modos_titulo: "Available Licensing Types:",
             modos_lista: "<ul><li><strong>Standalone:</strong> Fixed license on a single computer.</li><li><strong>Floating (Network):</strong> Network/server access for shared use, non-simultaneous per license.</li><li><strong>USB Dongle:</strong> License tied to a physical USB drive, allowing use on any machine while the dongle is connected.</li></ul>",
-            aviso_pro: "⚠️ <strong>Important Notice regarding Global Mapper PRO:</strong> The <em>Global Mapper Pro</em> module is an advanced add-on and <strong>does not include</strong> the base software. To use Pro features, it is mandatory to also purchase the standard <em>Global Mapper</em> license (Total = Global Mapper + additional PRO).",
+            aviso_pro: "⚠️ <strong>Important Notice regarding Global Mapper PRO:</strong> The Global Mapper Pro module is an advanced add-on and <strong>does not include</strong> the base software. To use Pro features, it is mandatory to also purchase the standard Global Mapper license (Total = Global Mapper + additional PRO).",
             tabelas_titulo_novas: "📊 Pricing Table - New Licenses (R$)",
             tabelas_titulo_renovacao: "🔄 Pricing Table - Upgrade / 12-Month Support Renewal (R$)",
             col_produto: "Product",
@@ -1122,6 +1137,14 @@
         suporte_titulo: "🤝 Distribuição e Suporte Técnico",
         suporte_distribuidor: "<strong>Distribuidor Oficial:</strong> A EngeSat é a revendedora oficial para a América Latina.",
         suporte_atencao: "<strong>Atenção ao Suporte:</strong> O suporte técnico pleno só é garantido para compras diretas com a EngeSat. A empresa não se responsabiliza por compras ou upgrades feitos pelas lojas de aplicativos (Apple Store/Google Play).",
+        
+        dados_admin_titulo: "📄 Dados Administrativos – LAM Informática Ltda",
+        dados_admin_lista: "<ul><li><strong>Razão Social:</strong> LAM Informática Ltda</li><li><strong>Endereço:</strong> Rua Ângela Budel, 275 – Curitiba – PR – CEP 82.320-520</li><li><strong>CNPJ:</strong> 13.157.625/0001-03</li><li><strong>Inscrição Estadual:</strong> Isento</li><li><strong>Inscrição Municipal:</strong> 06055151</li></ul>",
+        dados_bancarios_titulo: "💳 Dados Bancários",
+        dados_bancarios_lista: "<ul><li><strong>Banco:</strong> Banco Inter (077)</li><li><strong>Agência:</strong> Agência 0001</li><li><strong>Conta Corrente:</strong> 43907863-6</li><li><strong>Chave Pix:</strong> 13.157.625/0001-03</li></ul>",
+        condicoes_comerciais_titulo: "📦 Condições Comerciais",
+        condicoes_comerciais_lista: (dias, data) => `<ul><li><strong>Pagamento:</strong> faturado para ${dias} dias depois da entrega das licenças</li><li><strong>Validade da Proposta:</strong> até ${data}</li><li><strong>Entrega:</strong> Licenças enviadas por e-mail com instruções de instalação e ativação.</li><li><strong>Licenças:</strong> Licenças temporárias poderão ser emitidas até a confirmação do pagamento. As definitivas serão fornecidas após a quitação.</li><li><strong>Nota Fiscal:</strong> Será emitida Nota Fiscal de Serviços, conforme decisão do STF</li><li><strong>ISS:</strong> Não aceitamos desconto de ISS na sede da contratante, o serviço sendo prestado em Curitiba.</li></ul>`,
+        
         imagem_diretrizes: "img/Avenza - Novas diretrizes para os planos Free e Pro (PT-BR).png",
         mais_info: "Saiba mais sobre o Avenza Maps em nosso site: <a href=\"https://www.engesat.com.br/softwares/avenza/avenza-maps/\" target=\"_blank\">https://www.engesat.com.br/softwares/avenza/avenza-maps/</a>"
     };
@@ -1161,6 +1184,14 @@
         suporte_titulo: "🤝 Distribución y Soporte Técnico",
         suporte_distribuidor: "<strong>Distribuidor Oficial:</strong> EngeSat es el revendedor oficial para América Latina.",
         suporte_atencao: "<strong>Atención al Soporte:</strong> El soporte técnico completo solo está garantizado para compras directas con EngeSat. La empresa no se responsabiliza por compras o actualizaciones realizadas a través de tiendas de aplicaciones (Apple Store/Google Play).",
+        
+        dados_admin_titulo: "📄 Datos Administrativos – LAM Informática Ltda",
+        dados_admin_lista: "<ul><li><strong>Razón Social:</strong> LAM Informática Ltda</li><li><strong>Dirección:</strong> Rua Ângela Budel, 275 – Curitiba – PR – CEP 82.320-520</li><li><strong>CNPJ:</strong> 13.157.625/0001-03</li><li><strong>Inscripción Estatal:</strong> Exento</li><li><strong>Inscripción Municipal:</strong> 06055151</li></ul>",
+        dados_bancarios_titulo: "💳 Datos Bancarios",
+        dados_bancarios_lista: "<ul><li><strong>Banco:</strong> Banco Inter (077)</li><li><strong>Agencia:</strong> Agência 0001</li><li><strong>Cuenta Corriente:</strong> 43907863-6</li><li><strong>Clave Pix:</strong> 13.157.625/0001-03</li></ul>",
+        condicoes_comerciais_titulo: "📦 Condiciones Comerciales",
+        condicoes_comerciais_lista: (dias, data) => `<ul><li><strong>Pago:</strong> facturado para ${dias} días después de la entrega de las licencias</li><li><strong>Validez de la Propuesta:</strong> hasta ${data}</li><li><strong>Entrega:</strong> Licencias enviadas por correo electrónico con instrucciones de instalación y activación.</li><li><strong>Licencias:</strong> Las licencias temporales pueden emitirse hasta que se confirme el pago. Las definitivas se proporcionarán después de la liquidación.</li><li><strong>Factura:</strong> Se emitirá una Factura de Servicios, conforme a la decisión del STF</li><li><strong>ISS:</strong> No aceptamos deducción de ISS en la sede del contratante, ya que el servicio se presta en Curitiba.</li></ul>`,
+        
         imagem_diretrizes: "img/Avenza - Novas diretrizes para os planos Free e Pro (ES).png",
         mais_info: "Obtenga más información sobre Avenza Maps en nuestro sitio web: <a href=\"https://www.engesat.com.br/softwares/avenza/avenza-maps/\" target=\"_blank\">https://www.engesat.com.br/softwares/avenza/avenza-maps/</a>"
     };
@@ -1200,6 +1231,14 @@
         suporte_titulo: "🤝 Distribution and Technical Support",
         suporte_distribuidor: "<strong>Official Distributor:</strong> EngeSat is the official reseller for Latin America.",
         suporte_atencao: "<strong>Support Attention:</strong> Full technical support is only guaranteed for direct purchases with EngeSat. The company is not responsible for purchases or upgrades made through app stores (Apple Store/Google Play).",
+        
+        dados_admin_titulo: "📄 Administrative Data – LAM Informática Ltda",
+        dados_admin_lista: "<ul><li><strong>Company Name:</strong> LAM Informática Ltda</li><li><strong>Address:</strong> Rua Ângela Budel, 275 – Curitiba – PR – CEP 82.320-520</li><li><strong>CNPJ:</strong> 13.157.625/0001-03</li><li><strong>State Registration:</strong> Exempt</li><li><strong>Municipal Registration:</strong> 06055151</li></ul>",
+        dados_bancarios_titulo: "💳 Bank Details",
+        dados_bancarios_lista: "<ul><li><strong>Bank:</strong> Banco Inter (077)</li><li><strong>Branch:</strong> Agência 0001</li><li><strong>Checking Account:</strong> 43907863-6</li><li><strong>Pix Key:</strong> 13.157.625/0001-03</li></ul>",
+        condicoes_comerciais_titulo: "📦 Commercial Conditions",
+        condicoes_comerciais_lista: (dias, data) => `<ul><li><strong>Payment:</strong> invoiced for ${dias} days after delivery of the licenses</li><li><strong>Proposal Validity:</strong> until ${data}</li><li><strong>Delivery:</strong> Licenses sent by email with installation and activation instructions.</li><li><strong>Licenses:</strong> Temporary licenses may be issued until payment is confirmed. Permanent ones will be provided after settlement.</li><li><strong>Invoice:</strong> A Services Invoice will be issued, according to the STF decision</li><li><strong>ISS:</strong> We do not accept ISS deduction at the contractor's headquarters, as the service is provided in Curitiba.</li></ul>`,
+        
         imagem_diretrizes: "img/Avenza - Novas diretrizes para os planos Free e Pro (ES).png",
         mais_info: "Learn more about Avenza Maps on our website: <a href=\"https://www.engesat.com.br/softwares/avenza/avenza-maps/\" target=\"_blank\">https://www.engesat.com.br/softwares/avenza/avenza-maps/</a>"
     };
@@ -1213,7 +1252,7 @@
     textosAvenza.pt.link2 = "https://support.avenzamaps.com/";
     textosAvenza.pt.senha = "O acesso às funções Pro é liberado após inserir sua <strong>Chave de Licença de Assinatura (Subscription Key)</strong> ou fazendo o login com a conta da sua empresa, conforme orientação de entrega da Avenza.";
     textosAvenza.pt.link_registro_senha = ""; 
-    textosAvenza.pt.recomendacao = "Recomendamos guardar o número da sua Avenza Order e as chaves de licença em um local seguro. Caso sua empresa utilize o <em>Subscription Management</em>, o administrador poderá alocar as licenças pelo painel corporativo.";
+    textosAvenza.pt.recomendacao = "Recomendamos guardar o número da sua Avenza Order e as chaves de licença em um local seguro. Caso sua empresa utilize o Subscription Management, o administrador poderá alocar as licenças pelo painel corporativo.";
     textosAvenza.pt.ativacao = "Para ativar: Abra o aplicativo Avenza Maps > Vá na aba 'Configurações' > 'Assinaturas Avenza Maps' (ou 'Conta') > Faça o login corporativo ou insira sua chave de assinatura.";
     textosAvenza.pt.suporte_renovacao_info = "A assinatura do Avenza Maps é válida pelo período contratado (1, 2 ou 3 anos). Para garantir o uso contínuo das funções corporativas, navegação offline e suporte técnico, lembre-se de renovar antes do vencimento.";
     textosAvenza.pt.imagem_quadro_ativacao = "";
@@ -1297,7 +1336,7 @@
             <li>Instale o aplicativo Avenza Maps.</li>
             <li>Realize o registro normalmente utilizando os mesmos dados da assinatura.</li>
         </ol>
-        <p>Após a conclusão, será enviado um e-mail com o título <em>"Avenza Licensing Server Notification"</em> confirmando que o novo registro foi realizado com sucesso.</p>
+        <p>Após a conclusão, será enviado um e-mail com o título "Avenza Licensing Server Notification" confirmando que o novo registro foi realizado com sucesso.</p>
     `;
 
     textosAvenza.pt.entrega_custom_wpp = `
@@ -1361,7 +1400,7 @@ Para verificar a validade da assinatura: acesse *Configurações > Detalhes*. A 
     textosAvenza.es.link2 = "https://support.avenzamaps.com/";
     textosAvenza.es.senha = "El acceso a las funciones Pro se libera después de ingresar su <strong>Clave de Licencia de Suscripción (Subscription Key)</strong> o al iniciar sesión con la cuenta de su empresa, según las indicaciones de Avenza.";
     textosAvenza.es.link_registro_senha = ""; 
-    textosAvenza.es.recomendacao = "Recomendamos guardar su número de Avenza Order y las claves de licencia en un lugar seguro. Si su empresa utiliza el <em>Subscription Management</em>, el administrador podrá asignar las licencias desde el panel corporativo.";
+    textosAvenza.es.recomendacao = "Recomendamos guardar su número de Avenza Order y las claves de licencia en un lugar seguro. Si su empresa utiliza el Subscription Management, el administrador podrá asignar las licencias desde el panel corporativo.";
     textosAvenza.es.ativacao = "Para activar: Abra la aplicación Avenza Maps > Vaya a la pestaña 'Configuración' > 'Suscripciones de Avenza Maps' (o 'Cuenta') > Inicie sesión corporativa o ingrese su clave de suscripción.";
     textosAvenza.es.suporte_renovacao_info = "La suscripción a Avenza Maps es válida por el período contratado (1, 2 o 3 años). Para garantizar el uso continuo de las funciones corporativas, navegación fuera de línea y soporte técnico, recuerde renovar antes de su vencimiento.";
     textosAvenza.es.imagem_quadro_ativacao = ""; 
@@ -1509,7 +1548,7 @@ Para verificar la validez de la suscripción: acceda a *Configuración > Detalle
     textosAvenza.en.link2 = "https://support.avenzamaps.com/";
     textosAvenza.en.senha = "Access to Pro features is unlocked after entering your <strong>Subscription Key</strong> or logging in with your corporate account, as directed by Avenza.";
     textosAvenza.en.link_registro_senha = ""; 
-    textosAvenza.en.recomendacao = "We recommend keeping your Avenza Order number and license keys in a safe place. If your company uses <em>Subscription Management</em>, the administrator can allocate licenses from the corporate dashboard.";
+    textosAvenza.en.recomendacao = "We recommend keeping your Avenza Order number and license keys in a safe place. If your company uses Subscription Management, the administrator can allocate licenses from the corporate dashboard.";
     textosAvenza.en.ativacao = "To activate: Open the Avenza Maps app > Go to the 'Settings' tab > 'Avenza Maps Subscriptions' (or 'Account') > Log in with your corporate account or enter your subscription key.";
     textosAvenza.en.suporte_renovacao_info = "The Avenza Maps subscription is valid for the contracted period (1, 2, or 3 years). To ensure the continuous use of corporate features, offline navigation, and technical support, remember to renew before it expires.";
     textosAvenza.en.imagem_quadro_ativacao = ""; 
@@ -1663,7 +1702,6 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
         return `${dia}/${mes}/${ano}`;
     }
 
-    // Ação do Botão Gerar Email de Pedido
     gerarPedidoBtn.addEventListener('click', () => {
       const t = getTextos()[langKey].pedido;
       
@@ -1700,6 +1738,7 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
       if (email) wpp += `📧 Email: ${email}\n`;
       if (telefone) wpp += `📞 Telefone: ${telefone}\n\n`;
 
+      // Se for GLOBAL MAPPER
       if (currentSoftware === 'gm') {
           const expl = getTextos()[langKey].licenseExplanations;
           const modosExplicacoes = Object.values(expl).join('\n');
@@ -1719,7 +1758,10 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           };
 
           const formatGM = (brlVal) => {
-              const val = currentCurrency === 'USD' ? brlVal / 5.5 : brlVal; // Taxa de câmbio simbólica de 5.5
+              let val = currentCurrency === 'USD' ? brlVal / 5.5 : brlVal; // Taxa de câmbio simbólica de 5.5
+              if (currentCurrency === 'USD') {
+                  val = Math.round(val); // Arredondar para o inteiro mais próximo
+              }
               const loc = currentCurrency === 'USD' ? 'en-US' : 'pt-BR';
               return val.toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
           };
@@ -1770,14 +1812,14 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
 • USB: ${formatGM(gmPrices.renovacao.total[3])}
           `;
 
-          wpp += `_${formatForWhatsApp(t.intro)}_\n\n`;
-          wpp += `_${formatForWhatsApp(t.idiomas)}_\n\n`;
+          wpp += `${formatForWhatsApp(t.intro)}\n\n`;
+          wpp += `${formatForWhatsApp(t.idiomas)}\n\n`;
           wpp += `💻 *${formatForWhatsApp(t.modos_titulo)}*\n${formatForWhatsApp(modosExplicacoes)}\n\n`;
           wpp += `${formatForWhatsApp(t.aviso_pro)}\n\n`;
           wpp += `${tabelasValoresWpp.trim()}\n\n`;
           wpp += `*${formatForWhatsApp(t.atencao_titulo)}*\n${formatForWhatsApp(t.vitalicia)}\n${formatForWhatsApp(t.suporte)}\n${formatForWhatsApp(t.importancia)}\n\n`;
           wpp += `🔄 *${formatForWhatsApp(t.regras_titulo)}*\n• ${formatForWhatsApp(t.regra_1)}\n• ${formatForWhatsApp(t.regra_2)}\n\n`;
-          wpp += `🌐 _${formatForWhatsApp(t.mais_info)}_\n\n`;
+          wpp += `🌐 ${formatForWhatsApp(t.mais_info)}\n\n`;
 
           const tabelasValoresHtml = `
           <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 15px; margin: 25px 0;">
@@ -1900,9 +1942,16 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           </div>
           `;
       } else {
+          // Se for AVENZA MAPS
+          
+          // Dados do Formulário Avenza
+          const diasPagamento = get('ped_dias_pagamento') || '15';
+          const validadeOriginal = get('ped_validade_proposta') || new Date().toISOString().split('T')[0];
+          const validadeProposta = formatarData(validadeOriginal);
+          
           // Geração da Tabela Dinâmica para o Avenza
           const tituloValoresAvenza = t.valores_titulo.replace(/\(R\$\)|\(USD\)/g, `(${currentCurrency})`);
-          let tabelasValoresWpp = `*${formatForWhatsApp(tituloValoresAvenza)}*\n_${formatForWhatsApp(t.valores_intro)}_\n\n`;
+          let tabelasValoresWpp = `*${formatForWhatsApp(tituloValoresAvenza)}*\n${formatForWhatsApp(t.valores_intro)}\n\n`;
           const prefixoMoeda = currentCurrency === 'USD' ? 'US$ ' : 'R$ ';
           
           const avenzaData = [
@@ -1973,19 +2022,30 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           }
           // --- FIM DO CÁLCULO ---
 
-          wpp += `_${formatForWhatsApp(t.intro)}_\n\n`;
-          wpp += `*${formatForWhatsApp(t.aviso_uso_comercial_titulo)}*\n_${formatForWhatsApp(t.aviso_uso_comercial_texto)}_\n${formatForWhatsApp(t.aviso_uso_comercial_vantagem)}\n\n`;
-          wpp += `*${formatForWhatsApp(t.ideal_titulo)}*\n_${formatForWhatsApp(t.ideal_texto)}_\n\n`;
+          wpp += `${formatForWhatsApp(t.intro)}\n\n`;
+          wpp += `*${formatForWhatsApp(t.aviso_uso_comercial_titulo)}*\n${formatForWhatsApp(t.aviso_uso_comercial_texto)}\n${formatForWhatsApp(t.aviso_uso_comercial_vantagem)}\n\n`;
+          wpp += `*${formatForWhatsApp(t.ideal_titulo)}*\n${formatForWhatsApp(t.ideal_texto)}\n\n`;
           wpp += `*${formatForWhatsApp(t.func_titulo)}*\n${formatForWhatsApp(t.func_lista)}\n\n`;
           wpp += `*${formatForWhatsApp(t.vantagens_titulo)}*\n${formatForWhatsApp(t.vantagens_lista)}\n\n`;
-          wpp += `*${formatForWhatsApp(t.setores_titulo)}*\n_${formatForWhatsApp(t.setores_intro)}_\n${formatForWhatsApp(t.setores_lista)}\n\n`;
+          wpp += `*${formatForWhatsApp(t.setores_titulo)}*\n${formatForWhatsApp(t.setores_intro)}\n${formatForWhatsApp(t.setores_lista)}\n\n`;
           wpp += `${tabelasValoresWpp}`;
           wpp += `${orcamentoWpp}\n`;
           wpp += `${formatForWhatsApp(t.aviso_desconto)}\n\n`;
           wpp += `${formatForWhatsApp(t.aviso_expiracao)}\n\n`;
-          wpp += `*${formatForWhatsApp(t.gerenciador_titulo)}*\n_${formatForWhatsApp(t.gerenciador_texto)}_\n\n`;
+          wpp += `*${formatForWhatsApp(t.gerenciador_titulo)}*\n${formatForWhatsApp(t.gerenciador_texto)}\n\n`;
           wpp += `*${formatForWhatsApp(t.suporte_titulo)}*\n${formatForWhatsApp(t.suporte_distribuidor)}\n${formatForWhatsApp(t.suporte_atencao)}\n\n`;
-          wpp += `🌐 _${formatForWhatsApp(t.mais_info)}_\n\n`;
+          
+          // Dados Administrativos para WPP
+          wpp += `*${formatForWhatsApp(t.dados_admin_titulo)}*\n`;
+          wpp += `${formatForWhatsApp(t.dados_admin_lista)}\n\n`;
+          
+          wpp += `*${formatForWhatsApp(t.dados_bancarios_titulo)}*\n`;
+          wpp += `${formatForWhatsApp(t.dados_bancarios_lista)}\n\n`;
+
+          wpp += `*${formatForWhatsApp(t.condicoes_comerciais_titulo)}*\n`;
+          wpp += `${formatForWhatsApp(t.condicoes_comerciais_lista(diasPagamento, validadeProposta))}\n\n`;
+
+          wpp += `🌐 ${formatForWhatsApp(t.mais_info)}\n\n`;
 
           texto = `
           <div style="text-align: center; margin-top: 0; padding-top: 0; margin-bottom: 20px;">
@@ -2057,6 +2117,23 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
               <p style="color: #856404; margin-bottom: 0;">${t.suporte_atencao}</p>
           </div>
 
+          <div style="background-color: #f8f9fa; border: 1px solid #ced4da; border-radius: 8px; padding: 20px; margin: 25px 0; font-size: 0.95em;">
+              <h3 style="color: #334e68; margin-top: 0; font-size: 1.15em; border-bottom: 1px solid #dee2e6; padding-bottom: 5px;">${t.dados_admin_titulo}</h3>
+              <div style="color: #333; margin-bottom: 20px; padding-left: 5px; line-height: 1.6;">
+                  ${t.dados_admin_lista}
+              </div>
+
+              <h3 style="color: #334e68; margin-top: 0; font-size: 1.15em; border-bottom: 1px solid #dee2e6; padding-bottom: 5px;">${t.dados_bancarios_titulo}</h3>
+              <div style="color: #333; margin-bottom: 20px; padding-left: 5px; line-height: 1.6;">
+                  ${t.dados_bancarios_lista}
+              </div>
+
+              <h3 style="color: #334e68; margin-top: 0; font-size: 1.15em; border-bottom: 1px solid #dee2e6; padding-bottom: 5px;">${t.condicoes_comerciais_titulo}</h3>
+              <div style="color: #333; margin-bottom: 0; padding-left: 5px; line-height: 1.6;">
+                  ${t.condicoes_comerciais_lista(diasPagamento, validadeProposta)}
+              </div>
+          </div>
+
           <p style="margin-top: 25px; margin-bottom: 20px;"><strong>🌐 ${t.mais_info}</strong></p>
 
           ${obsHtml}
@@ -2091,7 +2168,6 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
       }
     });
 
-    // Ação do Botão Gerar Email de Entrega
     gerarBtn.addEventListener('click', () => {
       const t = getTextos()[langKey];
       const refCliente = get('ref_cliente');
@@ -2200,12 +2276,12 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
       wpp += `📞 *Telefone:* ${get('telefone')}\n\n`;
 
       wpp += `${formatForWhatsApp(t.saudacao)}\n\n`;
-      wpp += `_${formatForWhatsApp(t.introducao_licencas)}:_\n\n`;
+      wpp += `${formatForWhatsApp(t.introducao_licencas)}:\n\n`;
       
       wpp += wppLicencas;
 
       if (t.suporte_renovacao_info) {
-          wpp += `⚠️ _${formatForWhatsApp(t.suporte_renovacao_info)}_\n\n`;
+          wpp += `⚠️ ${formatForWhatsApp(t.suporte_renovacao_info)}\n\n`;
       }
 
       wpp += `${formatForWhatsApp(explicacaoLicencaFinal)}\n\n`;
