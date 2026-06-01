@@ -1692,6 +1692,21 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
     const imageUrlLogo = "img/Logo Engesat.png";
     const imageAltTextLogo = "Logo Engesat";
 
+    // Nova função auxiliar para gerar o cabeçalho com as duas logos na mesma linha (sem ocupar espaço vertical extra)
+    const getHeaderLogosHtml = (swLogoSrc, swLogoAlt, swLogoFallback) => `
+    <table width="100%" style="margin-bottom: 20px; border-collapse: collapse; border: none;">
+      <tr>
+        <td style="width: 33%; vertical-align: top; text-align: left; padding: 0;">
+          <img src="${imageUrlLogo}" alt="${imageAltTextLogo}" width="120" height="auto" style="max-width: 120px; height: auto; display: block; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/120x40/ffffff/334e68?text=Logo+Engesat';">
+        </td>
+        <td style="width: 34%; vertical-align: top; text-align: center; padding: 0;">
+          <img src="${swLogoSrc}" alt="${swLogoAlt}" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=${swLogoFallback}';">
+        </td>
+        <td style="width: 33%; padding: 0;"></td>
+      </tr>
+    </table>
+    `;
+
     function get(id) {
       return document.getElementById(id).value.trim();
     }
@@ -1900,9 +1915,7 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           `;
 
           texto = `
-          <div style="text-align: center; margin-top: 0; padding-top: 0; margin-bottom: 20px;">
-            <img src="img/GlobalMapper.png" alt="Logo Global Mapper" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Global+Mapper';">
-          </div>
+          ${getHeaderLogosHtml('img/GlobalMapper.png', 'Logo Global Mapper', 'Global+Mapper')}
 
           <p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>
           ${contatoHtml}
@@ -2048,9 +2061,7 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           wpp += `🌐 ${formatForWhatsApp(t.mais_info)}\n\n`;
 
           texto = `
-          <div style="text-align: center; margin-top: 0; padding-top: 0; margin-bottom: 20px;">
-            <img src="img/Avenza_logo_OK.png" alt="Logo Avenza Maps" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=Avenza+Maps';">
-          </div>
+          ${getHeaderLogosHtml('img/Avenza_logo_OK.png', 'Logo Avenza Maps', 'Avenza+Maps')}
 
           <p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>
           ${contatoHtml}
@@ -2364,9 +2375,7 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
       }
 
       const texto = `
-<div style="text-align: center; margin-top: 0; padding-top: 0; margin-bottom: 20px;">
-  <img src="${logoImgSrc}" alt="${logoImgAlt}" width="250" height="auto" style="max-width: 250px; height: auto; display: block; margin: 0 auto; border: 0;" onerror="this.onerror=null; this.src='https://placehold.co/250x80/ffffff/334e68?text=${logoImgFallback}';">
-</div>
+${getHeaderLogosHtml(logoImgSrc, logoImgAlt, logoImgFallback)}
 
 <p><strong>📌 Referência Interna:</strong> <span style="font-weight:bold; color:#007bff;">${get('ref_engesat')}</span><br/>
 <strong>📝 Referência do Cliente:</strong> <span style="font-weight:bold; color:#007bff;">${refCliente}</span></p>
