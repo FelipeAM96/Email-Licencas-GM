@@ -15,7 +15,7 @@
       color: #334e68; /* Cor de texto principal */
       display: flex;
       justify-content: center;
-      align-items: flex-start; /* Alterado de center para suportar o painel sticky */
+      align-items: flex-start;
       min-height: 100vh;
     }
 
@@ -30,10 +30,9 @@
       margin: 0 auto;
     }
 
-    /* Expansão para Duas Colunas (Telas grandes / Notebooks) */
     @media (min-width: 992px) {
       .app-wrapper.show-output {
-        max-width: 1400px; /* Reduzido de 1500 para melhor adaptação em notebooks */
+        max-width: 1400px;
         flex-direction: row;
         align-items: flex-start;
       }
@@ -49,16 +48,9 @@
       box-sizing: border-box;
     }
 
-    .left-panel {
-      flex: 1; /* Distribuição de espaço flexível */
-      width: 100%;
-    }
-
+    .left-panel { flex: 1; width: 100%; }
     .right-panel {
-      flex: 1; /* Distribuição de espaço flexível */
-      width: 100%;
-      display: none; /* Escondido até gerar */
-      opacity: 0;
+      flex: 1; width: 100%; display: none; opacity: 0;
     }
 
     .app-wrapper.show-output .right-panel {
@@ -66,21 +58,17 @@
       animation: fadeIn 0.6s forwards ease;
     }
 
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
+    @keyframes fadeIn { to { opacity: 1; } }
 
-    /* Fixar o painel direito na tela no Desktop */
     @media (min-width: 992px) {
       .right-panel {
         position: sticky;
-        top: 40px; /* Espaço igual ao padding do body */
-        max-height: calc(100vh - 80px); /* 100vh menos topo e fundo */
+        top: 40px;
+        max-height: calc(100vh - 80px);
         overflow-y: auto;
       }
     }
 
-    /* Cabeçalho do Painel Direito (E-mail gerado) */
     .right-header {
       display: flex;
       justify-content: space-between;
@@ -89,375 +77,153 @@
       padding-bottom: 15px;
       border-bottom: 2px solid #e9ecef;
       position: sticky;
-      top: -35px; /* Compensa o padding para manter fixo no scroll interno */
+      top: -35px;
       background: #ffffff;
       z-index: 10;
     }
 
-    .right-header h2 {
-      margin: 0;
-      color: #2b3b51;
-      font-size: 1.4em;
-    }
+    .right-header h2 { margin: 0; color: #2b3b51; font-size: 1.4em; }
 
-    /* Abas de Software (Topo) */
+    /* Abas */
     .software-tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 30px;
-      background-color: #2b3b51;
-      border-radius: 8px;
-      padding: 6px;
-      gap: 6px;
+      display: flex; justify-content: center; margin-bottom: 30px;
+      background-color: #2b3b51; border-radius: 8px; padding: 6px; gap: 6px;
     }
 
     .software-tab {
-      flex: 1;
-      padding: 14px;
-      text-align: center;
-      font-size: 1.1em;
-      font-weight: 600;
-      color: #a0aec0;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      user-select: none;
+      flex: 1; padding: 14px; text-align: center; font-size: 1.1em;
+      font-weight: 600; color: #a0aec0; border-radius: 6px; cursor: pointer;
+      transition: all 0.3s ease; user-select: none;
     }
 
-    .software-tab.active {
-      background-color: #ffffff;
-      color: #2b3b51;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-    }
+    .software-tab.active { background-color: #ffffff; color: #2b3b51; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); }
+    .software-tab:hover:not(.active) { background-color: #3e5370; color: #ffffff; }
 
-    .software-tab:hover:not(.active) {
-      background-color: #3e5370;
-      color: #ffffff;
-    }
+    .header-logo { text-align: center; margin-bottom: 25px; }
+    .header-logo img { max-width: 250px; height: auto; border-radius: 8px; }
 
-    /* Título e logo */
-    .header-logo {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .header-logo img {
-      max-width: 250px;
-      height: auto;
-      border-radius: 8px;
-    }
-
-    /* Abas de Idioma */
     .tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 30px;
-      border-radius: 8px;
-      background-color: #e9ecef;
-      padding: 5px;
-      cursor: pointer;
-      user-select: none;
+      display: flex; justify-content: center; margin-bottom: 30px;
+      border-radius: 8px; background-color: #e9ecef; padding: 5px;
+      cursor: pointer; user-select: none;
     }
 
     .tab {
-      flex: 1;
-      padding: 12px;
-      text-align: center;
-      font-weight: 500;
-      color: #5a7184;
-      border-radius: 6px;
-      transition: background-color 0.3s, color 0.3s;
+      flex: 1; padding: 12px; text-align: center; font-weight: 500;
+      color: #5a7184; border-radius: 6px; transition: background-color 0.3s, color 0.3s;
     }
 
-    .tab.active {
-      background-color: #ffffff;
-      color: #007bff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+    .tab.active { background-color: #ffffff; color: #007bff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
 
-    /* Abas Principais (Pedido / Entrega) */
-    .main-tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 25px;
-      gap: 15px;
-    }
-
+    .main-tabs { display: flex; justify-content: center; margin-bottom: 25px; gap: 15px; }
     .main-tab {
-      padding: 12px 25px;
-      font-size: 1.1em;
-      font-weight: 600;
-      color: #5a7184;
-      background-color: #e9ecef;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      user-select: none;
+      padding: 12px 25px; font-size: 1.1em; font-weight: 600; color: #5a7184;
+      background-color: #e9ecef; border-radius: 8px; cursor: pointer;
+      transition: all 0.3s ease; border: 2px solid transparent; user-select: none;
     }
-
-    .main-tab.active {
-      background-color: #007bff;
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
-    }
-
-    .main-tab:hover:not(.active) {
-      background-color: #dee2e6;
-    }
+    .main-tab.active { background-color: #007bff; color: #ffffff; box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25); }
+    .main-tab:hover:not(.active) { background-color: #dee2e6; }
 
     /* Formulário e campos */
-    label {
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 6px;
-      font-weight: 600;
-      color: #334e68;
-      font-size: 0.95em;
-    }
-
+    label { display: block; margin-top: 15px; margin-bottom: 6px; font-weight: 600; color: #334e68; font-size: 0.95em; }
     input[type="text"], input[type="date"], input[type="number"], select, textarea {
-      width: 100%;
-      padding: 12px;
-      box-sizing: border-box;
-      border: 1px solid #ced4da;
-      border-radius: 8px;
-      font-size: 1em;
-      color: #495057;
-      background-color: #f8f9fa;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      font-family: inherit;
+      width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ced4da;
+      border-radius: 8px; font-size: 1em; color: #495057; background-color: #f8f9fa;
+      transition: border-color 0.3s, box-shadow 0.3s; font-family: inherit;
+    }
+    input[type="text"]:focus, input[type="date"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+      outline: none; border-color: #007bff; box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
     }
 
-    input[type="text"]:focus, input[type="date"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #007bff;
-      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    /* Botão Toggle Expansível */
+    .expand-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 0.95em;
+      color: #007bff;
+      cursor: pointer;
+      font-weight: 600;
+      user-select: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background-color: #e9f2ff;
+      transition: background-color 0.2s;
+    }
+    .expand-toggle:hover { background-color: #d0e4ff; }
+    .expand-toggle span.icon { font-size: 1.1em; line-height: 1; }
+
+    .extra-fields {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background: #fdfdfe;
+      border: 1px dashed #ced4da;
+      border-radius: 8px;
+    }
+    .extra-fields.show { display: block; animation: fadeInDown 0.3s ease; }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Botões */
     button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 25px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1.1em;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      width: 100%; padding: 15px; margin-top: 25px; background: #007bff;
+      color: white; border: none; border-radius: 8px; cursor: pointer;
+      font-size: 1.1em; font-weight: 600; letter-spacing: 0.5px;
       transition: background 0.3s ease, transform 0.1s ease;
     }
-
-    button:hover {
-      background: #0056b3;
-      transform: translateY(-2px);
-    }
-
-    button.btn-secondary {
-      background: #6c757d;
-      margin-top: 10px;
-    }
-
-    button.btn-secondary:hover {
-      background: #5a6268;
-    }
-
-    button.btn-danger {
-      background: #dc3545;
-      padding: 8px 12px;
-      font-size: 0.9em;
-      margin-top: 10px;
-      width: auto;
-    }
-
-    button.btn-danger:hover {
-      background: #c82333;
-    }
-
-    button#copyBtn {
-      background: #28a745; 
-      margin-top: 0;
-      width: auto;
-      padding: 10px 20px;
-    }
-
-    button#copyBtn:hover {
-      background: #218838;
-    }
-
-    /* Botões de Moeda */
+    button:hover { background: #0056b3; transform: translateY(-2px); }
+    button.btn-secondary { background: #6c757d; margin-top: 10px; }
+    button.btn-secondary:hover { background: #5a6268; }
+    button.btn-danger { background: #dc3545; padding: 8px 12px; font-size: 0.9em; margin-top: 10px; width: auto; }
+    button.btn-danger:hover { background: #c82333; }
+    button#copyBtn { background: #28a745; margin-top: 0; width: auto; padding: 10px 20px; }
+    button#copyBtn:hover { background: #218838; }
     .currency-btn {
-      padding: 8px 15px;
-      border: 1px solid #ced4da;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9em;
-      background-color: #f8f9fa;
-      color: #495057;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      user-select: none;
+      padding: 8px 15px; border: 1px solid #ced4da; border-radius: 6px; cursor: pointer;
+      font-size: 0.9em; background-color: #f8f9fa; color: #495057; font-weight: 600;
+      transition: all 0.2s ease; user-select: none;
     }
-
-    .currency-btn.active {
-      background-color: #007bff;
-      color: white;
-      border-color: #007bff;
-      box-shadow: 0 2px 8px rgba(0,123,255,0.25);
-    }
-
-    /* Botão WhatsApp */
-    button.btn-whatsapp {
-      background: #25D366; 
-      margin-top: 0;
-      width: auto;
-      padding: 10px 20px;
-    }
-
-    button.btn-whatsapp:hover {
-      background: #128C7E;
-    }
-
-    .right-header-buttons {
-      display: flex;
-      gap: 10px;
-    }
+    .currency-btn.active { background-color: #007bff; color: white; border-color: #007bff; box-shadow: 0 2px 8px rgba(0,123,255,0.25); }
+    button.btn-whatsapp { background: #25D366; margin-top: 0; width: auto; padding: 10px 20px; }
+    button.btn-whatsapp:hover { background: #128C7E; }
+    .right-header-buttons { display: flex; gap: 10px; }
 
     /* Área de Saída do Email */
-    .email-output {
-      font-size: 1em;
-      line-height: 1.7;
-      white-space: normal;
-      word-wrap: break-word; /* Quebra de linha para palavras longas */
-    }
-
-    .email-output p, .email-output ul, .email-output h3, .email-output h4 {
-        margin-top: 1em;
-        margin-bottom: 1em;
-    }
+    .email-output { font-size: 1em; line-height: 1.7; white-space: normal; word-wrap: break-word; }
+    .email-output p, .email-output ul, .email-output h3, .email-output h4 { margin-top: 1em; margin-bottom: 1em; }
 
     /* Bloco de Licença */
-    .licenca-block {
-      background-color: #f8f9fa;
-      border: 1px solid #ced4da;
-      border-radius: 8px;
-      padding: 20px;
-      margin-top: 20px;
-      position: relative;
-    }
-    
-    .licenca-block h3 {
-      margin-top: 0;
-      color: #334e68;
-      font-size: 1.1em;
-      border-bottom: 1px solid #dee2e6;
-      padding-bottom: 10px;
-      margin-bottom: 15px;
-    }
-
-    .licenca-block select, .licenca-block input {
-      background-color: #fff;
-    }
+    .licenca-block { background-color: #f8f9fa; border: 1px solid #ced4da; border-radius: 8px; padding: 20px; margin-top: 20px; position: relative; }
+    .licenca-block h3 { margin-top: 0; color: #334e68; font-size: 1.1em; border-bottom: 1px solid #dee2e6; padding-bottom: 10px; margin-bottom: 15px; }
+    .licenca-block select, .licenca-block input { background-color: #fff; }
 
     /* Toast Notification */
-    .toast-container {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .toast {
-      background-color: #333;
-      color: #fff;
-      padding: 15px 25px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.3s, transform 0.3s;
-      max-width: 350px;
-      word-wrap: break-word;
-      font-size: 0.95em;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
+    .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
+    .toast { background-color: #333; color: #fff; padding: 15px 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); opacity: 0; transform: translateY(20px); transition: opacity 0.3s, transform 0.3s; max-width: 350px; word-wrap: break-word; font-size: 0.95em; }
+    .toast.show { opacity: 1; transform: translateY(0); }
     .toast.success { background-color: #28a745; }
     .toast.warning { background-color: #ffc107; color: #333; }
     .toast.error { background-color: #dc3545; }
 
     /* Responsividade */
     @media (max-width: 991px) {
-      body {
-        padding: 20px 10px;
-      }
-      
-      .main-tabs {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .main-tab {
-        text-align: center;
-      }
-
-      .panel {
-        padding: 20px;
-        border-radius: 8px;
-      }
-
-      .header-logo img {
-        max-width: 180px;
-      }
-
-      .tabs {
-        flex-direction: column;
-        padding: 0;
-        background-color: transparent;
-      }
-
-      .tab {
-        border-bottom: 2px solid #e9ecef;
-        border-radius: 0;
-      }
-
-      .tab:last-child {
-        border-bottom: none;
-      }
-
-      .tab.active {
-        box-shadow: none;
-        background-color: #f8f9fa;
-      }
-
-      button {
-        padding: 12px;
-        font-size: 1em;
-      }
-      
-      .right-header {
-        flex-direction: column;
-        gap: 10px;
-        position: static; /* Remove sticky no celular/tablet menor */
-      }
-
-      button#copyBtn {
-        width: 100%;
-      }
-
-      .email-output img {
-        width: 100% !important;
-      }
+      body { padding: 20px 10px; }
+      .main-tabs { flex-direction: column; gap: 10px; }
+      .main-tab { text-align: center; }
+      .panel { padding: 20px; border-radius: 8px; }
+      .header-logo img { max-width: 180px; }
+      .tabs { flex-direction: column; padding: 0; background-color: transparent; }
+      .tab { border-bottom: 2px solid #e9ecef; border-radius: 0; }
+      .tab:last-child { border-bottom: none; }
+      .tab.active { box-shadow: none; background-color: #f8f9fa; }
+      button { padding: 12px; font-size: 1em; }
+      .right-header { flex-direction: column; gap: 10px; position: static; }
+      button#copyBtn { width: 100%; }
+      .email-output img { width: 100% !important; }
     }
   </style>
 </head>
@@ -485,22 +251,29 @@
         <div class="tab" data-lang="en">English</div>
       </div>
 
+      <!-- FORMULÁRIO DE PEDIDO -->
       <form id="formPedido">
-        <label for="ped_empresa">🏢 Nome da Empresa:</label>
-        <input type="text" id="ped_empresa" placeholder="Empresa interessada" />
+        <label for="ped_empresa">🏢 Empresa Cliente:</label>
+        <input type="text" id="ped_empresa" placeholder="Nome da empresa do cliente" />
 
-        <label for="ped_responsavel">👤 Nome do Responsável:</label>
-        <input type="text" id="ped_responsavel" placeholder="Nome do contato" />
+        <div class="expand-toggle" id="btnTogglePedExtra">
+          <span class="icon">➕</span> Completar Informações do Contato (Opcional)
+        </div>
 
-        <label for="ped_email">📧 Email:</label>
-        <input type="text" id="ped_email" placeholder="email@exemplo.com" />
+        <div id="ped_extra_fields" class="extra-fields">
+          <label for="ped_responsavel" style="margin-top: 0;">👤 Nome do Contato / Responsável:</label>
+          <input type="text" id="ped_responsavel" placeholder="Nome do contato (opcional)" />
 
-        <label for="ped_telefone">📞 Telefone:</label>
-        <input type="text" id="ped_telefone" placeholder="(XX) XXXX-XXXX" />
+          <label for="ped_email">📧 Email:</label>
+          <input type="text" id="ped_email" placeholder="email@exemplo.com (opcional)" />
+
+          <label for="ped_telefone">📞 Telefone:</label>
+          <input type="text" id="ped_telefone" placeholder="(XX) XXXX-XXXX (opcional)" />
+        </div>
         
         <!-- Campos Dinâmicos Avenza -->
         <div id="container_dados_avenza" style="display: none;">
-          <div style="background-color: #e9ecef; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #334e68;">
+          <div style="background-color: #e9ecef; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #334e68;">
               <h4 style="margin-top: 0; color: #334e68; margin-bottom: 10px;">📋 Dados Comerciais (Avenza)</h4>
               
               <label for="ped_qtd_avenza" style="margin-top: 0;">🔢 Quantidade de Licenças Avenza (Opcional):</label>
@@ -526,33 +299,40 @@
         <button type="button" id="gerarPedidoBtn">Gerar Email de Pedido</button>
       </form>
 
+      <!-- FORMULÁRIO DE ENTREGA -->
       <form id="emailForm" style="display: none;">
-        <label for="ref_engesat">📌 Referência Interna:</label>
-        <input type="text" id="ref_engesat" placeholder="Ex: Pedido 25010" />
+        <label for="empresa">🏢 Empresa Cliente:</label>
+        <input type="text" id="empresa" placeholder="Nome da empresa do cliente" />
 
-        <label for="ref_cliente">📝 Referência do Cliente:</label>
-        <input type="text" id="ref_cliente" placeholder="Ex: Ordem de Compra #OC-XYZ" />
+        <div class="expand-toggle" id="btnToggleEntExtra">
+          <span class="icon">➕</span> Completar Referências e Dados do Contato (Opcional)
+        </div>
 
-        <label for="nome">👤 Nome:</label>
-        <input type="text" id="nome" placeholder="Nome do cliente" />
+        <div id="ent_extra_fields" class="extra-fields">
+          <label for="ref_engesat" style="margin-top: 0;">📌 Referência Interna:</label>
+          <input type="text" id="ref_engesat" placeholder="Ex: Pedido 25010 (opcional)" />
 
-        <label for="empresa">🏢 Empresa:</label>
-        <input type="text" id="empresa" placeholder="Nome da empresa" />
+          <label for="ref_cliente">📝 Referência do Cliente:</label>
+          <input type="text" id="ref_cliente" placeholder="Ex: Ordem de Compra #OC-XYZ (opcional)" />
 
-        <label for="endereco">📍 Endereço:</label>
-        <input type="text" id="endereco" placeholder="Endereço completo" />
+          <label for="nome">👤 Nome do Contato:</label>
+          <input type="text" id="nome" placeholder="Nome do cliente (opcional)" />
 
-        <label for="cidade">🌆 Cidade:</label>
-        <input type="text" id="cidade" placeholder="Nome da cidade" />
+          <label for="endereco">📍 Endereço:</label>
+          <input type="text" id="endereco" placeholder="Endereço completo (opcional)" />
 
-        <label for="pais">🌎 País:</label>
-        <input type="text" id="pais" placeholder="Nome do país" />
+          <label for="cidade">🌆 Cidade:</label>
+          <input type="text" id="cidade" placeholder="Nome da cidade (opcional)" />
 
-        <label for="email">📧 Email:</label>
-        <input type="text" id="email" placeholder="email@exemplo.com" />
+          <label for="pais">🌎 País:</label>
+          <input type="text" id="pais" placeholder="Nome do país (opcional)" />
 
-        <label for="telefone">📞 Telefone:</label>
-        <input type="text" id="telefone" placeholder="(XX) XXXX-XXXX" />
+          <label for="email">📧 Email:</label>
+          <input type="text" id="email" placeholder="email@exemplo.com (opcional)" />
+
+          <label for="telefone">📞 Telefone:</label>
+          <input type="text" id="telefone" placeholder="(XX) XXXX-XXXX (opcional)" />
+        </div>
 
         <div id="licencasContainer">
           <!-- O primeiro bloco será inserido via JavaScript -->
@@ -586,7 +366,6 @@
     const mainTabs = document.querySelectorAll('.main-tab');
     const formPedido = document.getElementById('formPedido');
     const emailForm = document.getElementById('emailForm');
-    const idiomaSelect = document.getElementById('idioma_email');
     const gerarBtn = document.getElementById('gerarBtn');
     const gerarPedidoBtn = document.getElementById('gerarPedidoBtn');
     const output = document.getElementById('emailOutput');
@@ -610,6 +389,23 @@
     const date15Days = new Date();
     date15Days.setDate(date15Days.getDate() + 15);
     inputValidadeProposta.value = date15Days.toISOString().split('T')[0];
+
+    // Toggle de Campos Extras
+    document.getElementById('btnTogglePedExtra').addEventListener('click', function() {
+        const fields = document.getElementById('ped_extra_fields');
+        fields.classList.toggle('show');
+        this.innerHTML = fields.classList.contains('show') 
+            ? '<span class="icon">➖</span> Ocultar Informações de Contato'
+            : '<span class="icon">➕</span> Completar Informações do Contato (Opcional)';
+    });
+
+    document.getElementById('btnToggleEntExtra').addEventListener('click', function() {
+        const fields = document.getElementById('ent_extra_fields');
+        fields.classList.toggle('show');
+        this.innerHTML = fields.classList.contains('show') 
+            ? '<span class="icon">➖</span> Ocultar Referências e Dados do Contato'
+            : '<span class="icon">➕</span> Completar Referências e Dados do Contato (Opcional)';
+    });
 
     // Lógica para os botões de Moeda
     const currencyBtns = document.querySelectorAll('.currency-btn');
@@ -649,8 +445,6 @@
       // Limpar múltiplos espaços e linhas vazias excessivas
       text = text.replace(/&nbsp;/g, ' ');
       text = text.replace(/\n{3,}/g, '\n\n');
-      
-      // Prevenir instâncias duplicadas de formatação (ex: ** ou * *)
       text = text.replace(/\*\s+\*/g, '');
       
       return text.trim();
@@ -662,7 +456,6 @@
         tab.classList.add('active');
         currentView = tab.getAttribute('data-view');
 
-        // Ocultar a saída gerada ao trocar de aba principal
         appWrapper.classList.remove('show-output');
 
         if (currentView === 'pedido') {
@@ -675,14 +468,12 @@
       });
     });
 
-    // Lógica para as abas de idioma
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         langKey = tab.getAttribute('data-lang');
 
-        // Atualiza todos os selects de idioma dos blocos dinâmicos para acompanhar a aba
         const idiomaSelects = document.querySelectorAll('[id^="idioma_email_"]');
         idiomaSelects.forEach(select => {
             if(langKey === 'pt') select.value = 'Português';
@@ -766,14 +557,12 @@
 
       licencasContainer.appendChild(bloco);
 
-      // Adiciona listener para calcular data final quando a data inicial mudar
       const dataInicialInput = bloco.querySelector(`#data_inicial_suporte_${id}`);
       const dataFinalInput = bloco.querySelector(`#data_final_suporte_${id}`);
       
       dataInicialInput.addEventListener('change', (e) => {
         if(e.target.value) {
             const data = new Date(e.target.value);
-            // Adiciona 1 ano
             data.setFullYear(data.getFullYear() + 1);
             
             const dia = String(data.getDate()).padStart(2, '0');
@@ -786,7 +575,6 @@
         }
       });
       
-      // Sincroniza o idioma do novo bloco com a aba atual
       const idiomaSelect = bloco.querySelector(`#idioma_email_${id}`);
       if(langKey === 'pt') idiomaSelect.value = 'Português';
       else if(langKey === 'es') idiomaSelect.value = 'Español';
@@ -811,7 +599,6 @@
 
     addLicencaBtn.addEventListener('click', criarBlocoLicenca);
 
-    // Inicializa com um bloco
     criarBlocoLicenca();
 
     softwareTabs.forEach(tab => {
@@ -820,7 +607,6 @@
         tab.classList.add('active');
         currentSoftware = tab.getAttribute('data-software');
         
-        // Atualizar UI
         const logoImg = document.querySelector('.header-logo img');
         const mainTabPedido = document.querySelector('.main-tab[data-view="pedido"]');
         const mainTabEntrega = document.querySelector('.main-tab[data-view="entrega"]');
@@ -841,17 +627,14 @@
           containerDadosAvenza.style.display = 'block';
         }
 
-        // Ocultar saídas abertas ao trocar de software
         appWrapper.classList.remove('show-output');
 
-        // Atualizar dropdowns de licença existentes
         const tipoLicencaSelects = licencasContainer.querySelectorAll('select[id^="tipo_licenca_"]');
         const optionsToUse = currentSoftware === 'gm' ? optionsTipoLicencaGM : optionsTipoLicencaAvenza;
         tipoLicencaSelects.forEach(select => {
           select.innerHTML = optionsToUse;
         });
 
-        // Atualizar labels de Order Number
         const orderLabels = licencasContainer.querySelectorAll('label[for^="order_number_"]');
         orderLabels.forEach(label => {
           label.innerHTML = `🔢 ${currentSoftware === 'gm' ? 'Blue Marble' : 'Avenza'} Order:`;
@@ -865,10 +648,8 @@
       toast.innerText = message;
       toastContainer.appendChild(toast);
       
-      // Animate in
       setTimeout(() => toast.classList.add('show'), 10);
 
-      // Animate out and remove
       setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
@@ -1006,7 +787,7 @@
           "Flutuante": `
             <h3>- Flotante</h3>
             <p>La licencia Flotante de Usuario Único es mucho más flexible que la Standalone. Piensa en ella como un "pase de acceso" que, aunque esté instalado en un computador específico, puede ser accedido desde otras máquinas. Esto significa que puedes usar el software remotamente, por ejemplo, a través de una conexión de Escritorio Remoto (RDP), accediendo al computador donde la licencia está instalada.</p>
-            <p>La gran ventaja es la libertad de movimiento: puedes transferir esta licencia entre computadores un número ilimitado de veces. Para hacer esto, simplemente libera la licencia del computador anterior antes de activarla en una nueva máquina. Esto es ideal si alternas el uso entre una laptop y un escritorio, o si necesitas acceder al software desde diferentes ubicaciones. Sin embargo, es importante tener en cuenta que no está diseñada para ser compartida por varias personas o para oficinas con múltiples usuarios simultáneos, ya que sigue siendo una licencia de uso individual.</p>
+            <p>La gran ventaja es la libertad de movimiento: puedes transferir esta licencia entre computadores un número ilimitado de veces. Para hacer esto, simplemente libera la licencia del computador anterior antes de activarla en una nueva máquina. Esto es ideal si alternas el uso entre una laptop y un escritorio, o si necesitas acceder al software desde diferentes ubicaciones. Sin embargo, es importante tener en cuenta que no está diseñada para ser compartida por varias personas o para oficinas con múltiples usuarios simult simultaneous, ya que sigue siendo una licencia de uso individual.</p>
           `,
           "Rede": `
             <h3>- En Red</h3>
@@ -1105,11 +886,9 @@
     textosAvenza.pt.pedido = {
         saudacao: "Prezado(a)",
         intro: "Agradecemos o seu contato e o interesse no <strong>Avenza Maps Pro</strong>. Abaixo, detalhamos as informações essenciais sobre o aplicativo e seu licenciamento corporativo:",
-        
         aviso_uso_comercial_titulo: "⚠️ Alerta Importante: Uso Comercial e Conformidade",
         aviso_uso_comercial_texto: "Se você está usando o AVENZA MAPS para fins profissionais e comerciais, <strong>é obrigatório utilizar a versão PRO</strong>. A AVENZA está colocando ordem nas licenças no Brasil para garantir a conformidade legal dos Contratos de Licença. Quem não usa a versão PRO para fins profissionais está se deparando com sérias limitações e bloqueios de uso do aplicativo.",
         aviso_uso_comercial_vantagem: "<strong>Importante:</strong> O plano PLUS não serve para fins profissionais e comerciais. Se for detectado o uso indevido do licenciamento, ele será cancelado sem reembolso.<br><br>A versão <strong>PRO</strong> do AVENZA MAPS será muito vantajosa para o seu trabalho, sem nenhuma restrição de funcionalidades e de formato na importação e exportação (como Shapefiles), e com capacidade ilimitada de mapas, dependente apenas do seu armazenamento. <strong>Vale a pena investir!</strong>",
-        
         ideal_titulo: "📍 Para Quem é Ideal?",
         ideal_texto: "Profissionais e equipes em constante movimento que precisam usar mapas geoespaciais e coletar dados em áreas sem acesso à internet, utilizando dispositivos móveis (smartphones e tablets).",
         func_titulo: "🛠️ Funcionalidades Principais",
@@ -1123,12 +902,8 @@
         valores_intro: "Para uso comercial, a Avenza exige a versão Pro (para conformidade com o EULA). As assinaturas são <strong>anuais</strong> e o valor unitário cai conforme a quantidade de licenças adquiridas:",
         valores_tabela_headers: ["Quantidade de Licenças", "Valor Unitário Anual (R$)"],
         valores_tabela_rows: [
-            ["Até 4 licenças", "599,00"],
-            ["Até 9 licenças", "569,00"],
-            ["Até 24 licenças", "519,00"],
-            ["Até 49 licenças", "469,00"],
-            ["Até 99 licenças", "419,00"],
-            ["Até 249 licenças", "339,00"]
+            ["Até 4 licenças", "599,00"], ["Até 9 licenças", "569,00"], ["Até 24 licenças", "519,00"],
+            ["Até 49 licenças", "469,00"], ["Até 99 licenças", "419,00"], ["Até 249 licenças", "339,00"]
         ],
         aviso_desconto: "💡 <strong>Preço Exclusivo EngeSat:</strong> O preço do PRO que oferecemos está <strong>cerca de 30% mais barato</strong> que os valores originais de tabela da Avenza, por conta de um acordo especial que temos com eles para clientes no Brasil.",
         aviso_expiracao: "⏳ <strong>Atenção à Vigência:</strong> Todas as licenças compradas têm uma data de expiração de exatamente 1 (um) ano após a data de entrega, <strong>sejam elas ativadas imediatamente ou não</strong>. Portanto, recomendamos comprar somente a quantidade que irá usar.",
@@ -1137,14 +912,12 @@
         suporte_titulo: "🤝 Distribuição e Suporte Técnico",
         suporte_distribuidor: "<strong>Distribuidor Oficial:</strong> A EngeSat é a revendedora oficial para a América Latina.",
         suporte_atencao: "<strong>Atenção ao Suporte:</strong> O suporte técnico pleno só é garantido para compras diretas com a EngeSat. A empresa não se responsabiliza por compras ou upgrades feitos pelas lojas de aplicativos (Apple Store/Google Play).",
-        
         dados_admin_titulo: "📄 Dados Administrativos – LAM Informática Ltda",
         dados_admin_lista: "<ul><li><strong>Razão Social:</strong> LAM Informática Ltda</li><li><strong>Endereço:</strong> Rua Ângela Budel, 275 – Curitiba – PR – CEP 82.320-520</li><li><strong>CNPJ:</strong> 13.157.625/0001-03</li><li><strong>Inscrição Estadual:</strong> Isento</li><li><strong>Inscrição Municipal:</strong> 06055151</li></ul>",
         dados_bancarios_titulo: "💳 Dados Bancários",
         dados_bancarios_lista: "<ul><li><strong>Banco:</strong> Banco Inter (077)</li><li><strong>Agência:</strong> Agência 0001</li><li><strong>Conta Corrente:</strong> 43907863-6</li><li><strong>Chave Pix:</strong> 13.157.625/0001-03</li></ul>",
         condicoes_comerciais_titulo: "📦 Condições Comerciais",
         condicoes_comerciais_lista: (dias, data) => `<ul><li><strong>Pagamento:</strong> faturado para ${dias} dias depois da entrega das licenças</li><li><strong>Validade da Proposta:</strong> até ${data}</li><li><strong>Entrega:</strong> Licenças enviadas por e-mail com instruções de instalação e ativação.</li><li><strong>Licenças:</strong> Licenças temporárias poderão ser emitidas até a confirmação do pagamento. As definitivas serão fornecidas após a quitação.</li><li><strong>Nota Fiscal:</strong> Será emitida Nota Fiscal de Serviços, conforme decisão do STF</li><li><strong>ISS:</strong> Não aceitamos desconto de ISS na sede da contratante, o serviço sendo prestado em Curitiba.</li></ul>`,
-        
         imagem_diretrizes: "img/Avenza - Novas diretrizes para os planos Free e Pro (PT-BR).png",
         mais_info: "Saiba mais sobre o Avenza Maps em nosso site: <a href=\"https://www.engesat.com.br/softwares/avenza/avenza-maps/\" target=\"_blank\">https://www.engesat.com.br/softwares/avenza/avenza-maps/</a>"
     };
@@ -1152,11 +925,9 @@
     textosAvenza.es.pedido = {
         saudacao: "Estimado(a)",
         intro: "Agradecemos su contacto e interés en <strong>Avenza Maps Pro</strong>. A continuación, detallamos la información esencial sobre la aplicación y su licenciamiento corporativo:",
-        
         aviso_uso_comercial_titulo: "⚠️ Alerta Importante: Uso Comercial y Cumplimiento Legal",
         aviso_uso_comercial_texto: "Si está utilizando AVENZA MAPS con fines profesionales y comerciales, <strong>es obligatorio utilizar la versión PRO</strong>. AVENZA está poniendo orden en las licencias para garantizar el cumplimiento de los Acuerdos de Licencia. Quienes no usan la versión PRO para fines profesionales se están enfrentando a serias limitaciones y bloqueos en el uso de la aplicación.",
         aviso_uso_comercial_vantagem: "<strong>Importante:</strong> El plan PLUS no sirve para fines profesionales y comerciales. Si se detecta el uso indebido de la licencia, será cancelada sin reembolso.<br><br>La versión <strong>PRO</strong> de AVENZA MAPS será muy ventajosa para su trabajo, sin ninguna restricción de funcionalidades y formatos de importación/exportación (como Shapefiles), y con capacidad ilimitada de mapas, dependiendo solo de su almacenamiento. <strong>¡Vale la pena invertir!</strong>",
-        
         ideal_titulo: "📍 ¿Para Quién es Ideal?",
         ideal_texto: "Profesionales y equipos en constante movimiento que necesitan usar mapas geoespaciales y recopilar datos en áreas sin acceso a internet, utilizando dispositivos móviles (smartphones y tablets).",
         func_titulo: "🛠️ Funcionalidades Principales",
@@ -1170,12 +941,8 @@
         valores_intro: "Para uso comercial, Avenza requiere la versión Pro (para cumplimiento con el EULA). Las suscripciones son <strong>anuales</strong> y el valor unitario disminuye según la cantidad de licencias adquiridas:",
         valores_tabela_headers: ["Cantidad de Licencias", "Valor Unitario Anual (USD)"],
         valores_tabela_rows: [
-            ["Hasta 4 licencias", "93,00"],
-            ["Hasta 9 licencias", "88,00"],
-            ["Hasta 24 licencias", "80,00"],
-            ["Hasta 49 licencias", "73,00"],
-            ["Hasta 99 licencias", "65,00"],
-            ["Hasta 249 licencias", "53,00"]
+            ["Hasta 4 licencias", "93,00"], ["Hasta 9 licencias", "88,00"], ["Hasta 24 licencias", "80,00"],
+            ["Hasta 49 licencias", "73,00"], ["Hasta 99 licencias", "65,00"], ["Hasta 249 licencias", "53,00"]
         ],
         aviso_desconto: "💡 <strong>Precio Exclusivo EngeSat:</strong> El precio del PRO que ofrecemos es <strong>aproximadamente un 30% más barato</strong> que los valores de tabla oficiales de Avenza, debido a un acuerdo especial que tenemos para clientes en Brasil.",
         aviso_expiracao: "⏳ <strong>Atención a la Vigencia:</strong> Todas las licencias compradas tienen una fecha de caducidad de exactamente 1 (un) año después de la fecha de entrega, <strong>ya sea que se activen inmediatamente o no</strong>. Por lo tanto, recomendamos comprar solo la cantidad que va a utilizar.",
@@ -1184,14 +951,12 @@
         suporte_titulo: "🤝 Distribución y Soporte Técnico",
         suporte_distribuidor: "<strong>Distribuidor Oficial:</strong> EngeSat es el revendedor oficial para América Latina.",
         suporte_atencao: "<strong>Atención al Soporte:</strong> El soporte técnico completo solo está garantizado para compras directas con EngeSat. La empresa no se responsabiliza por compras o actualizaciones realizadas a través de tiendas de aplicaciones (Apple Store/Google Play).",
-        
         dados_admin_titulo: "📄 Datos Administrativos – LAM Informática Ltda",
         dados_admin_lista: "<ul><li><strong>Razón Social:</strong> LAM Informática Ltda</li><li><strong>Dirección:</strong> Rua Ângela Budel, 275 – Curitiba – PR – CEP 82.320-520</li><li><strong>CNPJ:</strong> 13.157.625/0001-03</li><li><strong>Inscripción Estatal:</strong> Exento</li><li><strong>Inscripción Municipal:</strong> 06055151</li></ul>",
         dados_bancarios_titulo: "💳 Datos Bancarios",
         dados_bancarios_lista: "<ul><li><strong>Banco:</strong> Banco Inter (077)</li><li><strong>Agencia:</strong> Agência 0001</li><li><strong>Cuenta Corriente:</strong> 43907863-6</li><li><strong>Clave Pix:</strong> 13.157.625/0001-03</li></ul>",
         condicoes_comerciais_titulo: "📦 Condiciones Comerciales",
         condicoes_comerciais_lista: (dias, data) => `<ul><li><strong>Pago:</strong> facturado para ${dias} días después de la entrega de las licencias</li><li><strong>Validez de la Propuesta:</strong> hasta ${data}</li><li><strong>Entrega:</strong> Licencias enviadas por correo electrónico con instrucciones de instalación y activación.</li><li><strong>Licencias:</strong> Las licencias temporales pueden emitirse hasta que se confirme el pago. Las definitivas se proporcionarán después de la liquidación.</li><li><strong>Factura:</strong> Se emitirá una Factura de Servicios, conforme a la decisión del STF</li><li><strong>ISS:</strong> No aceptamos deducción de ISS en la sede del contratante, ya que el servicio se presta en Curitiba.</li></ul>`,
-        
         imagem_diretrizes: "img/Avenza - Novas diretrizes para os planos Free e Pro (ES).png",
         mais_info: "Obtenga más información sobre Avenza Maps en nuestro sitio web: <a href=\"https://www.engesat.com.br/softwares/avenza/avenza-maps/\" target=\"_blank\">https://www.engesat.com.br/softwares/avenza/avenza-maps/</a>"
     };
@@ -1199,11 +964,9 @@
     textosAvenza.en.pedido = {
         saudacao: "Dear",
         intro: "Thank you for reaching out and for your interest in <strong>Avenza Maps Pro</strong>. Below, we detail the essential information about the app and its corporate licensing:",
-        
         aviso_uso_comercial_titulo: "⚠️ Important Alert: Commercial Use and Legal Compliance",
         aviso_uso_comercial_texto: "If you are using AVENZA MAPS for professional and commercial purposes, <strong>using the PRO version is mandatory</strong>. AVENZA is putting its licenses in order to ensure legal compliance with the License Agreements. Those who do not use the PRO version for professional purposes are facing serious limitations and application usage blocks.",
         aviso_uso_comercial_vantagem: "<strong>Important:</strong> The PLUS plan is not suitable for professional and commercial purposes. If misuse of the licensing is detected, it will be canceled without a refund.<br><br>The <strong>PRO</strong> version of AVENZA MAPS will be very advantageous for your work, with no restrictions on features and import/export formats (such as Shapefiles), and with unlimited map capacity, dependent only on your storage. <strong>It is worth investing!</strong>",
-        
         ideal_titulo: "📍 Who is it ideal for?",
         ideal_texto: "Professionals and teams constantly on the move who need to use geospatial maps and collect data in areas without internet access, using mobile devices (smartphones and tablets).",
         func_titulo: "🛠️ Key Features",
@@ -1217,12 +980,8 @@
         valores_intro: "For commercial use, Avenza requires the Pro version (for EULA compliance). Subscriptions are <strong>annual</strong>, and the unit price decreases depending on the number of licenses purchased:",
         valores_tabela_headers: ["Quantity of Licenses", "Annual Unit Price (USD)"],
         valores_tabela_rows: [
-            ["Up to 4 licenses", "93.00"],
-            ["Up to 9 licenses", "88.00"],
-            ["Up to 24 licenses", "80.00"],
-            ["Up to 49 licenses", "73.00"],
-            ["Up to 99 licenses", "65.00"],
-            ["Up to 249 licenses", "53.00"]
+            ["Up to 4 licenses", "93.00"], ["Up to 9 licenses", "88.00"], ["Up to 24 licenses", "80.00"],
+            ["Up to 49 licenses", "73.00"], ["Up to 99 licenses", "65.00"], ["Up to 249 licenses", "53.00"]
         ],
         aviso_desconto: "💡 <strong>Exclusive EngeSat Pricing:</strong> The PRO price we offer is <strong>about 30% cheaper</strong> than Avenza's official list prices, due to a special agreement we have with them for customers in Brazil.",
         aviso_expiracao: "⏳ <strong>Expiration Notice:</strong> All purchased licenses have an expiration date of exactly 1 (one) year after the delivery date, <strong>whether they are activated immediately or not</strong>. Therefore, we recommend buying only the amount you will use.",
@@ -1231,14 +990,12 @@
         suporte_titulo: "🤝 Distribution and Technical Support",
         suporte_distribuidor: "<strong>Official Distributor:</strong> EngeSat is the official reseller for Latin America.",
         suporte_atencao: "<strong>Support Attention:</strong> Full technical support is only guaranteed for direct purchases with EngeSat. The company is not responsible for purchases or upgrades made through app stores (Apple Store/Google Play).",
-        
         dados_admin_titulo: "📄 Administrative Data – LAM Informática Ltda",
         dados_admin_lista: "<ul><li><strong>Company Name:</strong> LAM Informática Ltda</li><li><strong>Address:</strong> Rua Ângela Budel, 275 – Curitiba – PR – CEP 82.320-520</li><li><strong>CNPJ:</strong> 13.157.625/0001-03</li><li><strong>State Registration:</strong> Exempt</li><li><strong>Municipal Registration:</strong> 06055151</li></ul>",
         dados_bancarios_titulo: "💳 Bank Details",
         dados_bancarios_lista: "<ul><li><strong>Bank:</strong> Banco Inter (077)</li><li><strong>Branch:</strong> Agência 0001</li><li><strong>Checking Account:</strong> 43907863-6</li><li><strong>Pix Key:</strong> 13.157.625/0001-03</li></ul>",
         condicoes_comerciais_titulo: "📦 Commercial Conditions",
         condicoes_comerciais_lista: (dias, data) => `<ul><li><strong>Payment:</strong> invoiced for ${dias} days after delivery of the licenses</li><li><strong>Proposal Validity:</strong> until ${data}</li><li><strong>Delivery:</strong> Licenses sent by email with installation and activation instructions.</li><li><strong>Licenses:</strong> Temporary licenses may be issued until payment is confirmed. Permanent ones will be provided after settlement.</li><li><strong>Invoice:</strong> A Services Invoice will be issued, according to the STF decision</li><li><strong>ISS:</strong> We do not accept ISS deduction at the contractor's headquarters, as the service is provided in Curitiba.</li></ul>`,
-        
         imagem_diretrizes: "img/Avenza - Novas diretrizes para os planos Free e Pro (ES).png",
         mais_info: "Learn more about Avenza Maps on our website: <a href=\"https://www.engesat.com.br/softwares/avenza/avenza-maps/\" target=\"_blank\">https://www.engesat.com.br/softwares/avenza/avenza-maps/</a>"
     };
@@ -1290,14 +1047,6 @@
             <li>Toque em: <strong>Enviar / Login</strong></li>
         </ol>
 
-        <h4 style="margin-bottom: 5px;">Cadastro via Código QR (Versão 3.9 ou Superior)</h4>
-        <p style="margin-top: 0;">Caso sua organização disponibilize um QR Code de registro, é possível utilizá-lo para preencher automaticamente o campo "Nome de usuário".</p>
-        <ol style="margin-top: 0;">
-            <li>Na tela "Inserir detalhes da conta", toque no ícone do leitor de QR Code, localizado no canto superior direito.</li>
-            <li>Escaneie o código QR fornecido.</li>
-            <li>Preencha manualmente os demais campos (Nome, E-mail, Organização).</li>
-        </ol>
-
         <div style="background-color: #fdf5f6; border-left: 4px solid #dc3545; padding: 12px; margin-bottom: 15px; border-radius: 4px;">
             <strong style="color: #dc3545;">⚠️ Observações Importantes e Erros Comuns:</strong>
             <ul style="margin-bottom: 0;">
@@ -1307,9 +1056,6 @@
                 <li><strong>Código incompleto:</strong> Certifique-se de inserir todos os 20 caracteres.</li>
             </ul>
         </div>
-
-        <h4 style="margin-bottom: 5px;">Após o Registro</h4>
-        <p style="margin-top: 0;">Após a ativação bem-sucedida, os recursos Pro estarão disponíveis em todo o aplicativo. Para verificar a validade da assinatura: acesse <strong>Configurações > Detalhes</strong>. Nesta tela será exibida a data de expiração da licença.</p>
 
         <h3 style="color: #17a2b8; margin-top: 25px;">🔄 Atualização ou Renovação da Assinatura</h3>
         <p style="margin-bottom: 5px;"><strong>Caso a assinatura tenha sido renovada recentemente:</strong></p>
@@ -1336,7 +1082,6 @@
             <li>Instale o aplicativo Avenza Maps.</li>
             <li>Realize o registro normalmente utilizando os mesmos dados da assinatura.</li>
         </ol>
-        <p>Após a conclusão, será enviado um e-mail com o título "Avenza Licensing Server Notification" confirmando que o novo registro foi realizado com sucesso.</p>
     `;
 
     textosAvenza.pt.entrega_custom_wpp = `
@@ -1357,12 +1102,6 @@ Após receber o código de assinatura do Avenza Maps Pro, será necessário regi
 • *Senha:* Deixe em branco, salvo orientação diferente da sua organização.
 • *Nome, e-mail e organização:* Preencher conforme necessário.
 4. Toque em: *Enviar / Login*.
-
-*Cadastro via Código QR (Versão 3.9 ou Superior)*
-Caso sua organização disponibilize um QR Code de registro:
-1. Na tela "Inserir detalhes da conta", toque no ícone do leitor de QR Code (canto superior direito).
-2. Escaneie o código QR fornecido.
-3. Preencha manualmente os demais campos.
 
 ❌ *Observações Importantes e Erros Comuns:*
 • O código não diferencia letras maiúsculas e minúsculas. Os hífens são opcionais.
@@ -1388,7 +1127,6 @@ Para verificar a validade da assinatura: acesse *Configurações > Detalhes*. A 
 
 *2. No novo dispositivo:*
 • Instale o aplicativo Avenza Maps e realize o registro normalmente utilizando os mesmos dados.
-(Você receberá um e-mail confirmando o sucesso do registro).
     `.trim();
 
     textosAvenza.es.introducao_licencas = "Se adjunta el correo electrónico de entrega formal referente a su(s)";
@@ -1438,14 +1176,6 @@ Para verificar a validade da assinatura: acesse *Configurações > Detalhes*. A 
             <li>Toque en: <strong>Enviar / Iniciar sesión</strong></li>
         </ol>
 
-        <h4 style="margin-bottom: 5px;">Registro mediante Código QR (Versión 3.9 o Superior)</h4>
-        <p style="margin-top: 0;">Si su organización proporciona un código QR de registro, puede usarlo para completar automáticamente el campo "Nombre de usuario".</p>
-        <ol style="margin-top: 0;">
-            <li>En la pantalla "Introducir detalles de la cuenta", toque el icono del lector de códigos QR, ubicado en la esquina superior derecha.</li>
-            <li>Escanee el código QR proporcionado.</li>
-            <li>Complete manualmente los campos restantes (Nombre, Correo electrónico, Organización).</li>
-        </ol>
-
         <div style="background-color: #fdf5f6; border-left: 4px solid #dc3545; padding: 12px; margin-bottom: 15px; border-radius: 4px;">
             <strong style="color: #dc3545;">⚠️ Observaciones Importantes y Errores Comunes:</strong>
             <ul style="margin-bottom: 0;">
@@ -1455,9 +1185,6 @@ Para verificar a validade da assinatura: acesse *Configurações > Detalhes*. A 
                 <li><strong>Código incompleto:</strong> Asegúrese de introducir los 20 caracteres completos.</li>
             </ul>
         </div>
-
-        <h4 style="margin-bottom: 5px;">Después del Registro</h4>
-        <p style="margin-top: 0;">Tras la activación exitosa, las funciones Pro estarán disponibles en toda la aplicación. Para verificar la validez de la suscripción: acceda a <strong>Configuración > Detalles</strong>. En esta pantalla se mostrará la fecha de vencimiento de la licencia.</p>
 
         <h3 style="color: #17a2b8; margin-top: 25px;">🔄 Actualización o Renovación de la Suscripción</h3>
         <p style="margin-bottom: 5px;"><strong>Si la suscripción se renovó recientemente:</strong></p>
@@ -1484,7 +1211,6 @@ Para verificar a validade da assinatura: acesse *Configurações > Detalhes*. A 
             <li>Instale la aplicación Avenza Maps.</li>
             <li>Realice el registro normalmente utilizando los mismos datos de suscripción.</li>
         </ol>
-        <p>Una vez completado, se enviará un correo electrónico confirmando que el nuevo registro se realizó correctamente.</p>
     `;
 
     textosAvenza.es.entrega_custom_wpp = `
@@ -1505,12 +1231,6 @@ Después de recibir el código de suscripción de Avenza Maps Pro, será necesar
 • *Contraseña:* Déjelo en blanco, salvo que su organización indique lo contrario.
 • *Nombre, correo electrónico y organización:* Complete según sea necesario.
 4. Toque en: *Enviar / Iniciar sesión*.
-
-*Registro mediante Código QR (Versión 3.9 o Superior)*
-Si su organización proporciona un código QR de registro:
-1. En la pantalla "Introducir detalles de la cuenta", toque el icono del lector de códigos QR (esquina superior derecha).
-2. Escanee el código QR proporcionado.
-3. Complete manualmente los campos restantes.
 
 ❌ *Observaciones Importantes y Errores Comunes:*
 • El código no distingue entre mayúsculas y minúsculas. Los guiones son opcionales.
@@ -1536,7 +1256,6 @@ Para verificar la validez de la suscripción: acceda a *Configuración > Detalle
 
 *2. En el nuevo dispositivo:*
 • Instale la aplicación Avenza Maps y realice el registro normalmente.
-(Recibirá un correo electrónico confirmando el éxito del registro).
     `.trim();
 
     textosAvenza.en.introducao_licencas = "Attached is the formal delivery email regarding your";
@@ -1586,14 +1305,6 @@ Para verificar la validez de la suscripción: acceda a *Configuración > Detalle
             <li>Tap on: <strong>Submit / Login</strong></li>
         </ol>
 
-        <h4 style="margin-bottom: 5px;">QR Code Registration (Version 3.9 or Higher)</h4>
-        <p style="margin-top: 0;">If your organization provides a registration QR Code, you can use it to automatically fill in the "Username" field.</p>
-        <ol style="margin-top: 0;">
-            <li>On the "Enter account details" screen, tap the QR Code reader icon located in the top right corner.</li>
-            <li>Scan the provided QR code.</li>
-            <li>Manually fill in the remaining fields (Name, Email, Organization).</li>
-        </ol>
-
         <div style="background-color: #fdf5f6; border-left: 4px solid #dc3545; padding: 12px; margin-bottom: 15px; border-radius: 4px;">
             <strong style="color: #dc3545;">⚠️ Important Notes and Common Errors:</strong>
             <ul style="margin-bottom: 0;">
@@ -1632,7 +1343,6 @@ Para verificar la validez de la suscripción: acceda a *Configuración > Detalle
             <li>Install the Avenza Maps app.</li>
             <li>Perform the registration normally using the same subscription details.</li>
         </ol>
-        <p>Upon completion, an email will be sent confirming that the new registration was successful.</p>
     `;
 
     textosAvenza.en.entrega_custom_wpp = `
@@ -1653,12 +1363,6 @@ After receiving the Avenza Maps Pro subscription code, you will need to register
 • *Password:* Leave it blank unless your organization instructs otherwise.
 • *Name, email, and organization:* Fill in as required.
 4. Tap on: *Submit / Login*.
-
-*QR Code Registration (Version 3.9 or Higher)*
-If your organization provides a registration QR Code:
-1. On the "Enter account details" screen, tap the QR Code reader icon (top right corner).
-2. Scan the provided QR code.
-3. Manually fill in the remaining fields.
 
 ❌ *Important Notes and Common Errors:*
 • The code is not case-sensitive. Hyphens are optional.
@@ -1684,7 +1388,6 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
 
 *2. On the new device:*
 • Install the Avenza Maps app and perform the registration normally.
-(You will receive an email confirming successful registration).
     `.trim();
 
     const getTextos = () => currentSoftware === 'gm' ? textosGM : textosAvenza;
@@ -1692,7 +1395,6 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
     const imageUrlLogo = "img/Logo Engesat.png";
     const imageAltTextLogo = "Logo Engesat";
 
-    // Nova função auxiliar para gerar o cabeçalho com as duas logos na mesma linha (sem ocupar espaço vertical extra)
     const getHeaderLogosHtml = (swLogoSrc, swLogoAlt, swLogoFallback) => `
     <table width="100%" style="margin-bottom: 20px; border-collapse: collapse; border: none;">
       <tr>
@@ -1726,8 +1428,8 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
       const telefone = get('ped_telefone');
       const obs = get('ped_obs');
 
-      if (!empresa || !responsavel) {
-         showToast('Atenção: Preencha pelo menos a Empresa e o Responsável.', 'warning');
+      if (!empresa) {
+         showToast('Atenção: Preencha o nome da Empresa Cliente.', 'warning');
       } else {
          showToast('Email de Pedido gerado com sucesso!', 'success');
       }
@@ -1741,42 +1443,38 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           </div>`;
       }
 
+      // Constroi contato HTML omitindo se for vazio
       const infoContato = [];
       if (email) infoContato.push(`<strong>📧 Email:</strong> ${email}`);
       if (telefone) infoContato.push(`<strong>📞 Telefone:</strong> ${telefone}`);
       const contatoHtml = infoContato.length > 0 ? `<p style="margin-top:0;">${infoContato.join('<br/>')}</p>` : '';
 
       let texto = '';
-      let wpp = ''; // String dedicada para o WhatsApp
+      let wpp = '';
 
-      wpp += `Prezado(a) *${responsavel}* - *${empresa}*,\n`;
+      // Saudação baseada no preenchimento de Responsável
+      if (responsavel) {
+          wpp += `${formatForWhatsApp(t.saudacao)} *${responsavel}* - *${empresa}*,\n`;
+      } else {
+          wpp += `${formatForWhatsApp(t.saudacao)} *${empresa}*,\n`;
+      }
+
       if (email) wpp += `📧 Email: ${email}\n`;
-      if (telefone) wpp += `📞 Telefone: ${telefone}\n\n`;
+      if (telefone) wpp += `📞 Telefone: ${telefone}\n`;
+      wpp += `\n`;
 
-      // Se for GLOBAL MAPPER
       if (currentSoftware === 'gm') {
           const expl = getTextos()[langKey].licenseExplanations;
           const modosExplicacoes = Object.values(expl).join('\n');
           
-          // Preços baseados em BRL (a serem convertidos se USD)
           const gmPrices = {
-              novas: {
-                  gm: [6900, 9900, 9900, 13900],
-                  pro: [8900, 12900, 12900, 12900],
-                  total: [15800, 22800, 22800, 26800]
-              },
-              renovacao: {
-                  gm: [2900, 3900, 3900, 3900],
-                  pro: [3900, 4900, 4900, 4900],
-                  total: [6800, 8800, 8800, 8800]
-              }
+              novas: { gm: [6900, 9900, 9900, 13900], pro: [8900, 12900, 12900, 12900], total: [15800, 22800, 22800, 26800] },
+              renovacao: { gm: [2900, 3900, 3900, 3900], pro: [3900, 4900, 4900, 4900], total: [6800, 8800, 8800, 8800] }
           };
 
           const formatGM = (brlVal) => {
-              let val = currentCurrency === 'USD' ? brlVal / 5.5 : brlVal; // Taxa de câmbio simbólica de 5.5
-              if (currentCurrency === 'USD') {
-                  val = Math.round(val); // Arredondar para o inteiro mais próximo
-              }
+              let val = currentCurrency === 'USD' ? brlVal / 5.5 : brlVal;
+              if (currentCurrency === 'USD') val = Math.round(val);
               const loc = currentCurrency === 'USD' ? 'en-US' : 'pt-BR';
               return val.toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
           };
@@ -1784,10 +1482,8 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           const tituloNovas = t.tabelas_titulo_novas.replace(/\(R\$\)|\(USD\)/g, `(${currentCurrency})`);
           const tituloRenov = t.tabelas_titulo_renovacao.replace(/\(R\$\)|\(USD\)/g, `(${currentCurrency})`);
 
-          // Tabela convertida em formato de lista para o Whatsapp
           let tabelasValoresWpp = `
 *${formatForWhatsApp(tituloNovas)}*
-
 *${t.row_gm}*
 • Standalone: ${formatGM(gmPrices.novas.gm[0])}
 • Em rede (min 2): ${formatGM(gmPrices.novas.gm[1])}
@@ -1807,7 +1503,6 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
 • USB com frete: ${formatGM(gmPrices.novas.total[3])}
 
 *${formatForWhatsApp(tituloRenov)}*
-
 *${t.row_gm}*
 • Standalone: ${formatGM(gmPrices.renovacao.gm[0])}
 • Em rede: ${formatGM(gmPrices.renovacao.gm[1])}
@@ -1914,10 +1609,14 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           </table>
           `;
 
+          let htmlSaudacao = responsavel 
+            ? `<p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>`
+            : `<p style="margin-bottom: 5px;">${t.saudacao} equipe da <strong>${empresa}</strong>,</p>`;
+
           texto = `
           ${getHeaderLogosHtml('img/GlobalMapper.png', 'Logo Global Mapper', 'Global+Mapper')}
 
-          <p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>
+          ${htmlSaudacao}
           ${contatoHtml}
 
           <p>${t.intro}</p>
@@ -1955,14 +1654,11 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           </div>
           `;
       } else {
-          // Se for AVENZA MAPS
           
-          // Dados do Formulário Avenza
           const diasPagamento = get('ped_dias_pagamento') || '15';
           const validadeOriginal = get('ped_validade_proposta') || new Date().toISOString().split('T')[0];
           const validadeProposta = formatarData(validadeOriginal);
           
-          // Geração da Tabela Dinâmica para o Avenza
           const tituloValoresAvenza = t.valores_titulo.replace(/\(R\$\)|\(USD\)/g, `(${currentCurrency})`);
           let tabelasValoresWpp = `*${formatForWhatsApp(tituloValoresAvenza)}*\n${formatForWhatsApp(t.valores_intro)}\n\n`;
           const prefixoMoeda = currentCurrency === 'USD' ? 'US$ ' : 'R$ ';
@@ -1992,7 +1688,6 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
               `;
           });
 
-          // --- CÁLCULO DE ORÇAMENTO AVENZA ---
           let orcamentoHtml = '';
           let orcamentoWpp = '';
           const qtdInput = get('ped_qtd_avenza');
@@ -2033,7 +1728,6 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
 
               orcamentoWpp = `\n📊 *${titleLbl}*\n• ${unitLbl}: ${unitPriceFormatted}\n• ${totalLbl}: *${totalFormatted}*\n`;
           }
-          // --- FIM DO CÁLCULO ---
 
           wpp += `${formatForWhatsApp(t.intro)}\n\n`;
           wpp += `*${formatForWhatsApp(t.aviso_uso_comercial_titulo)}*\n${formatForWhatsApp(t.aviso_uso_comercial_texto)}\n${formatForWhatsApp(t.aviso_uso_comercial_vantagem)}\n\n`;
@@ -2048,7 +1742,6 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           wpp += `*${formatForWhatsApp(t.gerenciador_titulo)}*\n${formatForWhatsApp(t.gerenciador_texto)}\n\n`;
           wpp += `*${formatForWhatsApp(t.suporte_titulo)}*\n${formatForWhatsApp(t.suporte_distribuidor)}\n${formatForWhatsApp(t.suporte_atencao)}\n\n`;
           
-          // Dados Administrativos para WPP
           wpp += `*${formatForWhatsApp(t.dados_admin_titulo)}*\n`;
           wpp += `${formatForWhatsApp(t.dados_admin_lista)}\n\n`;
           
@@ -2060,10 +1753,14 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
 
           wpp += `🌐 ${formatForWhatsApp(t.mais_info)}\n\n`;
 
+          let htmlSaudacao = responsavel 
+            ? `<p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>`
+            : `<p style="margin-bottom: 5px;">${t.saudacao} equipe da <strong>${empresa}</strong>,</p>`;
+
           texto = `
           ${getHeaderLogosHtml('img/Avenza_logo_OK.png', 'Logo Avenza Maps', 'Avenza+Maps')}
 
-          <p style="margin-bottom: 5px;">${t.saudacao} <strong>${responsavel}</strong> - <strong>${empresa}</strong>,</p>
+          ${htmlSaudacao}
           ${contatoHtml}
 
           <p>${t.intro}</p>
@@ -2168,12 +1865,9 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
       wpp += `${formatForWhatsApp(getTextos()[langKey].assinatura)}`;
 
       output.innerHTML = texto.trim();
-      currentWhatsAppText = wpp.trim(); // Salva a versão WhatsApp na variável global
+      currentWhatsAppText = wpp.trim(); 
       
-      // Expande a visualização (exibe o painel direito)
       appWrapper.classList.add('show-output');
-
-      // Se for celular ou tablet pequeno, rola até o painel
       if (window.innerWidth < 992) {
           rightPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -2181,21 +1875,17 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
 
     gerarBtn.addEventListener('click', () => {
       const t = getTextos()[langKey];
-      const refCliente = get('ref_cliente');
       
-      const camposObrigatoriosGerais = [
-        { id: 'ref_engesat', nome: 'Referência - Interna' },
-        { id: 'ref_cliente', nome: 'Referência - Cliente' },
-        { id: 'nome', nome: 'Nome' },
-        { id: 'empresa', nome: 'Empresa' },
-        { id: 'endereco', nome: 'Endereço' },
-        { id: 'cidade', nome: 'Cidade' },
-        { id: 'pais', nome: 'País' },
-        { id: 'email', nome: 'Email' },
-        { id: 'telefone', nome: 'Telefone' }
-      ];
-
-      const camposVaziosGerais = camposObrigatoriosGerais.filter(campo => !get(campo.id));
+      // Capturando os novos campos ou deixando vazio
+      const refEngesat = get('ref_engesat');
+      const refCliente = get('ref_cliente');
+      const nomeContato = get('nome');
+      const empresa = get('empresa');
+      const endereco = get('endereco');
+      const cidade = get('cidade');
+      const pais = get('pais');
+      const email = get('email');
+      const telefone = get('telefone');
       
       const blocos = licencasContainer.querySelectorAll('.licenca-block');
       const licencasData = [];
@@ -2234,19 +1924,16 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           });
       });
 
-      const todosCamposVazios = [...camposVaziosGerais.map(c => `- ${c.nome}`)];
-      if(camposVaziosLicencas.length > 0) {
-          todosCamposVazios.push(`- Faltam dados em: ${camposVaziosLicencas.join(', ')}`);
-      }
-
-      if (todosCamposVazios.length > 0) {
-        showToast('Atenção: Os seguintes campos não foram preenchidos:\n' + todosCamposVazios.join('\n') + '\n\nO email será gerado mesmo assim.', 'warning');
+      if (!empresa) {
+        showToast('Atenção: Preencha o nome da Empresa Cliente.', 'warning');
+      } else if (camposVaziosLicencas.length > 0) {
+        showToast(`Faltam dados nas licenças: ${camposVaziosLicencas.join(', ')}. O email será gerado mesmo assim.`, 'warning');
       } else {
-        showToast('Email gerado com sucesso!', 'success');
+        showToast('Email de Entrega gerado com sucesso!', 'success');
       }
 
       let licencasHTML = '';
-      let wppLicencas = ''; // Versão WPP para os blocos de licenças
+      let wppLicencas = ''; 
 
       licencasData.forEach((lic, idx) => {
           licencasHTML += `
@@ -2275,16 +1962,18 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
 
       // --- GERAR VERSÃO WHATSAPP (ENTREGA) ---
       let wpp = '';
-      wpp += `📌 *Referência Interna:* ${get('ref_engesat')}\n`;
-      wpp += `📝 *Referência do Cliente:* ${refCliente}\n\n`;
+      if (refEngesat) wpp += `📌 *Referência Interna:* ${refEngesat}\n`;
+      if (refCliente) wpp += `📝 *Referência do Cliente:* ${refCliente}\n`;
+      if (refEngesat || refCliente) wpp += `\n`;
       
-      wpp += `👤 *Nome:* ${get('nome')}\n`;
-      wpp += `🏢 *Empresa:* ${get('empresa')}\n`;
-      wpp += `📍 *Endereço:* ${get('endereco')}\n`;
-      wpp += `🌆 *Cidade:* ${get('cidade')}\n`;
-      wpp += `🌎 *País:* ${get('pais')}\n`;
-      wpp += `📧 *Email:* ${get('email')}\n`;
-      wpp += `📞 *Telefone:* ${get('telefone')}\n\n`;
+      if (nomeContato) wpp += `👤 *Nome:* ${nomeContato}\n`;
+      if (empresa) wpp += `🏢 *Empresa:* ${empresa}\n`;
+      if (endereco) wpp += `📍 *Endereço:* ${endereco}\n`;
+      if (cidade) wpp += `🌆 *Cidade:* ${cidade}\n`;
+      if (pais) wpp += `🌎 *País:* ${pais}\n`;
+      if (email) wpp += `📧 *Email:* ${email}\n`;
+      if (telefone) wpp += `📞 *Telefone:* ${telefone}\n`;
+      if (nomeContato || empresa || endereco || cidade || pais || email || telefone) wpp += `\n`;
 
       wpp += `${formatForWhatsApp(t.saudacao)}\n\n`;
       wpp += `${formatForWhatsApp(t.introducao_licencas)}:\n\n`;
@@ -2318,7 +2007,6 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           wpp += `✅ *${langKey === 'pt' ? 'Ativação das Licenças' : langKey === 'es' ? 'Activación de Licencias' : 'License Activation'}:*\n`;
           wpp += `• ${formatForWhatsApp(t.ativacao)}\n\n`;
       } else {
-          // Utiliza a estrutura personalizada do Avenza Maps
           wpp += `${t.entrega_custom_wpp}\n\n`;
       }
 
@@ -2330,9 +2018,9 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
       wpp += `• ${emailContact} laurent.engesat@gmail.com\n\n`;
 
       wpp += `${formatForWhatsApp(getTextos()[langKey].assinatura)}`;
-
       // --- FIM DA GERAÇÃO WPP ---
 
+      // --- GERAR HTML ENTREGA ---
       let instrucoesHtml = '';
       if (currentSoftware === 'gm') {
           instrucoesHtml = `
@@ -2374,19 +2062,27 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           instrucoesHtml = t.entrega_custom_html;
       }
 
+      // Constroi sessões html que ocultam o que for vazio
+      let refsHtmlArr = [];
+      if (refEngesat) refsHtmlArr.push(`<strong>📌 Referência Interna:</strong> <span style="font-weight:bold; color:#007bff;">${refEngesat}</span>`);
+      if (refCliente) refsHtmlArr.push(`<strong>📝 Referência do Cliente:</strong> <span style="font-weight:bold; color:#007bff;">${refCliente}</span>`);
+      let refsHtmlFinal = refsHtmlArr.length > 0 ? `<p>${refsHtmlArr.join('<br/>')}</p>` : '';
+
+      let clienteHtmlArr = [];
+      if (nomeContato) clienteHtmlArr.push(`<strong>👤 Nome:</strong> ${nomeContato}`);
+      if (empresa) clienteHtmlArr.push(`<strong>🏢 Empresa:</strong> ${empresa}`);
+      if (endereco) clienteHtmlArr.push(`<strong>📍 Endereço:</strong> ${endereco}`);
+      if (cidade) clienteHtmlArr.push(`<strong>🌆 Cidade:</strong> ${cidade}`);
+      if (pais) clienteHtmlArr.push(`<strong>🌎 País:</strong> ${pais}`);
+      if (email) clienteHtmlArr.push(`<strong>📧 Email:</strong> ${email}`);
+      if (telefone) clienteHtmlArr.push(`<strong>📞 Telefone:</strong> ${telefone}`);
+      let clienteHtmlFinal = clienteHtmlArr.length > 0 ? `<p>${clienteHtmlArr.join('<br/>')}</p>` : '';
+
       const texto = `
 ${getHeaderLogosHtml(logoImgSrc, logoImgAlt, logoImgFallback)}
 
-<p><strong>📌 Referência Interna:</strong> <span style="font-weight:bold; color:#007bff;">${get('ref_engesat')}</span><br/>
-<strong>📝 Referência do Cliente:</strong> <span style="font-weight:bold; color:#007bff;">${refCliente}</span></p>
-
-<p><strong>👤 Nome:</strong> ${get('nome')}<br/>
-<strong>🏢 Empresa:</strong> ${get('empresa')}<br/>
-<strong>📍 Endereço:</strong> ${get('endereco')}<br/>
-<strong>🌆 Cidade:</strong> ${get('cidade')}<br/>
-<strong>🌎 País:</strong> ${get('pais')}<br/>
-<strong>📧 Email:</strong> ${get('email')}<br/>
-<strong>📞 Telefone:</strong> ${get('telefone')}</p>
+${refsHtmlFinal}
+${clienteHtmlFinal}
 
 <p>${t.saudacao}</p>
 
@@ -2417,10 +2113,7 @@ ${instrucoesHtml}
       output.innerHTML = texto;
       currentWhatsAppText = wpp.trim();
       
-      // Expande a visualização (exibe o painel direito)
       appWrapper.classList.add('show-output');
-
-      // Se for celular ou tablet pequeno, rola até o painel
       if (window.innerWidth < 992) {
           rightPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -2479,7 +2172,7 @@ ${instrucoesHtml}
       function fallbackCopyWpp() {
         const textarea = document.createElement("textarea");
         textarea.value = currentWhatsAppText;
-        textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+        textarea.style.position = "fixed";
         document.body.appendChild(textarea);
         textarea.focus();
         textarea.select();
