@@ -279,11 +279,17 @@
               <label for="ped_qtd_avenza" style="margin-top: 0;">🔢 Quantidade de Licenças Avenza (Opcional):</label>
               <input type="number" id="ped_qtd_avenza" min="1" placeholder="Ex: 5 (calcula orçamento automático)" />
 
-              <label for="ped_dias_pagamento">⏳ Dias para Pagamento:</label>
-              <input type="number" id="ped_dias_pagamento" min="1" placeholder="Ex: 15" value="15" />
+              <div class="expand-toggle" id="btnToggleAvenzaExtra">
+                <span class="icon">➕</span> Alterar Prazos Comerciais (Opcional)
+              </div>
 
-              <label for="ped_validade_proposta">📅 Validade da Proposta:</label>
-              <input type="date" id="ped_validade_proposta" />
+              <div id="avenza_extra_fields" class="extra-fields" style="background: transparent; border: none; padding: 0; margin-top: 10px;">
+                  <label for="ped_dias_pagamento" style="margin-top: 0;">⏳ Dias para Pagamento:</label>
+                  <input type="number" id="ped_dias_pagamento" min="1" placeholder="Ex: 15" value="15" />
+
+                  <label for="ped_validade_proposta">📅 Validade da Proposta:</label>
+                  <input type="date" id="ped_validade_proposta" />
+              </div>
           </div>
         </div>
 
@@ -405,6 +411,14 @@
         this.innerHTML = fields.classList.contains('show') 
             ? '<span class="icon">➖</span> Ocultar Referências e Dados do Contato'
             : '<span class="icon">➕</span> Completar Referências e Dados do Contato (Opcional)';
+    });
+
+    document.getElementById('btnToggleAvenzaExtra').addEventListener('click', function() {
+        const fields = document.getElementById('avenza_extra_fields');
+        fields.classList.toggle('show');
+        this.innerHTML = fields.classList.contains('show') 
+            ? '<span class="icon">➖</span> Ocultar Prazos Comerciais'
+            : '<span class="icon">➕</span> Alterar Prazos Comerciais (Opcional)';
     });
 
     // Lógica para os botões de Moeda
@@ -917,7 +931,7 @@
         dados_bancarios_titulo: "💳 Dados Bancários",
         dados_bancarios_lista: "<ul><li><strong>Banco:</strong> Banco Inter (077)</li><li><strong>Agência:</strong> Agência 0001</li><li><strong>Conta Corrente:</strong> 43907863-6</li><li><strong>Chave Pix:</strong> 13.157.625/0001-03</li></ul>",
         condicoes_comerciais_titulo: "📦 Condições Comerciais",
-        condicoes_comerciais_lista: (dias, data) => `<ul><li><strong>Pagamento:</strong> faturado para ${dias} dias depois da entrega das licenças</li><li><strong>Validade da Proposta:</strong> até ${data}</li><li><strong>Entrega:</strong> Licenças enviadas por e-mail com instruções de instalação e ativação.</li><li><strong>Licenças:</strong> Licenças temporárias poderão ser emitidas até a confirmação do pagamento. As definitivas serão fornecidas após a quitação.</li><li><strong>Nota Fiscal:</strong> Será emitida Nota Fiscal de Serviços, conforme decisão do STF</li><li><strong>ISS:</strong> Não aceitamos desconto de ISS na sede da contratante, o serviço sendo prestado em Curitiba.</li></ul>`,
+        condicoes_comerciais_lista: (dias, data) => `<ul>${dias ? `<li><strong>Pagamento:</strong> faturado para ${dias} dias depois da entrega das licenças</li>` : ''}${data ? `<li><strong>Validade da Proposta:</strong> até ${data}</li>` : ''}<li><strong>Entrega:</strong> Licenças enviadas por e-mail com instruções de instalação e ativação.</li><li><strong>Licenças:</strong> Licenças temporárias poderão ser emitidas até a confirmação do pagamento. As definitivas serão fornecidas após a quitação.</li><li><strong>Nota Fiscal:</strong> Será emitida Nota Fiscal de Serviços, conforme decisão do STF</li><li><strong>ISS:</strong> Não aceitamos desconto de ISS na sede da contratante, o serviço sendo prestado em Curitiba.</li></ul>`,
         imagem_diretrizes: "img/Avenza - Novas diretrizes para os planos Free e Pro (PT-BR).png",
         mais_info: "Saiba mais sobre o Avenza Maps em nosso site: <a href=\"https://www.engesat.com.br/softwares/avenza/avenza-maps/\" target=\"_blank\">https://www.engesat.com.br/softwares/avenza/avenza-maps/</a>"
     };
@@ -956,7 +970,7 @@
         dados_bancarios_titulo: "💳 Datos Bancarios",
         dados_bancarios_lista: "<ul><li><strong>Banco:</strong> Banco Inter (077)</li><li><strong>Agencia:</strong> Agência 0001</li><li><strong>Cuenta Corriente:</strong> 43907863-6</li><li><strong>Clave Pix:</strong> 13.157.625/0001-03</li></ul>",
         condicoes_comerciais_titulo: "📦 Condiciones Comerciales",
-        condicoes_comerciais_lista: (dias, data) => `<ul><li><strong>Pago:</strong> facturado para ${dias} días después de la entrega de las licencias</li><li><strong>Validez de la Propuesta:</strong> hasta ${data}</li><li><strong>Entrega:</strong> Licencias enviadas por correo electrónico con instrucciones de instalación y activación.</li><li><strong>Licencias:</strong> Las licencias temporales pueden emitirse hasta que se confirme el pago. Las definitivas se proporcionarán después de la liquidación.</li><li><strong>Factura:</strong> Se emitirá una Factura de Servicios, conforme a la decisión del STF</li><li><strong>ISS:</strong> No aceptamos deducción de ISS en la sede del contratante, ya que el servicio se presta en Curitiba.</li></ul>`,
+        condicoes_comerciais_lista: (dias, data) => `<ul>${dias ? `<li><strong>Pago:</strong> facturado para ${dias} días después de la entrega de las licencias</li>` : ''}${data ? `<li><strong>Validez de la Propuesta:</strong> hasta ${data}</li>` : ''}<li><strong>Entrega:</strong> Licencias enviadas por correo electrónico con instrucciones de instalación y activación.</li><li><strong>Licencias:</strong> Las licencias temporales pueden emitirse hasta que se confirme el pago. Las definitivas se proporcionarán después de la liquidación.</li><li><strong>Factura:</strong> Se emitirá una Factura de Servicios, conforme a la decisión del STF</li><li><strong>ISS:</strong> No aceptamos deducción de ISS en la sede del contratante, ya que el servicio se presta en Curitiba.</li></ul>`,
         imagem_diretrizes: "img/Avenza - Novas diretrizes para os planos Free e Pro (ES).png",
         mais_info: "Obtenga más información sobre Avenza Maps en nuestro sitio web: <a href=\"https://www.engesat.com.br/softwares/avenza/avenza-maps/\" target=\"_blank\">https://www.engesat.com.br/softwares/avenza/avenza-maps/</a>"
     };
@@ -995,7 +1009,7 @@
         dados_bancarios_titulo: "💳 Bank Details",
         dados_bancarios_lista: "<ul><li><strong>Bank:</strong> Banco Inter (077)</li><li><strong>Branch:</strong> Agência 0001</li><li><strong>Checking Account:</strong> 43907863-6</li><li><strong>Pix Key:</strong> 13.157.625/0001-03</li></ul>",
         condicoes_comerciais_titulo: "📦 Commercial Conditions",
-        condicoes_comerciais_lista: (dias, data) => `<ul><li><strong>Payment:</strong> invoiced for ${dias} days after delivery of the licenses</li><li><strong>Proposal Validity:</strong> until ${data}</li><li><strong>Delivery:</strong> Licenses sent by email with installation and activation instructions.</li><li><strong>Licenses:</strong> Temporary licenses may be issued until payment is confirmed. Permanent ones will be provided after settlement.</li><li><strong>Invoice:</strong> A Services Invoice will be issued, according to the STF decision</li><li><strong>ISS:</strong> We do not accept ISS deduction at the contractor's headquarters, as the service is provided in Curitiba.</li></ul>`,
+        condicoes_comerciais_lista: (dias, data) => `<ul>${dias ? `<li><strong>Payment:</strong> invoiced for ${dias} days after delivery of the licenses</li>` : ''}${data ? `<li><strong>Proposal Validity:</strong> until ${data}</li>` : ''}<li><strong>Delivery:</strong> Licenses sent by email with installation and activation instructions.</li><li><strong>Licenses:</strong> Temporary licenses may be issued until payment is confirmed. Permanent ones will be provided after settlement.</li><li><strong>Invoice:</strong> A Services Invoice will be issued, according to the STF decision</li><li><strong>ISS:</strong> We do not accept ISS deduction at the contractor's headquarters, as the service is provided in Curitiba.</li></ul>`,
         imagem_diretrizes: "img/Avenza - Novas diretrizes para os planos Free e Pro (ES).png",
         mais_info: "Learn more about Avenza Maps on our website: <a href=\"https://www.engesat.com.br/softwares/avenza/avenza-maps/\" target=\"_blank\">https://www.engesat.com.br/softwares/avenza/avenza-maps/</a>"
     };
@@ -1703,9 +1717,17 @@ To check your subscription's validity: go to *Settings > Details*. The expiratio
           `;
       } else {
           
-          const diasPagamento = get('ped_dias_pagamento') || '15';
-          const validadeOriginal = get('ped_validade_proposta') || new Date().toISOString().split('T')[0];
-          const validadeProposta = formatarData(validadeOriginal);
+          const isAvenzaExtraExpanded = document.getElementById('avenza_extra_fields').classList.contains('show');
+          let diasPagamento = '';
+          let validadeProposta = '';
+
+          if (isAvenzaExtraExpanded) {
+              diasPagamento = get('ped_dias_pagamento');
+              const validadeOriginal = get('ped_validade_proposta');
+              if (validadeOriginal) {
+                  validadeProposta = formatarData(validadeOriginal);
+              }
+          }
           
           const tituloValoresAvenza = t.valores_titulo.replace(/\(R\$\)|\(USD\)/g, `(${currentCurrency})`);
           let tabelasValoresWpp = `*${formatForWhatsApp(tituloValoresAvenza)}*\n${formatForWhatsApp(t.valores_intro)}\n\n`;
